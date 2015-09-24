@@ -1,2 +1,4 @@
+# Directories/files to ignore when commiting changes
 node_modules
 build
+.sass-cache
