@@ -1,7 +1,101 @@
-$font-stack:    Helvetica, sans-serif;
-$primary-color: #333;
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+$background-color: #fff; // #dfdfdf
+$header-color: black;
+$login-background-color: #fff; // #8FA5CB
+$login-text-color: $header-color;
+$button-color: #555; // #8CBEB2
+$login-margin: 8em;
 
 body {
-  font: 100% $font-stack;
-  color: $primary-color;
+  margin: 0;
+  padding: 0;
+  height: 40em;
+  background-color: $background-color;
+}
+
+header {
+  margin: 0 20em;
+  padding: 1em;
+  height: 2.5em;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  border-bottom: .2em solid $header-color;
+  
+  h1 {
+    font-size: 1.9em;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    letter-spacing: .4em;
+    color: $header-color;
+    text-shadow: 0px 1px 0px rgba(200,200,200,.6);
+    
+    -webkit-transition: all .5s ease-in-out 0s;
+    transition: all .5s ease-in-out 0s;
+    
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#graphA {
+  margin: 8em 2em;
+  text-align: center;
+}
+
+#testing {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 18px;
+}
+
+.login-form {
+  transition: 0.5s linear all;
+  background: $login-background-color no-repeat scroll 0% 0%;
+  text-align: center;
+  width: 400px;
+  padding: 2em;
+  margin: $login-margin auto;
+  font-size: 18px;
+  color: $login-text-color;
+  
+  label {
+    font-size: 20px;
+  }
+}
+
+input {
+  margin: .5em 0;
+  
+  &[type="text"], &[type="password"] {
+    width: 70%;
+    height: 25px;
+    font: 16px "Noto Sans",Tahoma,sans-serif;
+    text-align: center;
+    color: $header-color;
+  }
+  
+  &[type="submit"] {
+    font: 16px 'Lato', sans-serif;
+    color: #FFF;
+    background-color: $button-color;
+    width: 72%;
+    padding: 5px 10px;
+    border: medium none;
+    cursor: pointer;
+  }
+}
+
+.login-form.ng-invalid {
+  background: red;
+  color:white;
 }

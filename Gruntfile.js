@@ -40,18 +40,42 @@ module.exports = function(grunt) {
 				files: ['gruntfile.js', 'src/js/*.js', 'test/*.js'],
 				// configure JSHint (documented at http://www.jshint.com/docs/)
 				options: {
+					curly: true,
+					newcap: true,
+					noarg: true,
+					sub: true,
+					boss: true,
+					eqnull: true,
+					
 					// more options here if you want to override JSHint defaults
 					globals: {
 						jQuery: false,
 						console: true,
 						module: true
 					},
-					
 				}
 			}, 
 			watch: {
-				files: ['<%= jshint.files %>'],
-				tasks: ['jshint, karma:unit:run']
+				css: {
+					files: 'src/scss/*.scss',
+					tasks: ['sass'],
+					options: {
+						livereload: true
+					}
+				},
+				html: {
+					files: ['*.html', 'src/html/*.html'],
+					options: {
+						livereload: true
+					}
+				},
+				scripts: {
+					files: ['<%= jshint.files %>'],
+					tasks: ['jshint', 'karma:unit:run'],
+					options: {
+						livereload: true
+					}
+				}
 			},
 			sass: {                              // Task 
 				dist: {                            // Target 
@@ -63,18 +87,10 @@ module.exports = function(grunt) {
 					}
 				}
 			},
-			karma: {		// TODO - get working
+			karma: {
 				unit: {
-					files: [
-						{ src: ['test/**/*.js'], served: true },
-						{ src: ['src/js/*.js'], served: true, included: false }
-					],
-					frameworks: ['mocha', 'chai'],
-					colors: true,
-					logLevel: 'INFO',
-					browsers: ['Firefox', 'Chrome', 'Safari'],
-					background: true,
-					singleRun: false
+					configFile: 'karma.conf.js',
+					background: true
 				}
 			},
 			mocha: {
@@ -84,6 +100,13 @@ module.exports = function(grunt) {
 				options: {
 					run: true
 				}
+			},
+			connect: {
+			  server: {
+			    options: {
+			      port: 9000
+			    }
+			  }
 			}
 		}
 	);
@@ -92,17 +115,29 @@ module.exports = function(grunt) {
 	
 	/***  Load our Node Package Manager tasks ***/
 	
-	// Load tasks
+	// Load grunt tasks
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-mocha');
+	grunt.loadNpmTasks('grunt-contrib-connect');
 	
 	
 	/*** Create our runnable Command-line tasks ***/
+
+	// Start web server
+	grunt.registerTask('serve', [
+		'connect:server',
+		'watch'
+	]);
 	
-	// the default task can be run just by typing "grunt" on the command line
-	grunt.registerTask('default', ['sass', 'jshint', 'mocha', 'watch']);
+	/* 	The default task can be run just by typing "grunt" on the command line
+			1) Compiles sass to CSS
+			2) Runs jshint to look for syntax errors in our JS
+			3) Starts our grunt file watcher
+	*/
+	grunt.registerTask('default', ['sass', 'jshint', 'karma', 'serve']);
+
 };

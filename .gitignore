@@ -1,4 +1,5 @@
-# Directories/files to ignore when commiting changes
+# Directories/files to ignore when commiting changes 
+.DS_Store
 node_modules
 build
 .sass-cache
