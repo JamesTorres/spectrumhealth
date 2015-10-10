@@ -33,6 +33,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-karma": "^0.12.1",
     "grunt-mocha": "^0.4.13",
+    "jquery": "^2.1.4",
     "karma": "^0.13.10",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.2.0",

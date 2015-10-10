@@ -71,7 +71,7 @@ module.exports = function(grunt) {
 				},
 				scripts: {
 					files: ['<%= jshint.files %>'],
-					tasks: ['jshint', 'karma:unit:run'],
+					tasks: ['jshint'], // Include , 'karma:unit:run' or 'karma:continuous:run' when ready
 					options: {
 						livereload: true
 					}
@@ -88,17 +88,30 @@ module.exports = function(grunt) {
 				}
 			},
 			karma: {
-				unit: {
+				options: {
 					configFile: 'karma.conf.js',
+					files: [      
+						// 'node_modules/angular/angular.js',
+      // 					'node_modules/angular-mocks/angular-mocks.js',
+      // 					'node_modules/chai/chai.js',
+      					'test/example-test.js'
+      				]
+				},
+				unit: {
+					singleRun: true
+				},
+				continuous: {
+					// keep karma running in the background
 					background: true
 				}
 			},
 			mocha: {
 				all: {
-					src: ['test/testrunner.html'],
+					src: ['test/index.html'],
 				},
 				options: {
-					run: true
+					run: true,
+					threshold: 60		// 60% minimum code coverage
 				}
 			},
 			connect: {
@@ -138,6 +151,6 @@ module.exports = function(grunt) {
 			2) Runs jshint to look for syntax errors in our JS
 			3) Starts our grunt file watcher
 	*/
-	grunt.registerTask('default', ['sass', 'jshint', 'karma', 'serve']);
+	grunt.registerTask('default', ['sass', 'jshint', 'serve']);	// include karma when ready
 
 };

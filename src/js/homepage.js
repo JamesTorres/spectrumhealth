@@ -59,7 +59,7 @@ function Graph(SHEndpoint) {
   //this.xAxisLabel = ["providers", "totalPaitents", "waitingPatients", "seenPatients"];
   
   this.generateSGGraph();
-};
+}
 
 Graph.prototype.generateBarChart = function() {
   
@@ -70,7 +70,7 @@ Graph.prototype.generateSGGraph = function() {
   var n = this.layers, // number of layers
       m = this.samplesPerLayer, // number of samples per layer
       stack = d3.layout.stack(),
-      layers = stack(d3.range(n).map(function() { return bumpLayer(m, .1); })),
+      layers = stack(d3.range(n).map(function() { return bumpLayer(m, 0.1); })),
       yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y; }); }),
       yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
 
@@ -80,7 +80,7 @@ Graph.prototype.generateSGGraph = function() {
 
   var x = d3.scale.ordinal()
       .domain(d3.range(m))
-      .rangeRoundBands([0, width], .08);
+      .rangeRoundBands([0, width], 0.08);
 
   var y = d3.scale.linear()
       .domain([0, yStackMax])
@@ -134,8 +134,8 @@ Graph.prototype.generateSGGraph = function() {
 
   function change() {
     clearTimeout(timeout);
-    if (this.value === "grouped") transitionGrouped();
-    else transitionStacked();
+    if (this.value === "grouped") { transitionGrouped(); }
+    else { transitionStacked(); }
   }
 
   function transitionGrouped() {
@@ -168,9 +168,9 @@ Graph.prototype.generateSGGraph = function() {
   function bumpLayer(n, o) {
 
     function bump(a) {
-      var x = 1 / (.1 + Math.random()),
-          y = 2 * Math.random() - .5,
-          z = 10 / (.1 + Math.random());
+      var x = 1 / (0.1 + Math.random()),
+          y = 2 * Math.random() - 0.5,
+          z = 10 / (0.1 + Math.random());
       for (var i = 0; i < n; i++) {
         var w = (i / n - y) * z;
         a[i] += x * Math.exp(-w * w);
@@ -178,8 +178,8 @@ Graph.prototype.generateSGGraph = function() {
     }
 
     var a = [], i;
-    for (i = 0; i < n; ++i) a[i] = o + o * Math.random();
-    for (i = 0; i < 5; ++i) bump(a);
+    for (i = 0; i < n; ++i) { a[i] = o + o * Math.random(); }
+    for (i = 0; i < 5; ++i) { bump(a); }
     return a.map(function(d, i) { return {x: i, y: Math.max(0, d)}; });
   }
 };
@@ -187,4 +187,6 @@ Graph.prototype.generateSGGraph = function() {
 $(document).ready(function() {
   var endpoint = new SHEndpoint();
   var graph = new Graph(endpoint);
+
+  alert('hi');
 });
