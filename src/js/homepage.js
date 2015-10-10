@@ -188,5 +188,4 @@ $(document).ready(function() {
   var endpoint = new SHEndpoint();
   var graph = new Graph(endpoint);
 
-  alert('hi');
 });

@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 			},
 			jshint: {
 				// define the files to lint
-				files: ['gruntfile.js', 'src/js/*.js', 'test/*.js'],
+				files: ['gruntfile.js', 'src/js/*.js', 'test/*.js', 'src/js/**/*.js'],
 				// configure JSHint (documented at http://www.jshint.com/docs/)
 				options: {
 					curly: true,
