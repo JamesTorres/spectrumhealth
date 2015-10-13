@@ -1,22 +1,20 @@
-<div ng-controller="loginController">
-    <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
+<form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
 
-        <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
-            <label for="username">Username</label>
-            <input class="form-control" type="text" name="username" ng-model="user.username" ng-minlength="3" ng-maxlength="8" required>
-            <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Username is required</p>
-            <p ng-show="userForm.username.$error.minlength" class="help-block">Username too short</p>
-            <p ng-show="userForm.username.$error.maxlength" class="help-block">Username too long</p>
-        </div>
+    <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
+        <label for="username">Username</label>
+        <input class="form-control" type="text" name="username" ng-model="user.username" ng-minlength="3" ng-maxlength="8" required>
+        <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Username is required</p>
+        <p ng-show="userForm.username.$error.minlength" class="help-block">Username too short</p>
+        <p ng-show="userForm.username.$error.maxlength" class="help-block">Username too long</p>
+    </div>
 
-        <div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
-            <label for="password">Password</label>
-            <input class="form-control" type="password" name="password" ng-minlength="5" ng-model="password" required>
-            <p ng-show="userForm.password.$error.minlength" class="help-block">Password too short</p>
-            <p ng-show="userForm.password.$error.maxlength" class="help-block">Password too long</p>
-        </div>
+    <div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
+        <label for="password">Password</label>
+        <input class="form-control" type="password" name="password" ng-minlength="5" ng-model="password" required>
+        <p ng-show="userForm.password.$error.minlength" class="help-block">Password too short</p>
+        <p ng-show="userForm.password.$error.maxlength" class="help-block">Password too long</p>
+    </div>
 
-        <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+    <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
 
-    </form>
-</div>
+</form>

@@ -1,7 +1,7 @@
-app.controller('loginController', ['$scope', function($scope) {           
+app.controller('loginController', ['$scope', '$window', function($scope, $window) {           
 	$scope.submitForm = function(isValid) {
 		if (isValid) {
-			alert('valid form');
+			$window.location.href = '#/dashboard';
 		}
 	};
 }]);

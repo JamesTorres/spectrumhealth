@@ -64,7 +64,7 @@ module.exports = function(grunt) {
 					}
 				},
 				html: {
-					files: ['*.html', 'src/html/*.html'],
+					files: ['*.html', 'src/views/*.html'],
 					options: {
 						livereload: true
 					}

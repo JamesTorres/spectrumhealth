@@ -1,10 +1,10 @@
-app.directive('report', function() { 
+app.directive('graph', function() { 
   return { 
     restrict: 'E', 
     scope: { 
       info: '=' 
     }, 
-    templateUrl: 'src/js/directives/report.html' 	// Must specify path from root
+    templateUrl: 'src/js/directives/graph.html' 	// Must specify path from root
   }; 
 });
 
