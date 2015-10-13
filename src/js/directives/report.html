@@ -1,4 +1,10 @@
-<img class="icon" ng-src="{{ info.icon }}"> 
-<h2 class="title">{{ info.title }}</h2> 
-<p class="developer">{{ info.developer }}</p> 
-<p class="price">{{ info.price | currency }}</p>
+<div id="graphA">
+	<form>
+		<label><input type="radio" name="mode" value="grouped"> Grouped</label><br>
+		<label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
+	</form>
+</div>
+
+<div id="testing">
+	<p id="output"></p>
+</div>
