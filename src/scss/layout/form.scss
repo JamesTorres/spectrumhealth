@@ -1,0 +1,30 @@
+.loginForm {
+	position: absolute;
+	top: 45%;								// 5% is for 10% header
+	left: 50%;
+	transform: translate(-50%, -50%);		// Aligns to half height/width
+
+	padding: 2em 6em;
+	border-radius: 1em;
+
+	input[type="text"], input[type="password"] {
+		text-align: center;
+		border: none;
+	}
+
+	.submit-group {
+		width: auto;
+		height: 3em;
+
+		button[type="submit"] {
+			float: left;
+		}
+
+		> a {
+			position: relative;
+			float: right;
+			font-size: 12px;
+			text-align: right;
+		}
+	}
+}

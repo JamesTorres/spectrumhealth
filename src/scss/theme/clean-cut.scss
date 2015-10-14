@@ -1,0 +1,96 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Poiret+One);
+
+// Main shared theme variables
+$primary: #5ca4a9; //rgba(92, 164, 169, 100)
+$secondary: #9bc1bc; //rgba(155, 193, 188, 100)
+$complement: #ed6a5a; //rgba(237, 106, 90, 100)
+$dark: #444545; //rgba(244, 241, 187, 100)
+$light: #fff; //rgba(230, 235, 224, 100)
+
+
+$pageShadowColor: #000;
+
+
+html {
+	// -moz-box-shadow:    inset 0 0 10px $pageShadowColor;
+ //   	-webkit-box-shadow: inset 0 0 10px $pageShadowColor;
+ //   	box-shadow:         inset 0 0 10px $pageShadowColor;
+}
+
+body { 
+	background: $light url("../../../img/graphy.png");
+}
+
+.view {
+	
+}
+
+.header {
+	// background-color: $primary;
+
+	> h1 {
+		font-family: 'Poiret One', sans-serif;
+		font-size: 4em;
+		font-weight: 700;
+		letter-spacing: .25em;
+		color: $dark;
+		// text-shadow: 3px 3px 2px #ccc;
+
+		&:hover {
+			cursor: pointer;
+			opacity: 0.8;
+		}
+	}
+
+	.hamburger {		
+		.glyphicon {
+			color: $dark;
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: none;
+				opacity: 0.8;
+			}
+		}	
+	}
+
+	.uib-dropdown-menu {
+		background-color: $dark;
+
+		a {
+			text-align: center;
+			color: $light;
+		}
+	}
+}
+
+.loginForm {
+	// -moz-box-shadow:    3px 3px 5px 6px #ccc;
+	// -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+	// box-shadow:         3px 3px 5px 6px #ccc;
+
+	background-color: $dark;
+
+	> form {
+		color: $light;
+
+		input[type="text"], input[type="password"] {
+			font-family: 'Lato', sans-serif;
+
+			-moz-box-shadow:    inset 0 0 1px $pageShadowColor;
+		   	-webkit-box-shadow: inset 0 0 1px $pageShadowColor;
+		   	box-shadow:         inset 0 0 1px $pageShadowColor;
+		}
+
+		button[type="submit"] {
+			background-color: $primary;
+			text-decoration: none;
+			border: none;
+
+			&:hover {
+				background-color: $primary;
+			}
+		}
+	}
+}

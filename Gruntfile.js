@@ -57,7 +57,7 @@ module.exports = function(grunt) {
 			}, 
 			watch: {
 				css: {
-					files: 'src/scss/*.scss',
+					files: ['src/scss/*.scss', 'src/scss/**/*.scss'],
 					tasks: ['sass'],
 					options: {
 						livereload: true
@@ -82,8 +82,8 @@ module.exports = function(grunt) {
 					options: {                       // Target options 
 						style: 'expanded'
 					},
-					files: {                       // Dictionary of files 
-						'build/main.css': 'src/scss/main.scss'      // 'destination': 'source' 
+					files: {                       								// Dictionary of files 
+						'build/main.css': 'src/scss/main.scss'      			// 'destination': 'source' 
 					}
 				}
 			},

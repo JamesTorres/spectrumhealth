@@ -12,6 +12,8 @@
 
         <script src="node_modules/angular/angular.min.js"></script>
         <script src="node_modules/angular-route/angular-route.min.js"></script>
+        <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+        <script src="node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
         <script src="../../node_modules/d3/d3.min.js"></script>
         <!--[if lt IE 9]>
             <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
@@ -19,14 +21,26 @@
     </head>
 
     <body ng-app="myApp" ng-controller="mainController">
-
-        <div ng-controller="headerController">
+        <div class="header" ng-controller="headerController">
             <h1>{{ title }}</h1>
+
+            <!-- Angular-ui-bootstrap dropdown -->
+            <span class="hamburger" uib-dropdown>
+                <a class="glyphicon glyphicon-menu-hamburger dropdown-toggle" href id="simple-dropdown" uib-dropdown-toggle></a>
+
+                <ul class="uib-dropdown-menu dropdown-menu-right" aria-labelledby="simple-dropdown">
+                    <li ng-repeat="choice in dropdownItems">
+                    <a href="#/login">{{choice}}</a>
+                    </li>
+                </ul>
+            </span>
+        </div>
+    
+        <div class="view">
+            <div ng-view></div> 
         </div>
 
-        <div ng-view></div> 
-
-        <footer>Copyright &copy; 2013 My Site. All Rights Reserved.</footer>
+        <footer>Copyright &copy; 2015 Spectrum Health. All Rights Reserved.</footer>
 
 
 
@@ -44,6 +58,7 @@
         <script src="src/js/controllers/loginController.js"></script>
         <script src="src/js/controllers/mainController.js"></script>
         <script src="src/js/controllers/dashboardController.js"></script>
+        <script src="src/js/controllers/sidebarController.js"></script>
 
         <!-- Services -->
         <script src="src/js/services/queues.js"></script>

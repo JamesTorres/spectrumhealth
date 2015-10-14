@@ -1,8 +1,22 @@
-.ng-valid       {  }
-.ng-invalid     {  }
-.ng-pristine    {  }
-.ng-dirty       {  }
-.ng-touched     {  }
+@import 'base/default';
+
+// .view {
+// 	height: 2000px;
+// }
+
+.sidebar {
+	background-color: $primary;
+	position: fixed;
+	float: left;
+	height: 70%;
+	width: 20%;
+}
+
+// .ng-valid       {  }
+// .ng-invalid     {  }
+// .ng-pristine    {  }
+// .ng-dirty       {  }
+// .ng-touched     {  }
 
 // /* really specific css rules applied by angular */
 // .ng-invalid-required        {  }
@@ -15,6 +29,7 @@
 
 
 // @import url(https://fonts.googleapis.com/css?family=Lato);
+//@import url(https://fonts.googleapis.com/css?family=Poiret+One);
 
 // $background-color: #fff; // #dfdfdf
 // $header-color: black;
