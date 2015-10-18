@@ -1,4 +1,6 @@
 footer {
-	position: absolute;
+	position: relative;
 	bottom: 0;
+	display: inline-block;
+	// z-index: -111;	
 }

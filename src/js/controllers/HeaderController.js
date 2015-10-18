@@ -6,14 +6,4 @@ app.controller('headerController', ['$scope', function($scope) {
 		'Calendar',
 		'Logout'
 	];
-
-	$scope.dropdownStatus = {
-		isopen: false
-	};
-
-	$scope.toggleDropdown = function($event) {
-		$event.preventDefault();
-		$event.stopPropagation();
-		$scope.status.isopen = !$scope.status.isopen;
-	};
 }]);

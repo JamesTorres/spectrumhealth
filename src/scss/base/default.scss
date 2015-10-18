@@ -2,8 +2,10 @@
 @import '../layout/header.scss';
 @import '../layout/form.scss';
 @import '../layout/footer.scss';
+@import '../layout/sidebar.scss';
+@import '../layout/dashboard.scss';
 
-html, body {
+html {
 	height: 100%;
 	// display: inline-block;
 }
@@ -12,7 +14,32 @@ html, body {
 	cursor: pointer; 
 }
 
+// path { 
+//     stroke: steelblue;
+//     stroke-width: 2;
+//     fill: none;
+// }
+
+// .axis path,
+// .axis line {
+//     fill: none;
+//     stroke: grey;
+//     stroke-width: 1;
+//     shape-rendering: crispEdges;
+// }
+
+.homepage {
+    text-align: center;
+}
+
 .view {
-	position: relative;
-	height: 90%;
+    height: 87vh;
+    position: relative;
+}
+
+.loginPage {
+    display: inline-block;
+    text-align: center;
+    width: 100vw;
+    position: relative;
 }

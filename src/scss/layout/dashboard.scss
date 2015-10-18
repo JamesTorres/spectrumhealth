@@ -1,0 +1,21 @@
+
+.dashboard {
+	background-color: $dark;
+	height: 500px;
+	width: 800px;			// change
+	margin-top: 5%;
+	display: inline-block;
+}
+
+.line-graph {
+	background-color: $dark;
+	width: auto;
+	height: 480px;
+
+	svg {
+		background-color: white;
+		display: block;
+		margin: auto;
+	}
+}
+

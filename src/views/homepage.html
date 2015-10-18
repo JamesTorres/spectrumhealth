@@ -1,0 +1,32 @@
+<div class="homepage">
+	<!-- <graph></graph> -->
+
+    <div ng-controller="sidebarController" class="sidebar" sidebar="state">
+        <a href id="navigation-toggle" ng-click="toggleState()">></a>
+        <ul class="navigation">
+        	<li class="navigation-title">Preferences</li>
+            <li class="navigation-items"> <a href="/">Alerts</a> </li>
+            <li class="navigation-items"> <a href="/">API Selection</a> </li>
+            <li class="navigation-items"> <a href="/">Parameters</a> </li>
+            <li class="navigation-items"> <a href="/">Graph Order</a> </li>
+            <li class="navigation-items"> <a href="/">Theme</a> </li>
+        </ul>
+    </div>
+
+    <div class="dashboard" ng-controller="dashboardController">
+        <div class="line-graph">
+            <h3 style="color: white; padding-bottom: .4em;">Patients Per Provider / Time</h3>
+            <nvd3 options='options' data='queues'></nvd3>
+        </div>
+    </div>
+
+<!-- 		<div line-graph>
+			<div class="container">
+				<div line-graph class="jumbotron">
+					<svg id="visualisation" width="1000" height="500"></svg>
+				</div>
+			</div>
+		</div> -->
+
+	</div>
+</div>

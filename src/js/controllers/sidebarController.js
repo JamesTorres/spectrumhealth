@@ -6,5 +6,9 @@ app.controller('sidebarController', ['$scope', function($scope) {
 			- Theme
 			- Model?
 	*/
-	$scope.isCollapsed = false;
+    $scope.state = false;
+    
+    $scope.toggleState = function() {
+        $scope.state = !$scope.state;
+    };
 }]);

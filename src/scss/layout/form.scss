@@ -1,11 +1,9 @@
 .loginForm {
-	position: absolute;
-	top: 45%;								// 5% is for 10% header
-	left: 50%;
-	transform: translate(-50%, -50%);		// Aligns to half height/width
-
-	padding: 2em 6em;
-	border-radius: 1em;
+	position: relative;
+	display: inline-block;
+	padding: 3em 6em;
+	margin-top: 23vh;
+	// border-radius: 1em;
 
 	input[type="text"], input[type="password"] {
 		text-align: center;

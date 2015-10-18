@@ -1,0 +1,33 @@
+.sidebar {
+    position: fixed;
+    top: 30%;
+    left: -200px;
+
+	#navigation-toggle {
+	    position: absolute;
+	    top: 40%;
+	    left: 200px;
+	    padding: 20px;
+	}
+
+	.navigation {
+	    padding: 0;
+	    margin: 0;
+
+		.navigation-items a {
+		    display: block;
+		    padding: 10px 30px;
+		    width: 200px;
+		}
+
+		.navigation-title {
+			display: block;
+		    padding: 10px 30px;
+		    width: 200px;
+		}
+	}
+}
+
+.show {
+    left: 0;
+}

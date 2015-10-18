@@ -1,5 +1,6 @@
 /*
 	Retrieves the Urgent Care queues from the backend. The JSON format:
+	
 		{"totalPatients": 8, "providers": 9, "waitingPatients": 9, "seenPatients": 8}
 
 	Test url: 		http://jsonplaceholder.typicode.com/posts/1
