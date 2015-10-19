@@ -4,4 +4,10 @@ app.controller('loginController', ['$scope', '$window', function($scope, $window
 			$window.location.href = '#/dashboard';
 		}
 	};
+
+	$scope.title = "Spectrum Statistics";
+
+	$scope.dropdownItems = [
+		'About'
+	];
 }]);

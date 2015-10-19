@@ -1,0 +1,27 @@
+<div class="about" ng-controller="aboutController">
+    <div class="header">
+        <h1>{{ title }}</h1>
+
+        <!-- Angular-ui-bootstrap dropdown -->
+        <span class="hamburger" uib-dropdown>
+            <a class="glyphicon glyphicon-menu-hamburger dropdown-toggle" href id="simple-dropdown" uib-dropdown-toggle></a>
+
+            <ul class="uib-dropdown-menu dropdown-menu-right" aria-labelledby="simple-dropdown">
+                <li ng-repeat="item in dropdownItems | filter:lowercase">
+                <a ng-href="#/{{ item | lowercase }}">{{ item }}</a>
+                </li>
+            </ul>
+        </span>
+    </div>
+
+	<div style="display: inline-block; text-align: justify; margin: 10em 20em;">
+		<p>
+		With the goal of becoming the national leader in healthcare by 2020, Spectrum Health is a not-for-profit organization based in Grand Rapids, Michigan. Spectrum Health offers a full continuum of care through its seven hospitals, more than 140 service sites and Priority Health, a health plan with nearly 500,000 members.</p><p>
+		Spectrum Health uses patient arrival prediction software to improve staffing efficiency and to provide patients with optimal visitation hours. The Patient Service Delivery Planning Project tackles both of these requirements through a responsive web application, comprised of two independent interfaces - one for patients, and one for Spectrum Health staff.</p><p>
+		The private staff interface provides graphs and analytics of both past and predicted patient arrivals. Spectrum Health leverages this data to staff their facilities, optimize business hours, and predict average treatment time.</p><p>
+		The public interface is intended for use by patients, and provides a means of finding the nearest Urgent Care with the shortest treatment time, while also providing a calendar for scheduling visits around hours of high traffic. This gives patients a resource to mitigate situations of near emergency, as well as a simple way to plan for the future.</p><p>
+		Both interfaces employ a modular statistics package that is used for calculating predictions. This allows for the predictive model to be easily exchanged or expanded upon.</p><p>
+		The application is written in C#, Javascript, and R, using AngularJS, D3.js, and MongoDB.</p><p>
+		</p>
+	</div>
+</div>
