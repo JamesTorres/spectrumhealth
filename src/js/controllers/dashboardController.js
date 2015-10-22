@@ -1,7 +1,9 @@
 app.controller('dashboardController', ['$scope', 'queues', function($scope, queues) {
     // queues.success(function(data) {
-    // 	$scope.data = data;
+    // 	$scope.test = data;
+    //     console.log($scope.test);
     // });
+
 
     // Create mock data for now
     var fakeData = function() {
@@ -102,9 +104,9 @@ app.controller('dashboardController', ['$scope', 'queues', function($scope, queu
                         // },
                         // axisLabelDistance: 30
                     },
-                    callback: function(chart){
-                        console.log("!!! lineChart callback !!!");
-                    },
+                    // callback: function(chart){
+                    //     console.log("!!! lineChart callback !!!");
+                    // },
                     transitionDuration: 250
                 }
             };
