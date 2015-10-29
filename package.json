@@ -4,8 +4,8 @@
   "description": "Staff frontend for the SH statistics application",
   "main": "index.js",
   "scripts": {
-      "postinstall": "grunt",
-      "start": "node index.js"
+    "postinstall": "grunt",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
   "devDependencies": {
     "angular-animate": "^1.4.7",
     "angular-mocks": "^1.4.7",
+    "angular-nvd3": "^1.0.2",
     "angular-route": "^1.4.7",
     "angular-ui-bootstrap": "^0.14.1",
     "chai": "^3.3.0",
@@ -44,6 +45,7 @@
     "karma-firefox-launcher": "^0.1.6",
     "karma-mocha": "^0.2.0",
     "karma-safari-launcher": "^0.1.1",
-    "mocha": "^2.3.3"
+    "mocha": "^2.3.3",
+    "nvd3": "^1.8.1"
   }
 }

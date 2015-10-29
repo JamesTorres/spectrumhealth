@@ -1,29 +1,36 @@
+$width-sidebar: 225px;
+
 .sidebar {
     position: fixed;
     top: 30%;
-    left: -200px;
+    left: -$width-sidebar;
 
-	#navigation-toggle {
+	#sidebar-toggle {
 	    position: absolute;
 	    top: 40%;
-	    left: 200px;
+	    left: $width-sidebar;
 	    padding: 20px;
 	}
 
-	.navigation {
+	ul {
 	    padding: 0;
 	    margin: 0;
 
-		.navigation-items a {
+		.sidebar-item {
 		    display: block;
 		    padding: 10px 30px;
-		    width: 200px;
+		    width: $width-sidebar;
+		    margin: 0;
+
+		    input, a {
+		    	text-align: center;
+		    }
 		}
 
-		.navigation-title {
+		.sidebar-title {
 			display: block;
 		    padding: 10px 30px;
-		    width: 200px;
+		    width: $width-sidebar;
 		}
 	}
 }

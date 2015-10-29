@@ -1,14 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Lato);
 @import url(https://fonts.googleapis.com/css?family=Poiret+One);
 
-$primary: #5ca4a9; //rgba(92, 164, 169, 100)
-$secondary: #9bc1bc; //rgba(155, 193, 188, 100)
-$complement: #ed6a5a; //rgba(237, 106, 90, 100)
-$dark: #444545; //rgba(244, 241, 187, 100)
-$light: #fff; //rgba(230, 235, 224, 100)
+$primary: #5ca4a9; 		//rgba(92, 164, 169, 100)
+$secondary: #888; 		//Grey							OR 		9bc1bc (LIGHTBLUE)
+$complement: #ed6a5a; 	//rgba(237, 106, 90, 100)    	OR    	ed6a5a (RED)
+$dark: #444545; 		//rgba(244, 241, 187, 100)
+$light: #fff; 			//rgba(230, 235, 224, 100)
 
 $pageShadowColor: #000;
-
+$green: #388659;
+$red: #fb3640;
 
 
 body { 
@@ -50,7 +51,7 @@ body {
 			color: $light;
 
 			&:hover {
-				background-color: $complement;
+				background-color: $secondary;
 				color: $light;
 			}
 		}
@@ -86,27 +87,40 @@ body {
 .sidebar {
     transition : 100ms left;
 
-    #navigation-toggle {
+    #sidebar-toggle {
 	    background-color: $primary;
 	    color: $light;
 	    text-decoration: none;
 	}
 
-	.navigation {
+	ul {
 	    list-style: none;
 
-		.navigation-items a {
+		.sidebar-item  {
 		    background-color: $dark;
 		    color: $light;
 		    line-height: 2em;
 		    text-decoration: none;
 
 		    &:hover {
-		    	background-color: $complement;
+		    	background-color: $secondary;
+		    	cursor: pointer;
+		    }
+
+		    input {
+		    	color: black;
 		    }
 		}
 
-		.navigation-title {
+		.disabled {
+			background-color: $red;
+		}
+
+	    .enabled {
+			background-color: $green;
+		}
+
+		.sidebar-title {
 			font-family: 'Lato', sans-serif;
 			background-color: $light;
 			color: $dark;

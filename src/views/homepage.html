@@ -17,18 +17,34 @@
     </div>
 
     <div ng-controller="sidebarController" class="sidebar" sidebar="state">
-        <a href id="navigation-toggle" ng-click="toggleState()">></a>
-        <ul class="navigation">
-        	<li class="navigation-title">Preferences</li>
-            <li class="navigation-items"> <a href="/">Alerts</a> </li>
-            <li class="navigation-items"> <a href="/">API Selection</a> </li>
-            <li class="navigation-items"> <a href="/">Parameters</a> </li>
-            <li class="navigation-items"> <a href="/">Graph Order</a> </li>
-            <li class="navigation-items"> <a href="/">Theme</a> </li>
+        <a href id="sidebar-toggle" ng-click="toggleState()">{{ icon }}</a>
+
+        <ul ng-switch on="selected.name">
+            <a ng-click="select(null)" ng-if="selected">Back</a>
+            <li class="sidebar-title">{{ selected.name || "Preferences" }}</li>
+            <div ng-switch-default>
+                <li ng-repeat="preference in sidebarPreferences"><a class="sidebar-item" ng-click="select(preference)">{{ preference.name }}</a></li>
+            </div>
+            <div ng-switch-when="API Selection">
+                <li ng-repeat="option in selected.options"><a class="sidebar-item" ng-class="{ 'enabled': option.enabled, 'disabled': !option.enabled }" ng-click="enableAPI(option)">{{ option.name }}</a></li>
+            </div>
+            <div ng-switch-when="Filters">
+                <li ng-repeat="option in selected.options"><form><label class="sidebar-item">{{ option.name }}</br><input type="text" value="{{ option.value }}" /></label></form></li>
+            </div>
+            <div ng-switch-when="Model">
+                <li class="sidebar-item" ng-repeat="option in selected.options"><label>{{ option.name }}</br><input type="text" value="{{ option.value }}" /></label></li>
+            </div>
+            <div ng-switch-when="Theme">
+                <li ng-repeat="option in selected.options"><a class="sidebar-item" ng-class="{ 'enabled': option.enabled, 'disabled': !option.enabled }" ng-click="enableAPI(option)">{{ option.name }}</a></li>
+            </div>
         </ul>
     </div>
 
-    <div class="dashboard" ng-controller="dashboardController">
+    <div class="calendar" ng-controller="calendarController">
+        <div class="calHeader"
+    </div>
+
+<!--     <div class="dashboard" ng-controller="dashboardController">
         <div class="line-graph">
             <h3 style="color: white; padding-bottom: .4em;">Patients / Hour</h3>
             <nvd3 options='options' data='data' class="with-3d-shadow with-transitions"></nvd3>
@@ -39,7 +55,7 @@
             <h3 style="color: white; padding-bottom: .4em;">Providers / Day</h3>
             <nvd3 options='options2' data='data2' class="with-3d-shadow with-transitions"></nvd3>
         </div>
-    </div>
+    </div> -->
 <!-- 		<div line-graph>
 			<div class="container">
 				<div line-graph class="jumbotron">

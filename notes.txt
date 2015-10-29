@@ -1,0 +1,43 @@
+How to compare two UCs in a calendar view?
+How to allow for modular date ranges in a calendar view?
+How to accommodate the larger scale of the data?
+
+
+To-do:
+	Features:
+		1) Implement several views, for respective time frames	
+			a) Yearly view
+				- Shows purely graphs and analytics for any number of Urgent Cares
+					- Traffic by Month
+					- Providers by Month
+					- Overlapping of past data
+					- Filterable by Urgent Care
+				- Shows data over the course of one year
+				- Gives a textual report of the year [STRETCH]
+			b) Monthly view [DEFAULT]
+				- Shows a calendar view for a month for a specific Urgent Care
+					- Show a changeable number of days before and after?
+				- Able to overlay (or display beneath) multiple years for comparison [STRETCH]
+				- Icons below each date representing information
+					- Doctor icon representing understaffed
+					- People representing high traffic
+					- Etc.
+				- Hovering over a date brings up the details about each icon				
+				- i.e., "Alpine UC is expected to experience a high patient volume"
+					- Add reason: e.g., "due to _____" [STRETCH]
+				- Clicking a date brings up one of two things:
+					- Graphs for that date
+					- A daily view of that date
+			c) Daily view	
+				- Shows hours in a specific day, with info
+				- Shows one of two things:
+					- Event listings and blocks of time in which there are expected ____
+					- Strictly graphs and charts
+		2) Sidebar preferences/settings
+			a) API Selection
+			b) Filters
+				- Cutoffs for marking bad values, etc.
+			c) Model	
+				- Altering variables in the model
+			d) Theme
+

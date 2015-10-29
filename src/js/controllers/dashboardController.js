@@ -1,9 +1,58 @@
 app.controller('dashboardController', ['$scope', 'queues', function($scope, queues) {
-    // queues.success(function(data) {
-    // 	$scope.test = data;
-    //     console.log($scope.test);
-    // });
+    /* Retrieves objects of the form:     
+            {"TotalPatients": 8, "Providers": 9, "WaitingPatients": 9, "SeenPatients": 8}
+    */
+    Date.prototype.addHours = function(h) {    
+       this.setTime(this.getTime() + (h*60*60*1000)); 
+       return this;   
+    };
 
+    var startDate = new Date();
+    var endDate = startDate.addHours(10);
+
+    console.log(startDate);
+    console.log(endDate);
+
+
+    queues.getQueues(startDate, endDate).then(function(data){
+        $scope.queueData = data;
+
+        $scope.data = parseQueueData();
+    });
+
+    var parseQueueData = function() {
+        var alpine = [], 
+            broadmoor = [];
+
+        console.log($scope.queueData);
+        $scope.queueData.forEach(function(element){
+            switch (element.Department) {
+                case "ExampleDepartment":
+                    alpine.push({x: element.Hour, y: element.TotalPatients});
+                    break;
+                case "ExampleDepartment2":
+                    broadmoor.push({x: element.Hour, y: element.TotalPatients});
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        return [
+            {
+                values: alpine,      //values - represents the array of {x,y} data points
+                key: 'Alpine',   //key  - the name of the series.
+                color: '#ff7f0e'    //color - optional: choose your own line color.
+            },
+            {
+                values: broadmoor,
+                key: 'Broadmoor UC',
+                color: '#2ca02c'
+            }
+        ];
+    };
+
+    // parseQueueData();
 
     // Create mock data for now
     var fakeData = function() {
