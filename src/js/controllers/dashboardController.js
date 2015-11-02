@@ -10,14 +10,14 @@ app.controller('dashboardController', ['$scope', 'queues', function($scope, queu
     var startDate = new Date();
     var endDate = startDate.addHours(10);
 
-    console.log(startDate);
-    console.log(endDate);
+    // console.log(startDate);
+    // console.log(endDate);
 
 
     queues.getQueues(startDate, endDate).then(function(data){
         $scope.queueData = data;
 
-        $scope.data = parseQueueData();
+        if ($scope.queueData) { $scope.data = parseQueueData(); }
     });
 
     var parseQueueData = function() {

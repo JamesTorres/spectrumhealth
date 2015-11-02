@@ -29,13 +29,13 @@
                 <li ng-repeat="option in selected.options"><a class="sidebar-item" ng-class="{ 'enabled': option.enabled, 'disabled': !option.enabled }" ng-click="enableAPI(option)">{{ option.name }}</a></li>
             </div>
             <div ng-switch-when="Filters">
-                <li ng-repeat="option in selected.options"><form><label class="sidebar-item">{{ option.name }}</br><input type="text" value="{{ option.value }}" /></label></form></li>
+                <li ng-repeat="option in selected.options"><form><label class="sidebar-item">{{ option.name }}</br><input type="text" value="{{ option.value }}" ng-change="changeFilter(option)" ng-model="option.value" /></label></form></li>
             </div>
             <div ng-switch-when="Model">
-                <li class="sidebar-item" ng-repeat="option in selected.options"><label>{{ option.name }}</br><input type="text" value="{{ option.value }}" /></label></li>
+                <li class="sidebar-item" ng-repeat="option in selected.options"><label>{{ option.name }}</br><input type="text" value="{{ option.value }}" ng-change="changeModel(option)" ng-model="option.value" /></label></li>
             </div>
             <div ng-switch-when="Theme">
-                <li ng-repeat="option in selected.options"><a class="sidebar-item" ng-class="{ 'enabled': option.enabled, 'disabled': !option.enabled }" ng-click="enableAPI(option)">{{ option.name }}</a></li>
+                <li ng-repeat="option in selected.options"><a class="sidebar-item" ng-class="{ 'enabled': option.enabled, 'disabled': !option.enabled }" ng-click="changeTheme(option)">{{ option.name }}</a></li>
             </div>
         </ul>
     </div>

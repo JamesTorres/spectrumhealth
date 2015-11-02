@@ -65,6 +65,21 @@ app.controller('sidebarController', ['$scope', 'storage', function($scope, stora
         $scope.savePreferences();
     };
 
+    $scope.changeFilter = function(option) {
+        // Talk to backend
+        $scope.savePreferences();
+    };
+
+    $scope.changeModel = function(option) {
+        // Talk to backend
+        $scope.savePreferences();
+    };
+
+    $scope.changeTheme = function(option) {
+        // Change themeing somehow...
+        $scope.savePreferences();
+    };
+
     // Saves preferences to localStorage
     $scope.savePreferences = function() {
         storage.setObject('sidebarPreferences', $scope.sidebarPreferences);
@@ -83,5 +98,5 @@ app.controller('sidebarController', ['$scope', 'storage', function($scope, stora
         storage.clear();
     };
 
-    // $scope.loadPreferences();
+    $scope.loadPreferences();
 }]);
