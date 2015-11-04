@@ -6,15 +6,15 @@ How to accommodate the larger scale of the data?
 To-do:
 	Features:
 		1) Implement several views, for respective time frames	
-			a) Yearly view
+			a) Dashboard View
 				- Shows purely graphs and analytics for any number of Urgent Cares
 					- Traffic by Month
 					- Providers by Month
 					- Overlapping of past data
 					- Filterable by Urgent Care
-				- Shows data over the course of one year
+				- Shows data over a selectable time frame
 				- Gives a textual report of the year [STRETCH]
-			b) Monthly view [DEFAULT]
+			b) Calendar View (Month?) [DEFAULT]
 				- Shows a calendar view for a month for a specific Urgent Care
 					- Show a changeable number of days before and after?
 				- Able to overlay (or display beneath) multiple years for comparison [STRETCH]
@@ -28,11 +28,10 @@ To-do:
 				- Clicking a date brings up one of two things:
 					- Graphs for that date
 					- A daily view of that date
-			c) Daily view	
-				- Shows hours in a specific day, with info
-				- Shows one of two things:
-					- Event listings and blocks of time in which there are expected ____
-					- Strictly graphs and charts
+						- Shows hours in a specific day, with info
+						- Shows one of two things:
+							- Event listings and blocks of time in which there are expected ____
+							- Strictly graphs and charts
 		2) Sidebar preferences/settings
 			a) API Selection
 			b) Filters
@@ -40,4 +39,7 @@ To-do:
 			c) Model	
 				- Altering variables in the model
 			d) Theme
+		3) Request caching
+		4) Refactoring
+		5) Live updating of graphs and information
 

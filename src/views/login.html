@@ -1,17 +1,6 @@
-<div class="loginPage" ng-controller="loginController">
-    <div class="header">
-        <h1>{{ title }}</h1>
-
-        <!-- Angular-ui-bootstrap dropdown -->
-        <span class="hamburger" uib-dropdown>
-            <a class="glyphicon glyphicon-menu-hamburger dropdown-toggle" href id="simple-dropdown" uib-dropdown-toggle></a>
-
-            <ul class="uib-dropdown-menu dropdown-menu-right" aria-labelledby="simple-dropdown">
-                <li ng-repeat="item in dropdownItems | filter:lowercase">
-                <a ng-href="#/{{ item | lowercase }}">{{ item }}</a>
-                </li>
-            </ul>
-        </span>
+<div class="loginPage">
+    <div ng-controller="HeaderCtrl">
+        <div header page="login"></div>
     </div>
 
     <div class="loginForm">

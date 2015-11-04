@@ -1,4 +1,6 @@
-app.controller('loginController', ['$scope', '$window', function($scope, $window) {           
+app.controller('LoginCtrl', LoginCtrl);
+
+function LoginCtrl($scope, $window) {           
 	$scope.submitForm = function(isValid) {
 		if (isValid) {
 			$window.location.href = '#/dashboard';
@@ -10,4 +12,4 @@ app.controller('loginController', ['$scope', '$window', function($scope, $window
 	$scope.dropdownItems = [
 		'About'
 	];
-}]);
+}

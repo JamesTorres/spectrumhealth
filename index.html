@@ -23,13 +23,12 @@
         <![endif]-->
     </head>
 
-    <body ng-app="myApp" ng-controller="mainController">
+    <body ng-app="spectrumStatistics">
 
         <div class="view">
             <div ng-view></div> 
         </div>
 
-        <!-- <footer>Copyright &copy; 2015 Spectrum Health. All Rights Reserved.</footer> -->
 
 
 
@@ -43,22 +42,24 @@
         <script src="src/js/app.js"></script>
 
         <!-- Controllers -->
-        <script src="src/js/controllers/aboutController.js"></script>
-        <script src="src/js/controllers/loginController.js"></script>
-        <script src="src/js/controllers/mainController.js"></script>
-        <script src="src/js/controllers/homepageController.js"></script>
-        <script src="src/js/controllers/sidebarController.js"></script>
-        <script src="src/js/controllers/dashboardController.js"></script>
-        <script src="src/js/controllers/calendarController.js"></script>
-            
-        }])
+        <script src="src/js/controllers/about/AboutCtrl.js"></script>
+        <script src="src/js/controllers/login/LoginCtrl.js"></script>
+        <script src="src/js/controllers/homepage/HomepageCtrl.js"></script>
+        <script src="src/js/controllers/homepage/SidebarCtrl.js"></script>
+        <script src="src/js/controllers/homepage/DashboardCtrl.js"></script>
+        <script src="src/js/controllers/homepage/CalendarCtrl.js"></script>
+        <script src="src/js/controllers/homepage/DateRangeCtrl.js"></script>
+        <script src="src/js/controllers/common/HeaderCtrl.js"></script>
 
         <!-- Services -->
-        <script src="src/js/services/queues.js"></script>
-        <script src="src/js/services/storage.js"></script>
+        <script src="src/js/services/requests/spectrumAPI.js"></script>
+        <script src="src/js/services/storage/localStorage.js"></script>
+        <script src="src/js/services/models/dateRange.js"></script>
 
         <!-- Directives -->
-        <script src="src/js/directives/sidebar.js"></script>
+        <script src="src/js/directives/sidebar/sidebar.js"></script>
+        <script src="src/js/directives/footer/footer.js"></script>
+        <script src="src/js/directives/header/header.js"></script>
 
         <!-- Livereload Script -->
         <script src="//localhost:35729/livereload.js"></script>

@@ -1,22 +1,10 @@
-<div class="homepage" ng-controller="homepageController">
-	<!-- <graph></graph> -->
+<div class="homepage">
 
-    <div class="header">
-        <h1>{{ title }}</h1>
-
-        <!-- Angular-ui-bootstrap dropdown -->
-        <span class="hamburger" uib-dropdown>
-            <a class="glyphicon glyphicon-menu-hamburger dropdown-toggle" href id="simple-dropdown" uib-dropdown-toggle></a>
-
-            <ul class="uib-dropdown-menu dropdown-menu-right" aria-labelledby="simple-dropdown">
-                <li ng-repeat="item in dropdownItems | filter:lowercase">
-                <a ng-href="#/{{ item | lowercase }}">{{ item }}</a>
-                </li>
-            </ul>
-        </span>
+    <div ng-controller="HeaderCtrl">
+        <div header page="homepage"></div>
     </div>
 
-    <div ng-controller="sidebarController" class="sidebar" sidebar="state">
+    <div ng-controller="SidebarCtrl" class="sidebar" sidebar="state">
         <a href id="sidebar-toggle" ng-click="toggleState()">{{ icon }}</a>
 
         <ul ng-switch on="selected.name">
@@ -40,17 +28,41 @@
         </ul>
     </div>
 
-    <div class="calendar" ng-controller="calendarController">
-        <div class="calHeader"
-    </div>
+<!--     <div class="dashboard">
+        <div class="date-picker">
+        </div>
 
-    <div class="dashboard" ng-controller="dashboardController">
-        <div class="line-graph">
-            <h3 style="color: white; padding-bottom: .4em;">Patients / Hour</h3>
-            <nvd3 options='options' data='data' class="with-3d-shadow with-transitions"></nvd3>
+        <div class="graphs">
+            <div ng-repeat="">
+            </div>
         </div>
     </div>
-    <div class="dashboard" ng-controller="dashboardController">
+ -->
+    <div class="dashboard" ng-controller="DashboardCtrl">
+        <div class="date-picker" ng-controller="DateRangeCtrl" >
+            <!-- <pre>Selected date is: <em>{{ dt | date:'fullDate' }}</em></pre> -->
+            <div>
+                <p class="input-group">
+                    <input type="date" class="form-control" uib-datepicker-popup ng-model="startDate" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="setRange(startDate)" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
+            </div>
+<!--             <div>
+                <p class="input-group">
+                    <input type="date" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="setRange(endDate)" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
+            </div> -->
+        </div>
+
+<!--         <div class="line-graph">
+            <h3 style="color: white; padding-bottom: .4em;">Patients / Hour</h3>
+            <nvd3 options='options' data='data' class="with-3d-shadow with-transitions"></nvd3>
+        </div> -->
         <div class="line-graph">
             <h3 style="color: white; padding-bottom: .4em;">Providers / Day</h3>
             <nvd3 options='options2' data='data2' class="with-3d-shadow with-transitions"></nvd3>

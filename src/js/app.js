@@ -1,19 +1,24 @@
-var app = angular.module("myApp", ['ngRoute', 'ui.bootstrap', 'nvd3']);
+// Following style guide at: 	https://github.com/mgechev/angularjs-style-guide
+
+var app = angular.module("spectrumStatistics", ['ngRoute', 'ui.bootstrap', 'nvd3']);
 
 app.config(function ($routeProvider) { 
 	$routeProvider 
 		.when('/login', { 
 			// controller: 'loginController', 	// Can specify controller if needed ...
-			templateUrl: 'src/views/login.html' 
+			templateUrl: 'src/views/login.html',
+			controller: 'LoginCtrl'
 		}) 
 		.when('/dashboard', {
-			templateUrl: 'src/views/homepage.html'
+			templateUrl: 'src/views/homepage.html',
+			controller: 'HomepageCtrl'
 		})
 		.when('/about', {
-			templateUrl: 'src/views/about.html'
+			templateUrl: 'src/views/about.html',
+			controller: 'AboutCtrl'
 		})
 		.otherwise({
-			redirectTo: '/login' 
+			redirectTo: '/login'
 		});
 
 	// $locationProvider.html5Mode(true); //Remove the '#' from URL.

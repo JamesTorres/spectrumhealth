@@ -1,4 +1,6 @@
-app.controller('sidebarController', ['$scope', 'storage', function($scope, storage) {
+app.controller('SidebarCtrl', SidebarCtrl);
+
+function SidebarCtrl($scope, localStorage) {
 	/*
 		Sidebar contains preferences:
 			- API's to use
@@ -82,21 +84,21 @@ app.controller('sidebarController', ['$scope', 'storage', function($scope, stora
 
     // Saves preferences to localStorage
     $scope.savePreferences = function() {
-        storage.setObject('sidebarPreferences', $scope.sidebarPreferences);
+        localStorage.setObject('sidebarPreferences', $scope.sidebarPreferences);
     };
 
     // Loads preferences from localStorage (using service "storage")
     $scope.loadPreferences = function(){
         // If we have preferences in localStorage, get them
-        if (storage.getObject('sidebarPreferences')) {
-            $scope.sidebarPreferences = storage.getObject('sidebarPreferences');
-        } 
+        if (localStorage.getObject('sidebarPreferences') !== null) {
+            $scope.sidebarPreferences = localStorage.getObject('sidebarPreferences');
+        }
     };
 
     // Clears any stored data from localStorage
     $scope.clearPreferences = function() {
-        storage.clear();
+        localStorage.clear();
     };
 
     $scope.loadPreferences();
-}]);
+}

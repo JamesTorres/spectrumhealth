@@ -1,4 +1,4 @@
-app.controller('aboutController', ['$scope', function($scope) {           
+app.controller('AboutCtrl', ['$scope', function($scope) {           
 	$scope.title = "Spectrum Statistics";
 
 	$scope.dropdownItems = [
