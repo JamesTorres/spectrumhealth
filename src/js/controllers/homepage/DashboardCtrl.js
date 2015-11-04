@@ -5,16 +5,30 @@ function DashboardCtrl($scope, spectrumAPI, dateRange) {
             {"TotalPatients": 8, "Providers": 9, "WaitingPatients": 9, "SeenPatients": 8}
     */
 
-    $scope.startDate = dateRange.getStartDate();
-    $scope.endDate = dateRange.getEndDate();
+    $scope.dateRange = dateRange;
+    $scope.startDate = $scope.dateRange.getStartDate();
+    $scope.endDate = $scope.dateRange.getEndDate();
 
-    spectrumAPI.getQueues($scope.startDate, $scope.endDate).then(function(data) {
-        $scope.queueData = data;
+    $scope.requestQueues = function() {
+        spectrumAPI.getQueues($scope.startDate, $scope.endDate).then(function(data) {
+            $scope.queueData = data;
 
-        if ($scope.queueData) { 
-            $scope.data = parseQueueData(); 
-            $scope.data2 = parseQueueData(); 
-        }
+            if ($scope.queueData) { 
+                $scope.data = parseQueueData(); 
+                $scope.data2 = parseQueueData(); 
+            }
+        });
+    };
+
+    $scope.$watch('dateRange.getStartDate()', function(newValue) {
+        $scope.startDate = $scope.dateRange.getStartDate();
+        console.log($scope.startDate);
+        $scope.requestQueues();
+    });
+
+    $scope.$watch('dateRange.getEndDate()', function(newValue) {
+        $scope.endDate = $scope.dateRange.getEndDate();
+        $scope.requestQueues();
     });
 
     var parseQueueData = function() {
@@ -113,11 +127,11 @@ function DashboardCtrl($scope, spectrumAPI, dateRange) {
                     transitionDuration: 500,
                     stacked: true,
                     xAxis: {
-                        axisLabel: 'Days',
+                        axisLabel: 'Hour',
                         showMaxMin: false
                     },
                     yAxis: {
-                        axisLabel: 'Y Axis',
+                        axisLabel: 'Providers',
                         axisLabelDistance: 40,
                         tickFormat: function(d){
                             return d3.format(',.1f')(d);

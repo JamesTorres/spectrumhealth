@@ -23,7 +23,7 @@ function DateRangeCtrl($scope, dateRange) {
         $scope.minDate = $scope.minDate ? null : new Date();
     };
 
-    $scope.toggleMin();
+    // $scope.toggleMin();
     $scope.maxDate = new Date(2020, 5, 22);
 
     $scope.open = function($event) {
@@ -35,10 +35,11 @@ function DateRangeCtrl($scope, dateRange) {
         $scope.endDate = new Date(year, month, day);
     };
 
-    $scope.setRange = function(element) {
-        dateRange.setStartDate($scope.startDate);
-        dateRange.setEndDate($scope.endDate);
-        // Refresh?
+    $scope.setStartDate = function(start) {
+        dateRange.setStartDate(start);
+    };
+    $scope.setEndDate = function(end) {
+        dateRange.setEndDate(end);
     };
 
     $scope.dateOptions = {

@@ -36,6 +36,6 @@ app.service('spectrumAPI', ['$http', function($http, $q) {
 	}
 
 	function handleError(response) {
-		throw "Spectrum API request failed. Perhaps you passed an incorrect date, or don't have the correct permissions?";
+		throw "Spectrum API request failed. Perhaps you passed an incorrect date, didn't set a CORS header, or don't have the correct permissions?";
 	}
 }]);		
