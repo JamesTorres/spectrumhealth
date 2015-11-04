@@ -7,6 +7,6 @@ function CalendarCtrl($scope, spectrumAPI) {
 	$scope.dropdownItems = [
 		'About',
 		'Logout',
-		'CalendarZZZ'
+		'Calendar'
 	];
 }
