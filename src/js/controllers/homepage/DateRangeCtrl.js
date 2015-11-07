@@ -1,15 +1,8 @@
 app.controller('DateRangeCtrl', DateRangeCtrl);
 
-function DateRangeCtrl($scope, dateRange) {
+function DateRangeCtrl($scope, DateRange) {
 
-    $scope.today = function() {
-        $scope.startDate = new Date();
-        $scope.endDate = new Date();
-    };
-
-    $scope.today();
-
-    $scope.clear = function () {
+    $scope.clearDates = function () {
         $scope.startDate = null;
         $scope.endDate = null;
     };
@@ -30,17 +23,20 @@ function DateRangeCtrl($scope, dateRange) {
         $scope.status.opened = true;
     };
 
-    $scope.setDate = function(year, month, day) {
-        $scope.startDate = new Date(year, month, day);
-        $scope.endDate = new Date(year, month, day);
+    $scope.setStartDate = function(start) {
+        DateRange.setStartDate(start);
     };
 
-    $scope.setStartDate = function(start) {
-        dateRange.setStartDate(start);
-    };
     $scope.setEndDate = function(end) {
-        dateRange.setEndDate(end);
+        DateRange.setEndDate(end);
     };
+
+    var getDates = function() {
+        $scope.startDate = DateRange.getStartDate();
+        $scope.endDate = DateRange.getEndDate();
+    };
+
+    getDates();
 
     $scope.dateOptions = {
         formatYear: 'yy',
@@ -53,20 +49,6 @@ function DateRangeCtrl($scope, dateRange) {
     $scope.status = {
         opened: false
     };
-
-    var tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    var afterTomorrow = new Date();
-    afterTomorrow.setDate(tomorrow.getDate() + 2);
-    
-    $scope.events = [
-    {
-        date: tomorrow,
-        status: 'full'
-    },{
-        date: afterTomorrow,
-        status: 'partially'
-    }];
 
     $scope.getDayClass = function(date, mode) {
         if (mode === 'day') {

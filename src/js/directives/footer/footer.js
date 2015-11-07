@@ -1,4 +1,4 @@
-app.directive('shsFooter', function() {
+app.directive('footer', function() {
 	return {
 		restrict: 'A',
 		replace: true,

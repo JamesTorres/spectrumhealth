@@ -1,45 +1,38 @@
 app.controller('DashboardCtrl', DashboardCtrl);
 
-function DashboardCtrl($scope, spectrumAPI, dateRange) {
+function DashboardCtrl($scope, queueFactory, DateRange, Queue) {
     /* Retrieves objects of the form:     
             {"TotalPatients": 8, "Providers": 9, "WaitingPatients": 9, "SeenPatients": 8}
     */
 
-    $scope.dateRange = dateRange;
-    $scope.startDate = $scope.dateRange.getStartDate();
-    $scope.endDate = $scope.dateRange.getEndDate();
+    var getDateRange = function() {
+        $scope.startDate = DateRange.getStartDate();
+        $scope.endDate = DateRange.getEndDate();
+    };
 
-    $scope.requestQueues = function() {
-        spectrumAPI.getQueues($scope.startDate, $scope.endDate).then(function(data) {
-            $scope.queueData = data;
+    var getQueueData = function() {
+        
+    };
 
-            if ($scope.queueData) { 
-                $scope.data = parseQueueData(); 
-                $scope.data2 = parseQueueData(); 
-            }
+    var requestQueues = function(start, end) {
+        queueFactory.getQueues(start, end)
+            .then(function(data) {
+                $scope.data = parseQueueData(data); 
+                $scope.data2 = parseQueueData(data); 
+            }, function(error) {
+                // Promise rejected
         });
     };
 
-    $scope.$watch('dateRange.getStartDate()', function(newValue) {
-        $scope.startDate = $scope.dateRange.getStartDate();
-        console.log($scope.startDate);
-        $scope.requestQueues();
-    });
-
-    $scope.$watch('dateRange.getEndDate()', function(newValue) {
-        $scope.endDate = $scope.dateRange.getEndDate();
-        $scope.requestQueues();
-    });
-
-    var parseQueueData = function() {
+    var parseQueueData = function(data) {
         var alpine = [], 
             broadmoor = [];
 
-        if ($scope.queueData != null) {
+        if (typeof data === 'object' && data[0]) {
             var d1Daycount = 0;
             var d2Daycount = 0;
 
-            $scope.queueData.forEach(function(element) {
+            data.forEach(function(element) {
                 switch (element.Department) {
                     case "ExampleDepartment":
                         alpine.push({x: (element.Hour + d1Daycount*24) + 1, y: element.TotalPatients});
@@ -53,8 +46,6 @@ function DashboardCtrl($scope, spectrumAPI, dateRange) {
                         break;
                 }
             });
-
-            console.log(alpine);
 
             return [
                 {
@@ -72,6 +63,62 @@ function DashboardCtrl($scope, spectrumAPI, dateRange) {
 
         return [];
     };
+
+    var createWatchers = function() {
+
+        $scope.$watch('DateRange.getStartDate()', function(newVal, oldVal) {
+            if (newVal !== oldVal) {
+                $scope.startDate = DateRange.getStartDate();
+                console.log($scope.startDate);
+                $scope.requestQueues($scope.startDate, $scope.endDate);
+            }
+        });
+
+        $scope.$watch('DateRange.getEndDate()', function(newVal, oldVal) {
+            if (newVal !== oldVal) {
+                $scope.endDate = DateRange.getEndDate();
+                console.log($scope.endDate);
+                $scope.requestQueues($scope.startDate, $scope.endDate);
+            }
+        });
+    };
+
+    var run = function() {
+
+        getDateRange();
+        requestQueues($scope.startDate, $scope.endDate);
+        createWatchers();
+
+        // Graph options
+        $scope.options2 = {
+                    chart: {
+                        type: 'multiBarChart',
+                        clipEdge: true,
+                        staggerLabels: false,
+                        transitionDuration: 500,
+                        stacked: true,
+                        xAxis: {
+                            axisLabel: 'Hour',
+                            showMaxMin: false
+                        },
+                        yAxis: {
+                            axisLabel: 'Providers',
+                            axisLabelDistance: 40,
+                            tickFormat: function(d){
+                                return d3.format(',.1f')(d);
+                            },
+                            showMaxMin: false
+                        }
+                    }
+                };
+
+        parseQueueData({});
+    };
+
+    run();
+
+
+
 
     // Graph options
     // $scope.options = {
@@ -111,35 +158,7 @@ function DashboardCtrl($scope, spectrumAPI, dateRange) {
     //         };
 
 
-    // Graph options
-    $scope.options2 = {
-                chart: {
-                    type: 'multiBarChart',
-                    // height: 450,
-                    // margin : {
-                    //     top: 20,
-                    //     right: 20,
-                    //     bottom: 60,
-                    //     left: 45
-                    // },
-                    clipEdge: true,
-                    staggerLabels: false,
-                    transitionDuration: 500,
-                    stacked: true,
-                    xAxis: {
-                        axisLabel: 'Hour',
-                        showMaxMin: false
-                    },
-                    yAxis: {
-                        axisLabel: 'Providers',
-                        axisLabelDistance: 40,
-                        tickFormat: function(d){
-                            return d3.format(',.1f')(d);
-                        },
-                        showMaxMin: false
-                    }
-                }
-            };
+
 
 }
 
