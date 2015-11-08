@@ -20,12 +20,8 @@ function DateRangeCtrl($scope, DateRange) {
         $scope.status.opened = true;
     };
 
-    $scope.setStartDate = function(start) {
-        DateRange.sendStartDate(start);
-    };
-
-    $scope.setEndDate = function(end) {
-        DateRange.sendEndDate(end);
+    $scope.setDateRange = function(start, end) {
+        DateRange.sendDateRange(start, end);
     };
 
     var getDates = function() {

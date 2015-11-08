@@ -12,13 +12,10 @@ app.factory('DateRange', function($rootScope) {
 	dateRange.getStartDate = function() { return this.startDate; };
 	dateRange.getEndDate = function() { return this.endDate; };
 
-	dateRange.sendStartDate = function(start) {
+	dateRange.sendDateRange = function(start, end) {
 		this.startDate = start;
-		$rootScope.$broadcast('start_date_changed');
-	};
-	dateRange.sendEndDate = function(end) {
 		this.endDate = end;
-		$rootScope.$broadcast('end_date_changed');
+		$rootScope.$broadcast('date_range_changed');
 	};
 
 	return dateRange;

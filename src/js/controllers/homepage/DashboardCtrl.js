@@ -21,14 +21,10 @@ function DashboardCtrl($scope, backendAPI, DateRange, Queues) {
 
     var createWatchers = function() {
         // Detects broadcast messages from the service. The service broadcasts these message through $rootScope
-        $scope.$on('start_date_changed', function() {
+        $scope.$on('date_range_changed', function() {
             $scope.startDate = DateRange.getStartDate();
-            console.log("Start date changed: ",$scope.startDate);
-            getQueueData();
-        });
-        $scope.$on('end_date_changed', function() {
             $scope.endDate = DateRange.getEndDate();
-            console.log("End date changed: ",$scope.endDate);
+            console.log("Date range changed: ", $scope.startDate, '-', $scope.endDate);
             getQueueData();
         });
     };

@@ -4,7 +4,7 @@ function GraphCtrl($scope, Queues) {
 
     $scope.bar = {
         title: "Providers / Hour",
-        data: Queues.fakeData(),
+        data: Queues.barChartForm(),
         options: {
             chart: {
                 type: 'multiBarChart',
@@ -32,37 +32,8 @@ function GraphCtrl($scope, Queues) {
     };
 
     $scope.pie = {
-        title: "Test / You",
-        data: [
-            {
-                key: "One",
-                y: 5
-            },
-            {
-                key: "Two",
-                y: 2
-            },
-            {
-                key: "Three",
-                y: 9
-            },
-            {
-                key: "Four",
-                y: 7
-            },
-            {
-                key: "Five",
-                y: 4
-            },
-            {
-                key: "Six",
-                y: 3
-            },
-            {
-                key: "Seven",
-                y: 0.5
-            }
-        ],
+        title: "Total Patients For Date X",
+        data: Queues.pieChartForm(),
         options: {
             chart: {
                 type: 'pieChart',
@@ -137,7 +108,7 @@ function GraphCtrl($scope, Queues) {
                     axisLabelDistance: 30
                 },
                 callback: function(chart){
-                    console.log("!!! lineChart callback !!!");
+                    // ??
                 }
             }
         }
@@ -145,7 +116,8 @@ function GraphCtrl($scope, Queues) {
 
     $scope.$on('api_data_changed', function() {
         $scope.bar.data = Queues.barChartForm();
-        $scope.api.update();
+        $scope.pie.data = Queues.pieChartForm();
+        // $scope.api.update();
         // TODO - add calls for other graphs
         console.log("API Data Changed: ", $scope.bar.data);
     });

@@ -77,6 +77,31 @@ app.factory('Queues', function(Queue, $rootScope) {
         return [];
 	};
 
+    queues.pieChartForm = function() {
+        var ret = [];
+
+        if (typeof this.apiData === 'object' && this.apiData != null && this.apiData[0]) { 
+            console.log(this.apiData[0]);
+            var dataPoint = this.apiData[0];
+
+            ret = [{
+                key: "TotalPatients",
+                y: dataPoint.TotalPatients
+            }, {
+                key: "Providers",
+                y: dataPoint.Providers
+            }, {
+                key: "SeenPatients",
+                y: dataPoint.SeenPatients
+            }, {
+                key: "WaitingPatients",
+                y: dataPoint.WaitingPatients
+            }];
+        }
+
+        return ret;
+    };
+
     /*Random Data Generator */
     queues.sinAndCos = function() {
         var sin = [],sin2 = [],

@@ -32,23 +32,12 @@
         <div class="date-picker" ng-controller="DateRangeCtrl" >
             <div class="row">
                 <div class="col-xs-6">
-                    <p class="input-group">
-                        <input type="date" class="form-control" uib-datepicker-popup ng-model="startDate" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="setStartDate(startDate)" />
-                        <!-- <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span> -->
-                        <uib-timepicker ng-model="startDate" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-change="setStartDate(startDate)"></uib-timepicker>
-                    </p>
+                    <datetimepicker min-date="minDate" hour-step="hstep" minute-step="mstep" ng-model="startDate" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-date="false" show-spinners="true" readonly-time="false"></datetimepicker>
                 </div>
                 <div class="col-xs-6">
-                    <p class="input-group">
-                        <input type="date" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="setEndDate(endDate)" />
-                        <!-- <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span> -->
-                        <uib-timepicker ng-model="endDate" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-change="setEndDate(endDate)"></uib-timepicker>
-                    </p>
+                    <datetimepicker min-date="minDate" hour-step="hstep" minute-step="mstep" ng-model="endDate" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-date="false" show-spinners="true" readonly-time="false"></datetimepicker>
                 </div>
+                <button class="btn btn-default" type="submit" ng-click="setDateRange(startDate, endDate)">Query</button>
             </div>
         </div>
 

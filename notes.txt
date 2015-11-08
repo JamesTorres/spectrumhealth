@@ -60,3 +60,16 @@ To-do:
 // }, function (newValue) {
 //     alert("isLoggedIn changed to " + newValue);
 // });
+
+
+
+
+// Angular UI Bootstrap Datepicker & Timepicker
+
+<!--                     <div class="input-group">
+                        <input type="date" class="form-control" uib-datepicker-popup ng-model="startDate" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="setStartDate(startDate)" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                        <uib-timepicker ng-model="startDate" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-change="setStartDate(startDate)"></uib-timepicker>
+                    </div> -->
