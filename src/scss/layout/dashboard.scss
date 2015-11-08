@@ -1,26 +1,32 @@
+$block-height: 500px;
+$header-height: 50px;
 
-.dashboard {
-	background-color: $dark;
-	height: 500px;
-	width: 800px;			// change
-	margin-top: 5%;
-	display: inline-block;
+.col-xs-12, .col-md-8, .col-md-4, .col-md-12 {
+	margin-top: 2em;
 }
 
-.line-graph {
-	background-color: $dark;
-	width: auto;
-	height: 480px;
+.dash-block {
 
-	svg {
-		background-color: white;
-		display: block;
-		margin: auto;
+	height: $block-height;
+
+	h3 {
+		background-color: $dark;
+		color: $light;
+		padding: 10px 0;
+		height: $header-height;
+		margin: 0;
 	}
-}
+
+	.graph {
+		background-color: $light;
+		width: auto;
+		height: $block-height - $header-height;
+	}
+} 
 
 .date-picker {
 	display: inline-block;
 	position: relative;
-	background-color: none;
+	background-color: pink;
+	width: 50%;
 }

@@ -28,63 +28,38 @@
         </ul>
     </div>
 
-<!--     <div class="dashboard">
-        <div class="date-picker">
-        </div>
-
-        <div class="graphs">
-            <div ng-repeat="">
-            </div>
-        </div>
-    </div>
- -->
     <div class="dashboard" ng-controller="DashboardCtrl">
         <div class="date-picker" ng-controller="DateRangeCtrl" >
-            <!-- <pre>Selected date is: <em>{{ dt | date:'fullDate' }}</em></pre> -->
             <div class="row">
                 <div class="col-xs-6">
                     <p class="input-group">
                         <input type="date" class="form-control" uib-datepicker-popup ng-model="startDate" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="setStartDate(startDate)" />
-                        <span class="input-group-btn">
+                        <!-- <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+                        </span> -->
+                        <uib-timepicker ng-model="startDate" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-change="setStartDate(startDate)"></uib-timepicker>
                     </p>
                 </div>
                 <div class="col-xs-6">
                     <p class="input-group">
                         <input type="date" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="setEndDate(endDate)" />
-                        <span class="input-group-btn">
+                        <!-- <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+                        </span> -->
+                        <uib-timepicker ng-model="endDate" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-change="setEndDate(endDate)"></uib-timepicker>
                     </p>
                 </div>
             </div>
-<!--             <div>
-                <p class="input-group">
-                    <input type="date" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="setRange(endDate)" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </p>
-            </div> -->
         </div>
 
-<!--         <div class="line-graph">
-            <h3 style="color: white; padding-bottom: .4em;">Patients / Hour</h3>
-            <nvd3 options='options' data='data' class="with-3d-shadow with-transitions"></nvd3>
-        </div> -->
-        <div class="line-graph">
-            <h3 style="color: white; padding-bottom: .4em;">Providers / Hour</h3>
-            <nvd3 options='options2' data='data2' class="with-3d-shadow with-transitions"></nvd3>
+        <div class="container" ng-controller="GraphCtrl">
+            <div class="row">
+                <div class="col-xs-12 col-md-8"><div sh-graph graph="bar"></div></div>
+                <div class="col-xs-12 col-md-4"><div sh-graph graph="pie"></div></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-12"><div sh-graph graph="line"></div></div>
+            </div>
         </div>
-    </div>
-<!-- 		<div line-graph>
-			<div class="container">
-				<div line-graph class="jumbotron">
-					<svg id="visualisation" width="1000" height="500"></svg>
-				</div>
-			</div>
-		</div> -->
-
 	</div>
 </div>

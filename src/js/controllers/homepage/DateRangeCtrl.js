@@ -2,33 +2,30 @@ app.controller('DateRangeCtrl', DateRangeCtrl);
 
 function DateRangeCtrl($scope, DateRange) {
 
+    // Angular UI Datepicker
+
     $scope.clearDates = function () {
         $scope.startDate = null;
         $scope.endDate = null;
     };
 
-    // Disable weekend selection
-    $scope.disabled = function(date, mode) {
-        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-    };
-
-    $scope.toggleMin = function() {
-        $scope.minDate = $scope.minDate ? null : new Date();
-    };
-
-    // $scope.toggleMin();
     $scope.maxDate = new Date(2020, 5, 22);
+    $scope.minDate = new Date(2015, 1, 1);
+
+    $scope.hstep = 1;
+    $scope.mstep = 15;
+    $scope.ismeridian = true;
 
     $scope.open = function($event) {
         $scope.status.opened = true;
     };
 
     $scope.setStartDate = function(start) {
-        DateRange.setStartDate(start);
+        DateRange.sendStartDate(start);
     };
 
     $scope.setEndDate = function(end) {
-        DateRange.setEndDate(end);
+        DateRange.sendEndDate(end);
     };
 
     var getDates = function() {

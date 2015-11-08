@@ -1,19 +1,25 @@
 /*
 	Model representing the selected date range for the dashboard view, and other things
 */
-app.factory('DateRange', function() {
+app.factory('DateRange', function($rootScope) {
 
-	// Private variables
-	var startDate = new Date();
-	var endDate = new Date();
+	var dateRange = {};
 
-	// Set the default day span to be three days
-	endDate.setDate(startDate.getDate() + 3);
+	dateRange.startDate = new Date();
+	dateRange.endDate = new Date();
+	dateRange.endDate.setDate(dateRange.startDate.getDate() + 3);
 
-	return {
-		getStartDate: function() { return startDate; }, 
-		getEndDate: function() { return endDate; },
-		setStartDate: function(date) { startDate = date; },
-		setEndDate: function(date) { endDate = date; }
+	dateRange.getStartDate = function() { return this.startDate; };
+	dateRange.getEndDate = function() { return this.endDate; };
+
+	dateRange.sendStartDate = function(start) {
+		this.startDate = start;
+		$rootScope.$broadcast('start_date_changed');
 	};
+	dateRange.sendEndDate = function(end) {
+		this.endDate = end;
+		$rootScope.$broadcast('end_date_changed');
+	};
+
+	return dateRange;
 });

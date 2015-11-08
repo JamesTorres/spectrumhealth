@@ -43,3 +43,20 @@ To-do:
 		4) Refactoring
 		5) Live updating of graphs and information
 
+
+
+
+// var dataPoint = {};
+// for (var property in element) {
+// 	if (property != "_id" && property != "Department") { dataPoint[property] = element[property]; }
+// }
+
+
+
+// Watcher methods?
+
+// $scope.$watch(function(){
+//     return DateRange.getStartDate();
+// }, function (newValue) {
+//     alert("isLoggedIn changed to " + newValue);
+// });
