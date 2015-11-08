@@ -5,7 +5,7 @@
 
 	Test url: 		http://jsonplaceholder.typicode.com/posts/1
 	Heroku (old): 	https://peaceful-coast-3278.herokuapp.com/
-	Azure (new): 	http://patientservicedeliveryplanning2068.azurewebsites.net/api/data
+	Azure (new): 	http://patientservicedeliveryplanning.azurewebsites.net/api/data
 	Ngrok: 			https://e5a356dc.ngrok.io/api/data
 	NgrokNew: 		https://2c926ff3.ngrok.io/api/data
 */
@@ -14,6 +14,7 @@ app.service('backendAPI', function($http, $q) {
 	this.getQueues = function(startDate, endDate) {
 
 		var urlBase = "https://2c926ff3.ngrok.io/api/data";
+		var urgentCare = "Spectrum Health Alpine Urgent Care";
 
 		var request = $http({
 			method: 'GET',
@@ -26,7 +27,8 @@ app.service('backendAPI', function($http, $q) {
 				"m2": endDate.getMonth(),
 				"y2": endDate.getFullYear(),
 				"d2": endDate.getDate(),
-				"h2": endDate.getHours()
+				"h2": endDate.getHours(),
+				"dept": urgentCare
 			}
 		});
 
@@ -34,7 +36,7 @@ app.service('backendAPI', function($http, $q) {
 		return request.then(function(response) {
 
 				if (typeof response.data === 'object') {
-					console.log("API returned an object.");
+					console.log("API returned an object.", response.data);
 					return response.data;
 				}
 				console.log("The response came back with something other than an object. Perhaps the API is returning the wrong data type?");

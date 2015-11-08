@@ -1,3 +1,5 @@
+$header-height: 7em;
+
 @import '../theme/clean-cut.scss';
 @import '../layout/header.scss';
 @import '../layout/form.scss';
@@ -15,22 +17,15 @@ html {
 	cursor: pointer; 
 }
 
-// path { 
-//     stroke: steelblue;
-//     stroke-width: 2;
-//     fill: none;
-// }
-
-// .axis path,
-// .axis line {
-//     fill: none;
-//     stroke: grey;
-//     stroke-width: 1;
-//     shape-rendering: crispEdges;
-// }
-
 .homepage, .about {
     text-align: center;
+    padding-top: $header-height;
+}
+
+.display-toggle {
+    top: -.25em;
+    position: relative;
+    z-index: 0;
 }
 
 .view {
@@ -44,3 +39,20 @@ html {
     width: 100vw;
     position: relative;
 }
+
+
+
+
+// path { 
+//     stroke: steelblue;
+//     stroke-width: 2;
+//     fill: none;
+// }
+
+// .axis path,
+// .axis line {
+//     fill: none;
+//     stroke: grey;
+//     stroke-width: 1;
+//     shape-rendering: crispEdges;
+// }

@@ -1,6 +1,6 @@
 // Following style guide at: 	https://github.com/mgechev/angularjs-style-guide
 
-var app = angular.module("spectrumStatistics", ['ngRoute', 'ui.bootstrap', 'nvd3']);
+var app = angular.module("spectrumStatistics", ['ngRoute', 'ui.bootstrap', 'nvd3', 'ngFitText']);
 
 app.config(function ($routeProvider) { 
 	$routeProvider 
@@ -9,7 +9,7 @@ app.config(function ($routeProvider) {
 			templateUrl: 'src/views/login.html',
 			controller: 'LoginCtrl'
 		}) 
-		.when('/dashboard', {
+		.when('/homepage', {
 			templateUrl: 'src/views/homepage.html',
 			controller: 'HomepageCtrl'
 		})

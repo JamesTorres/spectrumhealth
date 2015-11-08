@@ -1,8 +1,34 @@
 $block-height: 500px;
-$header-height: 50px;
+$block-header-height: 50px;
 
 .col-xs-12, .col-md-8, .col-md-4, .col-md-12 {
 	margin-top: 2em;
+}
+
+.date-picker {
+	margin-top: 2em;
+	display: inline-block;
+	position: relative;
+	width: 30%;
+
+	.row {
+		position: relative;
+		z-index: 1;
+
+		.left-dp {
+			float: right;
+		}
+
+		.right-dp {
+			float: left;
+		}
+	}
+	.queryBtn {
+		top: -.25em;
+		width: 100px;
+		position: relative;
+		z-index: 0;
+	}
 }
 
 .dash-block {
@@ -10,28 +36,13 @@ $header-height: 50px;
 	height: $block-height;
 
 	h3 {
-		background-color: $dark;
-		color: $light;
 		padding: 10px 0;
-		height: $header-height;
+		height: $block-header-height;
 		margin: 0;
 	}
 
 	.graph {
-		background-color: $light;
 		width: auto;
-		height: $block-height - $header-height;
+		height: $block-height - $block-header-height;
 	}
 } 
-
-.date-picker {
-	margin-top: 2em;
-	display: inline-block;
-	position: relative;
-	// background-color: pink;
-	width: 40%;
-
-	button {
-		width: 100px;
-	}
-}

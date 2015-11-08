@@ -16,9 +16,6 @@ function GraphCtrl($scope, Queues) {
                     axisLabel: 'Hour',
                     showMaxMin: false
                 },
-                lines: { //options for basic line model; main chart
-                    forceX: 30
-                },
                 yAxis: {
                     axisLabel: 'Providers',
                     axisLabelDistance: 40,
@@ -32,8 +29,8 @@ function GraphCtrl($scope, Queues) {
     };
 
     $scope.pie = {
-        title: "Total Patients For Date X",
-        data: Queues.pieChartForm(),
+        title: "Current Information" ,
+        data: Queues.pieChartForm(new Date()),
         options: {
             chart: {
                 type: 'pieChart',
@@ -116,7 +113,7 @@ function GraphCtrl($scope, Queues) {
 
     $scope.$on('api_data_changed', function() {
         $scope.bar.data = Queues.barChartForm();
-        $scope.pie.data = Queues.pieChartForm();
+        $scope.pie.data = Queues.pieChartForm(new Date());
         // $scope.api.update();
         // TODO - add calls for other graphs
         console.log("API Data Changed: ", $scope.bar.data);

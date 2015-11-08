@@ -1,11 +1,14 @@
 @import url(https://fonts.googleapis.com/css?family=Lato);
 @import url(https://fonts.googleapis.com/css?family=Poiret+One);
 
-$primary: #5ca4a9; 		//rgba(92, 164, 169, 100)
+$primary: #247BA0; 		//rgba(92, 164, 169, 100)		OR		5ca4a9 (LIGHTBLUE)
 $secondary: #888; 		//Grey							OR 		9bc1bc (LIGHTBLUE)
 $complement: #ed6a5a; 	//rgba(237, 106, 90, 100)    	OR    	ed6a5a (RED)
-$dark: #444545; 		//rgba(244, 241, 187, 100)
-$light: #fff; 			//rgba(230, 235, 224, 100)
+$dark: #444545; 		//rgba(230, 235, 224, 100)
+$light: #fff; 			
+
+$hoverColor: #238BA0;
+
 
 $pageShadowColor: #000;
 $green: #388659;
@@ -18,25 +21,21 @@ body {
 
 .header {
 
-	background-color: $light;
+	background-color: $dark;
 	padding-bottom: 1em;
+	// border-bottom: .3em solid $primary;
 
 	> h1 {
 		font-family: 'Poiret One', sans-serif;
-		font-size: 4em;
-		font-weight: 700;
+		// font-size: 4em;
+		// font-weight: 700;
 		letter-spacing: .25em;
-		color: $dark;
-
-		&:hover {
-			cursor: pointer;
-			opacity: 0.8;
-		}
+		color: $light;
 	}
 
 	.hamburger {		
 		.glyphicon {
-			color: $dark;
+			color: $light;
 			text-decoration: none;
 
 			&:hover {
@@ -47,11 +46,11 @@ body {
 	}
 
 	.uib-dropdown-menu {
-		background-color: $dark;
+		background-color: $light;
 
 		a {
 			text-align: center;
-			color: $light;
+			color: $dark;
 
 			&:hover {
 				background-color: $secondary;
@@ -94,6 +93,12 @@ body {
 	    background-color: $primary;
 	    color: $light;
 	    text-decoration: none;
+	    border: 1px solid $dark;
+	    // border-radius: 4px;
+
+	    &:hover {
+	    	background-color: $secondary;
+	    }
 	}
 
 	ul {
@@ -133,4 +138,73 @@ body {
 			letter-spacing: .15em;
 		}
 	}
+}
+
+.display-toggle {
+
+    .btn-primary {
+        color: rgba(255, 255, 255, .85);
+        background-color: $secondary;
+        border-color: $dark;
+
+        &:hover {
+        	background-color: $secondary;
+        }
+    }
+
+    .active {
+        background-color: $primary;
+        color: $light;
+
+        &:hover {
+        	background-color: $primary;
+        }
+    }
+}
+
+.dashboard {
+	.dash-block {
+		h3 {
+			background-color: $dark;
+			color: $light;
+		}
+	}
+
+	.graph { 
+		background-color: $light;
+	}
+
+	.date-picker {
+		.row {
+			.col-xs-6 {
+				// background-color: $light;
+
+				.left-dp, .right-dp {
+					input {
+						background-color: $light;
+						color: $dark;
+					}
+
+					a {
+						color: $primary;
+
+						&:hover {
+							color: $hoverColor;
+						}
+					}
+				}
+			}
+		}
+
+		.queryBtn {
+			background-color: $dark;
+			color: $light;
+			border-color: $dark;
+
+			&:hover {
+				background-color: $secondary;
+			}
+		}
+	}
+
 }

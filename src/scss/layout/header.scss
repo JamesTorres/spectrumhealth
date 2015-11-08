@@ -1,17 +1,20 @@
 $hamburgerSize: 3.5em;
 
 .header {
-	width: auto;
-	height: 10%;
+	width: 100%;
+	height: $header-height;
 	text-align: center;
-	padding-top: 1em;
+	position: fixed;
+	z-index: 2;
+	padding: 1em;
 
 	h1 { 
 		margin: 0 auto;
 		position: relative;
 		display: inline-block;
-		text-align: center;
+		// text-align: center;
 		padding-top: .08em;
+		white-space: nowrap;
 	}
 
 	.hamburger {
@@ -31,5 +34,16 @@ $hamburgerSize: 3.5em;
 	    padding: 0;
 	    border-radius: 0;
 	    margin-right: 2em;
+	}
+}
+
+$mobile-breakpoint: 730px;
+@media (max-width: $mobile-breakpoint) {
+	.header {
+		// TODO
+
+		.hamburger {
+			// TODO
+		}
 	}
 }

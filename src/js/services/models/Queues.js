@@ -77,26 +77,34 @@ app.factory('Queues', function(Queue, $rootScope) {
         return [];
 	};
 
-    queues.pieChartForm = function() {
+    queues.pieChartForm = function(date) {
         var ret = [];
 
         if (typeof this.apiData === 'object' && this.apiData != null && this.apiData[0]) { 
-            console.log(this.apiData[0]);
-            var dataPoint = this.apiData[0];
+            this.apiData.forEach(function(element) {
+                if (element.Hour == date.getHours() && element.Day == date.getDate() && element.Month == date.getMonth() && element.Year == date.getFullYear()) { 
+                    var dataPoint = element;
 
-            ret = [{
-                key: "TotalPatients",
-                y: dataPoint.TotalPatients
-            }, {
-                key: "Providers",
-                y: dataPoint.Providers
-            }, {
-                key: "SeenPatients",
-                y: dataPoint.SeenPatients
-            }, {
-                key: "WaitingPatients",
-                y: dataPoint.WaitingPatients
-            }];
+                    ret = [
+                    {
+                        key: "TotalPatients",
+                        y: dataPoint.TotalPatients
+                    }, 
+                    {
+                        key: "Providers",
+                        y: dataPoint.Providers
+                    }, 
+                    {
+                        key: "SeenPatients",
+                        y: dataPoint.SeenPatients
+                    }, 
+                    {
+                        key: "WaitingPatients",
+                        y: dataPoint.WaitingPatients
+                    }
+                    ];
+                }
+            });
         }
 
         return ret;

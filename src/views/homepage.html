@@ -1,8 +1,9 @@
-<div class="homepage">
 
-    <div ng-controller="HeaderCtrl">
-        <div header page="homepage"></div>
-    </div>
+<div ng-controller="HeaderCtrl">
+    <div header page="homepage"></div>
+</div>
+
+<div class="homepage">
 
     <div ng-controller="SidebarCtrl" class="sidebar" sidebar="state">
         <a href id="sidebar-toggle" ng-click="toggleState()">{{ icon }}</a>
@@ -28,27 +29,39 @@
         </ul>
     </div>
 
-    <div class="dashboard" ng-controller="DashboardCtrl">
-        <div class="date-picker" ng-controller="DateRangeCtrl" >
-            <div class="row">
-                <div class="col-xs-6">
-                    <datetimepicker min-date="minDate" hour-step="hstep" minute-step="mstep" ng-model="startDate" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-date="false" show-spinners="true" readonly-time="false"></datetimepicker>
-                </div>
-                <div class="col-xs-6">
-                    <datetimepicker min-date="minDate" hour-step="hstep" minute-step="mstep" ng-model="endDate" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-date="false" show-spinners="true" readonly-time="false"></datetimepicker>
-                </div>
-                <button class="btn btn-default" type="submit" ng-click="setDateRange(startDate, endDate)">Query</button>
-            </div>
+    <div class="display-toggle">
+        <div class="btn-group">
+            <label class="btn btn-primary" ng-model="view" uib-btn-radio="'Calendar'">Calendar</label>
+            <label class="btn btn-primary" ng-model="view" uib-btn-radio="'Dashboard'">Dashboard</label>
         </div>
+    </div>
 
-        <div class="container" ng-controller="GraphCtrl">
-            <div class="row">
-                <div class="col-xs-12 col-md-8"><div sh-graph graph="bar"></div></div>
-                <div class="col-xs-12 col-md-4"><div sh-graph graph="pie"></div></div>
+    <div ng-switch on="view">
+        <div ng-switch-when="Dashboard" class="dashboard" ng-controller="DashboardCtrl">
+            <div class="date-picker" ng-controller="DateRangeCtrl" >
+                <div class="row">
+                    <div class="col-xs-6">
+                        <datetimepicker class="left-dp" min-date="minDate" hour-step="hstep" minute-step="mstep" ng-model="startDate" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-date="false" show-spinners="true" readonly-time="false"></datetimepicker>
+                    </div>
+                    <div class="col-xs-6">
+                        <datetimepicker class="right-dp" min-date="minDate" hour-step="hstep" minute-step="mstep" ng-model="endDate" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-date="false" show-spinners="true" readonly-time="false"></datetimepicker>
+                    </div>
+                </div>
+                <button class="queryBtn btn btn-default" type="submit" ng-click="setDateRange(startDate, endDate)">Query</button>
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-md-12"><div sh-graph graph="line"></div></div>
+
+            <div class="container" ng-controller="GraphCtrl">
+                <div class="row">
+                    <div class="col-xs-12 col-md-8"><div sh-graph graph="bar"></div></div>
+                    <div class="col-xs-12 col-md-4"><div sh-graph graph="pie"></div></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12"><div sh-graph graph="line"></div></div>
+                </div>
             </div>
+    	</div>
+        <div ng-switch-when="Calendar" class="calendar" ng-controller="CalendarCtrl">
+
         </div>
-	</div>
+    </div>
 </div>
