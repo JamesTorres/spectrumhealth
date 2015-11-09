@@ -1,49 +1,63 @@
 $hamburgerSize: 3.5em;
 
-.header {
-	width: 100%;
-	height: $header-height;
-	text-align: center;
-	position: fixed;
-	z-index: 2;
-	padding: 1em;
+.sh-header, .navbar-fixed-top {
+	height: $header-height;				// Defined in default.scss
+	padding: 0;
+	margin: 0;
+	border-bottom: none;
 
-	h1 { 
-		margin: 0 auto;
-		position: relative;
-		display: inline-block;
-		// text-align: center;
-		padding-top: .08em;
-		white-space: nowrap;
-	}
+	.container {
+		height: 100%;
 
-	.hamburger {
-		position: absolute;
-		// display: inline-block;
-		z-index: 3;
-		float: right;
-		margin: .95em 0 0 7em;
+		.navbar-header {
+			height: inherit;
+			padding-top: 0.15 * $header-height;
 
-		.glyphicon { 
-			font-size: $hamburgerSize;
+			.navbar-brand {
+				height: inherit;
+				margin: 0;
+				padding: auto;
+				padding-left: 0;
+				padding-right: 0;
+			}
+
+			.navbar-text {
+				height: inherit;
+				margin: 0;
+				bottom: 0;
+				padding-top: 0.35 * $header-height;
+				padding-left: 0.8em;
+				font-style: italic;
+			}
 		}
-	}
 
-	.uib-dropdown-menu {
-	    margin: 0;
-	    padding: 0;
-	    border-radius: 0;
-	    margin-right: 2em;
+		.navbar-collapse {
+			height: 100%;
+
+			.navbar-right {
+				padding-top: 1.4em;			// Todo - fix to automatic? Height isn't working..
+				height: inherit;
+				max-height: $header-height;
+
+				.dropwdown {
+					height: inherit;
+
+					a {
+						height: inherit;
+					}
+				}
+			}
+		}
 	}
 }
 
-$mobile-breakpoint: 730px;
-@media (max-width: $mobile-breakpoint) {
-	.header {
-		// TODO
 
-		.hamburger {
-			// TODO
+$tablet-breakpoint: 750px;
+
+@media (max-width: $tablet-breakpoint) {
+	.sh-header {
+		.navbar-text {
+			visibility: hidden;
 		}
 	}
 }

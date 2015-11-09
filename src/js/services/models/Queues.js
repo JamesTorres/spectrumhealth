@@ -4,36 +4,11 @@ app.factory('Queues', function(Queue, $rootScope) {
 
     queues.apiData = null;
 
+
     queues.sendAPIData = function(data) {
         this.apiData = data;
         $rootScope.$broadcast('api_data_changed');
     };
-
-	queues.organizeByDept = function() {
-
-		// If we were given an object, and that object has at least one property, iterate over its properties
-		if (typeof this.apiData === 'object' && this.apiData[0]) {
-
-            // Saving the Queues object
-            var queuesByDept = {};
-
-			this.apiData.forEach(function(element) {
-
-				// Create datapoint from all properties except the department
-				var queue = new Queue(element);
-
-				// If the department isn't already a property in our queues object, then intiitalize it 
-				if (queuesByDept[element.Department] == null) {
-					queuesByDept[element.Department] = [];
-				}
-
-				// Add our new datapoint to the appropriate list
-				queuesByDept[element.Department].push(queue);
-			});
-
-            return queuesByDept;
-		}
-	};
 
 	queues.barChartForm = function() {
 

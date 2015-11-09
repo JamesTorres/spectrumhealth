@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-US">
+<html lang="en-US" ng-app="spectrumStatistics" ng-controller="DocumentCtrl">
     <head>
         <meta charset="utf-8">
         <title>Spectrum Stats</title>
@@ -8,8 +8,9 @@
 
         <link type="text/css" rel="stylesheet" href="node_modules/normalize.css/normalize.css"/>
         <link type="text/css" rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
-        <link type="text/css" rel="stylesheet" href="build/main.css"/>
         <link type="text/css" rel="stylesheet" href="node_modules/nvd3/build/nv.d3.min.css"/>
+        <link type="text/css" rel="stylesheet" href="build/main.css"/>
+        <link type="text/css" rel="stylesheet" ng-href="build/theme/{{ theme }}.css"/>
 
         <script src="node_modules/angular/angular.min.js"></script>
         <script src="node_modules/angular-route/angular-route.min.js"></script>
@@ -19,6 +20,8 @@
         <script src="node_modules/nvd3/build/nv.d3.min.js"></script>
         <script src="node_modules/angular-nvd3/dist/angular-nvd3.min.js"></script>
         <script src="node_modules/ng-fittext/src/ng-FitText.js"></script>
+
+        <!-- External Datepicker - Extension of Ui-bootstrap -->
         <link href="https://cdn.rawgit.com/zhaber/datetimepicker/master/datetimepicker.css" type="text/css" rel="stylesheet">  
 
         <!--[if lt IE 9]>
@@ -26,7 +29,7 @@
         <![endif]-->
     </head>
 
-    <body ng-app="spectrumStatistics">
+    <body>
 
         <div class="view">
             <div ng-view></div> 
@@ -45,6 +48,7 @@
         <script src="src/js/app.js"></script>
 
         <!-- Controllers -->
+        <script src="src/js/controllers/DocumentCtrl.js"></script>
         <script src="src/js/controllers/about/AboutCtrl.js"></script>
         <script src="src/js/controllers/login/LoginCtrl.js"></script>
         <script src="src/js/controllers/homepage/HomepageCtrl.js"></script>

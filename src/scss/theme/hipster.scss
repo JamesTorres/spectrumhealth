@@ -37,9 +37,9 @@ body {
 		}
 
 		.navbar-nav > .active > a{
-			background-color: $primary;
+			background-color: $white;
 			border: none;
-			color: $white;
+			color: $black;
 
 			&:hover {
 				color: $primary;
@@ -131,8 +131,8 @@ body {
 .display-toggle {
 
     .btn-primary {
-        color: rgba(255, 255, 255, .85);
-        background-color: $black;
+        color: $black;
+        background-color: $white;
         border-color: $black;
 
         &:hover {
@@ -141,7 +141,7 @@ body {
     }
 
     .active {
-        background-color: $primary;
+        background-color: $black;
         color: $white;
 
         &:hover {

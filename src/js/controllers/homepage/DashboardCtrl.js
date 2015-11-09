@@ -1,9 +1,6 @@
 app.controller('DashboardCtrl', DashboardCtrl);
 
 function DashboardCtrl($scope, backendAPI, DateRange, Queues) {
-    /* Retrieves objects of the form:     
-            {"TotalPatients": 8, "Providers": 9, "WaitingPatients": 9, "SeenPatients": 8}
-    */
 
     var getDateRange = function() {
         $scope.startDate = DateRange.getStartDate();
@@ -14,9 +11,19 @@ function DashboardCtrl($scope, backendAPI, DateRange, Queues) {
         backendAPI.getQueues($scope.startDate, $scope.endDate)
             .then(function(data) {
                 Queues.sendAPIData(data);
+                $scope.initialized.dashboard = true;
             }, function(data) {
                 // Error
         });
+    };
+
+    var getQueueDataForDept = function() {
+        backendAPI.getQueuesForDept($scope.startDate, $scope.endDate, "Spectrum Health Alpine Urgent Care")
+            .then(function(data) {
+                Queues.sendAPIData(data);
+            }, function(data) {
+
+            }) ;
     };
 
     var createWatchers = function() {
@@ -25,13 +32,19 @@ function DashboardCtrl($scope, backendAPI, DateRange, Queues) {
             $scope.startDate = DateRange.getStartDate();
             $scope.endDate = DateRange.getEndDate();
             console.log("Date range changed: ", $scope.startDate, '-', $scope.endDate);
+            // getQueueDataForDept();
             getQueueData();
         });
     };
 
     var run = function() {
+        // Gets the default date range (located in DateRange service)
         getDateRange();
-        getQueueData();
+
+        // Initialized flag is located in the HomepageCtrl. This keeps track of if we need to query API on Controller load
+        if (!$scope.initialized.dashboard) { getQueueData(); }
+
+        // Creates watchers to check for date_range_changes. Upon change, we query API again
         createWatchers();
     };
 

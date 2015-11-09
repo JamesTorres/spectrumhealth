@@ -83,7 +83,9 @@ module.exports = function(grunt) {
 						style: 'expanded'
 					},
 					files: {                       								// Dictionary of files 
-						'build/main.css': 'src/scss/main.scss'      			// 'destination': 'source' 
+						'build/main.css': 'src/scss/main.scss',      			// 'destination': 'source' 
+						'build/theme/clean-cut.css': 'src/scss/theme/clean-cut.scss',
+						'build/theme/hipster.css': 'src/scss/theme/hipster.scss'
 					}
 				}
 			},

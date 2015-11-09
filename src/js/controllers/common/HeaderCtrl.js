@@ -4,16 +4,19 @@ function HeaderCtrl($scope) {
 
 	$scope.about = {
 		title: "About",
-		dropdownItems: ['Dashboard', 'Logout']
+		dropdownItems: ['About', 'Homepage', 'Logout'],
+		selected: 0,
+		signedInText: "Signed in as C. P. Bean"
 	};
 
 	$scope.homepage = {
 		title: "Spectrum Statistics",
-		dropdownItems: ['About', 'Logout']
+		dropdownItems: ['About', 'Homepage', 'Logout'],
+		selected: 1,
+		signedInText: "Signed in as C. P. Bean"
 	};
 
 	$scope.login = {
-		title: "Login",
-		dropdownItems: ['About']
+		title: "Login"
 	};
 }

@@ -38,12 +38,12 @@
 
     <div ng-switch on="view">
         <div ng-switch-when="Dashboard" class="dashboard" ng-controller="DashboardCtrl">
-            <div class="date-picker" ng-controller="DateRangeCtrl" >
+            <div class="container dp-ctn" ng-controller="DateRangeCtrl" >
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-lg-6 col-md-6 col-xs-6">
                         <datetimepicker class="left-dp" min-date="minDate" hour-step="hstep" minute-step="mstep" ng-model="startDate" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-date="false" show-spinners="true" readonly-time="false"></datetimepicker>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-lg-6 col-md-6 col-xs-6">
                         <datetimepicker class="right-dp" min-date="minDate" hour-step="hstep" minute-step="mstep" ng-model="endDate" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" date-disabled="disabled(date, mode)" readonly-date="false" show-spinners="true" readonly-time="false"></datetimepicker>
                     </div>
                 </div>
