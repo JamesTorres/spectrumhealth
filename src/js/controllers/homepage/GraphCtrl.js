@@ -1,10 +1,10 @@
 app.controller('GraphCtrl', GraphCtrl);
 
-function GraphCtrl($scope, Queues) {
+function GraphCtrl($scope, Queues, DateRange) {
 
     $scope.bar = {
-        title: "Providers / Hour",
-        data: Queues.barChartForm(),
+        title: "Total Patients / Hour",
+        data: [],
         options: {
             chart: {
                 type: 'multiBarChart',
@@ -14,30 +14,43 @@ function GraphCtrl($scope, Queues) {
                 stacked: true,
                 xAxis: {
                     axisLabel: 'Hour',
-                    showMaxMin: false
+                    showMaxMin: false,
+
                 },
                 yAxis: {
                     axisLabel: 'Providers',
                     axisLabelDistance: 40,
                     tickFormat: function(d){
-                        return d3.format(',.1f')(d);
+                        return d3.format('')(d);
                     },
                     showMaxMin: false
+                },
+                reduceXTicks: true,
+                noData: null,
+                tooltip: {
+                    headerFormatter: function(d, i) {
+                        var tempDate = new Date(DateRange.getStartDate());
+                        tempDate.setDate(tempDate.getDate() - 1);           // This function is off... bug
+                        tempDate.setHours(tempDate.getHours() + d - 1);
+                        return tempDate.getDate() + '/' + tempDate.getMonth() + '/' + tempDate.getFullYear() + ": " + tempDate.getHours() + " o'clock";
+                    }
                 }
             }
         }
     };
 
+    var d = new Date();
+    d.setDate(d.getDate() - 2);
+
     $scope.pie = {
         title: "Current Information" ,
-        data: Queues.pieChartForm(new Date()),
+        data: Queues.pieChartForm(d),
         options: {
             chart: {
                 type: 'pieChart',
-                height: 500,
                 x: function(d){return d.key;},
                 y: function(d){return d.y;},
-                showLabels: true,
+                showLabels: false,
                 transitionDuration: 500,
                 labelThreshold: 0.01,
                 legend: {
@@ -53,8 +66,8 @@ function GraphCtrl($scope, Queues) {
     };
 
     $scope.line = {
-        title: "A Line Chart", 
-        data: Queues.sinAndCos(),
+        title: "Providers / Hour", 
+        data: [],
         options: {
             chart: {
                 zoom: {
@@ -78,7 +91,6 @@ function GraphCtrl($scope, Queues) {
                     unzoomEventType: 'dblclick.zoom'
                 },
                 type: 'lineChart',
-                height: 450,
                 margin : {
                     top: 20,
                     right: 20,
@@ -99,9 +111,9 @@ function GraphCtrl($scope, Queues) {
                 },
                 yAxis: {
                     axisLabel: 'Voltage (v)',
-                    tickFormat: function(d){
-                        return d3.format('.02f')(d);
-                    },
+                    // tickFormat: function(d){
+                    //     return d3.format('.02f')(d);
+                    // },
                     axisLabelDistance: 30
                 },
                 callback: function(chart){
@@ -112,8 +124,11 @@ function GraphCtrl($scope, Queues) {
     };
 
     $scope.$on('api_data_changed', function() {
-        $scope.bar.data = Queues.barChartForm();
-        $scope.pie.data = Queues.pieChartForm(new Date());
+        $scope.bar.data = Queues.getBarChartData("TotalPatients", "Hour");      // The api has camelcase properties... match please
+        // $scope.bar.options.chart.xAxis.tickFormat = Queues.getBarChartXLabels();
+
+        $scope.pie.data = Queues.pieChartForm(DateRange.getEndDate());
+        $scope.line.data = Queues.getBarChartData("Providers", "Hour");
         // $scope.api.update();
         // TODO - add calls for other graphs
         console.log("API Data Changed: ", $scope.bar.data);

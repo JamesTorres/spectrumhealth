@@ -1,0 +1,4 @@
+BUGS
+
+	- Date selection is messed up. Using console log at places shows a different date than represented
+		- likely from zhaber datepicker (remove and switch)

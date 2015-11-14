@@ -37,9 +37,9 @@ body {
 		}
 
 		.navbar-nav > .active > a{
-			background-color: $primary;
+			background-color: $white;
 			border: none;
-			color: $white;
+			color: $black;
 
 			&:hover {
 				color: $primary;
@@ -132,7 +132,7 @@ body {
 
     .btn-primary {
         color: rgba(255, 255, 255, .85);
-        background-color: $black;
+        background-color: $secondary;
         border-color: $black;
 
         &:hover {

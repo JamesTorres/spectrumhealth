@@ -27,9 +27,9 @@ function SidebarCtrl($scope, localStorage) {
     // Our preferences array 
     $scope.sidebarPreferences = [
         {
-            name: "API Selection",
+            name: "Data Sources",
             options: [
-                { name: "SH Endpoint", enabled: true }, 
+                { name: "Spectrum Health", enabled: true }, 
                 { name: "Weather Channel", enabled: true }, 
                 { name: "Flu Data", enabled: false }
             ]
@@ -40,16 +40,19 @@ function SidebarCtrl($scope, localStorage) {
                 { name: "Seen/Total Ratio", value: 0.5 },
                 { name: "Waiting/Provider Ratio", value: 0.5 }
             ]
-        }, {
-            name: "Model",
-            options: [
-                { name: "# Providers for Day", value: 10, day: null },        // TODO
-                { name: "Hours of Operation", value: 11, day: null }              // Implement object for a days statistcs?
-            ]
-        }, {
+        },{
             name: "Theme",
             options: [
                 { name: "Clean-cut", enabled: true }
+            ]
+        }, {
+            name: "Urgent Cares",
+            options: [
+                { name: "Alpine", enabled: true },        // TODO
+                { name: "Broadmoor", enabled: true },              // Implement object for a days statistcs?
+                { name: "East Beltline", enabled: true },
+                { name: "West Pavilion", enabled: true },
+                { name: "Broadmoor", enabled: true }
             ]
         }
     ];
@@ -61,6 +64,14 @@ function SidebarCtrl($scope, localStorage) {
 
     // Enables an API for use
     $scope.enableAPI = function(option) {
+        option.enabled = (option.enabled) ? false : true;
+        //callToBackend();
+        //reloadPage();
+        $scope.savePreferences();
+    };
+
+    // Enables display of data for a UC 
+    $scope.enableUC = function(option) {
         option.enabled = (option.enabled) ? false : true;
         //callToBackend();
         //reloadPage();
@@ -100,5 +111,6 @@ function SidebarCtrl($scope, localStorage) {
         localStorage.clear();
     };
 
-    $scope.loadPreferences();
+    // $scope.loadPreferences();
+    $scope.clearPreferences();
 }

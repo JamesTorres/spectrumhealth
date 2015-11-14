@@ -2,36 +2,170 @@ app.factory('Queues', function(Queue, $rootScope) {
 
     var queues = {};
 
-    queues.apiData = null;
+    queues.rawAPIData = null;
+    queues.barChart = {};
 
+    showEmptyPoints = true;
+
+    function earlierThan(a, b) {
+        if (a.Year < b.Year) { return -1; } 
+        if (a.Year > b.Year) { return 1; } 
+        if (a.Month < b.Month) { return -1; } 
+        if (a.Month > b.Month) { return 1; } 
+        if (a.Day < b.Day) { return -1; }
+        if (a.Day > b.Day) { return 1; }
+        if (a.Hour < b.Hour) { return -1; } 
+        if (a.Hour > b.Hour) { return 1; } 
+        return 0;
+    }
+
+    function determineMultiplier(denominator) {
+        switch (denominator) {
+            case "Month":
+                return 12;
+            case "Day":
+                // TODO
+            case "Hour":
+                return 24;
+            default:
+                return 0;
+        }
+    }
+
+    function appendEmptyPoints(arrayOfPoints, start, end) {
+        if (showEmptyPoints) {
+            for (var i = start + 1; i <= end; i++) {
+                arrayOfPoints.push({x: i, y: 0});
+            }
+        }
+    }
 
     queues.sendAPIData = function(data) {
-        this.apiData = data;
+        data.sort(earlierThan);
+        this.rawAPIData = data;
         $rootScope.$broadcast('api_data_changed');
     };
 
-	queues.barChartForm = function() {
+    queues.getBarChartXLabels = function() {
+        return ['a','b','c'];
+    };
 
-        var alpine = [], 
-            broadmoor = [];
+	queues.getBarChartData = function(numerator, denominator) {
 
-   		// If we were given an object, and that object has at least one property
-        if (typeof this.apiData === 'object' && this.apiData != null && this.apiData[0]) {
-            var d1Daycount = 0;
-            var d2Daycount = 0;
+        /* 
+            Algorithm:
+                1) Ensure our data was returned as an array
+                    2) Sort the array
+                    3) Set the starting count (days, hours, years, etc.)
+                    4) Determine the multiplier for this count
+                    5) Iterate
+                        6) Push to appropriate dept
+                        7) Increment the count (& timechecker/start) if necessary
+        */
 
-            this.apiData.forEach(function(element) {
-                switch (element.Department) {
-                    case "ExampleDepartment":
-                        alpine.push({x: (element.Hour + d1Daycount*24) + 1, y: element.TotalPatients});
-                        if (element.Hour !== 0 && element.Hour % 23 === 0) { d1Daycount++; }
+        var parsedData = {
+            alpine: {
+                values: [],
+                key: "Alpine",
+                color: '#ff7f0e'
+            },
+            test: []
+        };
+
+        // this.rawAPIData = [
+        //     {Department:"Spectrum Health Alpine Urgent Care",TotalPatients:4,Hour:2},
+        //     {Department:"Spectrum Health Alpine Urgent Care",TotalPatients:6,Hour:2}
+        // ];
+
+        // If we recieved an array (sorted)
+        if (Array.isArray(this.rawAPIData) && this.rawAPIData[0]) {
+
+            // Keeps track of the number of days, hours, months...
+            var previous = this.rawAPIData[0][denominator];         // Start number (to determine if a new day, month, etc. has been selected)
+            var count = 0;                                          // Count of the number of days, months, etc.
+            var multiplier = determineMultiplier(denominator);
+
+            // Iterate and add appropriately
+            this.rawAPIData.forEach(function(sortedPoint) {
+
+                // Append to the appropriate department
+                switch (sortedPoint.Department) {
+                    case "Spectrum Health Alpine Urgent Care": 
+                        if (sortedPoint[denominator] < previous) { count++; appendEmptyPoints(parsedData.alpine.values, previous, (sortedPoint[denominator] + count*multiplier));  }
+                        var d = (sortedPoint[denominator] + count * multiplier);
+                        parsedData.alpine.values.push({x: d, y: sortedPoint[numerator]});
+                        previous = sortedPoint[denominator];
                         break;
-                    case "ExampleDepartment2":
-                        broadmoor.push({x: (element.Hour + d2Daycount*24) + 1, y: element.TotalPatients});
-                        if (element.Hour !== 0 && element.Hour % 23 === 0) { d2Daycount++; }
+                    case "Test":
+                        parsedData.test.push({x: (sortedPoint[denominator] + count*multiplier), y: sortedPoint[numerator]});
                         break;
                     default:
                         break;
+                }            
+            });
+        }
+
+        return [
+            {
+                values: parsedData.alpine.values,
+                key: parsedData.alpine.key,
+                color: parsedData.alpine.color
+            }
+        ];  
+	};
+
+    queues.pieChartForm = function(date) {
+
+        var ret = [];
+
+        if (typeof this.rawAPIData === 'object' && this.rawAPIData != null && this.rawAPIData[0]) { 
+            this.rawAPIData.forEach(function(element) {
+                if (element.Day == date.getDate() && element.Month == date.getMonth() + 1 && element.Year == date.getFullYear()) { 
+                    var dataPoint = element;
+
+                    ret = [
+                    {
+                        key: "TotalPatients",
+                        y: element.TotalPatients
+                    }, 
+                    {
+                        key: "Providers",
+                        y: element.Providers
+                    }, 
+                    {
+                        key: "SeenPatients",
+                        y: element.SeenPatients
+                    }, 
+                    {
+                        key: "WaitingPatients",
+                        y: element.WaitingPatients
+                    }
+                    ];
+                }
+            });
+        }
+
+        return ret;
+    };
+
+    queues.lineChartForm = function() {
+        var alpine = [];
+
+        // If we were given an object, and that object has at least one property
+        if (typeof this.rawAPIData === 'object' && this.rawAPIData != null && this.rawAPIData[0]) {
+            var d1Daycount = 0;
+            var d2Daycount = 0;
+
+            this.rawAPIData.forEach(function(element) {
+                if (element.Department) {
+                    switch (element.Department) {
+                        case "Spectrum Health Alpine Urgent Care":
+                            alpine.push({x: (element.Hour + d1Daycount*24) + 1, y: element.TotalPatients});
+                            if (element.Hour !== 0 && element.Hour % 23 === 0) { d1Daycount++; }
+                            break;
+                        default:
+                            break;
+                    }
                 }
             });
 
@@ -40,49 +174,9 @@ app.factory('Queues', function(Queue, $rootScope) {
                     values: alpine,             //values - represents the array of {x,y} data points
                     key: 'Alpine',              //key  - the name of the series.
                     color: '#ff7f0e'            //color - optional: choose your own line color.
-                },
-                {
-                    values: broadmoor,
-                    key: 'Broadmoor UC',
-                    color: '#2ca02c'
                 }
             ];
         }
-
-        return [];
-	};
-
-    queues.pieChartForm = function(date) {
-        var ret = [];
-
-        if (typeof this.apiData === 'object' && this.apiData != null && this.apiData[0]) { 
-            this.apiData.forEach(function(element) {
-                if (element.Hour == date.getHours() && element.Day == date.getDate() && element.Month == date.getMonth() && element.Year == date.getFullYear()) { 
-                    var dataPoint = element;
-
-                    ret = [
-                    {
-                        key: "TotalPatients",
-                        y: dataPoint.TotalPatients
-                    }, 
-                    {
-                        key: "Providers",
-                        y: dataPoint.Providers
-                    }, 
-                    {
-                        key: "SeenPatients",
-                        y: dataPoint.SeenPatients
-                    }, 
-                    {
-                        key: "WaitingPatients",
-                        y: dataPoint.WaitingPatients
-                    }
-                    ];
-                }
-            });
-        }
-
-        return ret;
     };
 
     /*Random Data Generator */
@@ -121,9 +215,10 @@ app.factory('Queues', function(Queue, $rootScope) {
 
     /* Random Data Generator (took from nvd3.org) */
     queues.fakeData = function() {
+        var names = ["Alpine", "Broadmoor", "West Pavillion"];
         return stream_layers(3, 50+Math.random()*50, 0.1).map(function(data, i) {
             return {
-                key: 'Stream' + i,
+                key: names[i],
                 values: data
             };
         });

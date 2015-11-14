@@ -17,22 +17,12 @@ function DashboardCtrl($scope, backendAPI, DateRange, Queues) {
         });
     };
 
-    var getQueueDataForDept = function() {
-        backendAPI.getQueuesForDept($scope.startDate, $scope.endDate, "Spectrum Health Alpine Urgent Care")
-            .then(function(data) {
-                Queues.sendAPIData(data);
-            }, function(data) {
-
-            }) ;
-    };
-
     var createWatchers = function() {
         // Detects broadcast messages from the service. The service broadcasts these message through $rootScope
         $scope.$on('date_range_changed', function() {
             $scope.startDate = DateRange.getStartDate();
             $scope.endDate = DateRange.getEndDate();
             console.log("Date range changed: ", $scope.startDate, '-', $scope.endDate);
-            // getQueueDataForDept();
             getQueueData();
         });
     };

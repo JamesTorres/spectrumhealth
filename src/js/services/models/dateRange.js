@@ -7,7 +7,8 @@ app.factory('DateRange', function($rootScope) {
 
 	dateRange.startDate = new Date();
 	dateRange.endDate = new Date();
-	dateRange.endDate.setDate(dateRange.startDate.getDate() + 3);
+	dateRange.startDate.setDate(dateRange.startDate.getDate() - 2);
+	// dateRange.endDate.setDate(dateRange.endDate.getDate() - 1);
 
 	dateRange.getStartDate = function() { return this.startDate; };
 	dateRange.getEndDate = function() { return this.endDate; };
