@@ -4,7 +4,7 @@
   "description": "Staff frontend for the SH statistics application",
   "main": "index.js",
   "scripts": {
-    //"postinstall": "grunt",
+    "postinstall": "grunt",
     "start": "node index.js"
   },
   "repository": {
