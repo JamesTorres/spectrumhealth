@@ -101,7 +101,7 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
     };
 
     $scope.changeFilter = function(option) {
-        // Talk to backend
+        //TODO
         $scope.savePreferences();
     };
 

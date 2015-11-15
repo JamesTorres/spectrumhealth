@@ -33,7 +33,7 @@ function GraphCtrl($scope, Parser, DateRange, UrgentCares) {
                     showMaxMin: false,
                     rotateYLabel: true
                 },
-                reduceXTicks: true,
+                reduceXTicks: !UrgentCares.simpleMode,
                 noData: "No data. Please query, or check the API call.",
                 tooltip: {
                     headerFormatter: function(d, i) {
@@ -141,6 +141,8 @@ function GraphCtrl($scope, Parser, DateRange, UrgentCares) {
 
         $scope.pie.data = Parser.pieChartForm(DateRange.getEndDate());
         $scope.line.data = Parser.getBarChartData("Providers", "Hour");
+
+        $scope.bar.options.chart.reduceXTicks = !UrgentCares.simpleMode;
 
         if (UrgentCares.areNoneSelected()) { 
             $scope.bar.options.chart.noData = "Please select at least one Urgent Care."; 
