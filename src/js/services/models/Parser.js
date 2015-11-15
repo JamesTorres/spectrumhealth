@@ -29,7 +29,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
     }
 
     function appendEmptyPoints(arrayOfPoints, start, end, limit) {
-        for (var i = start + limit; i <= end; i++) {
+        for (var i = start + limit; i <= end; i += limit) {
             arrayOfPoints.push({x: i, y: 0});
         }
     }
