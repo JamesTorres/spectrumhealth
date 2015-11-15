@@ -129,6 +129,7 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
             // Update our models
             UrgentCares.changeSelected($scope.sidebarPreferences[4].options);
             UrgentCares.changeShowEmptyPoints($scope.sidebarPreferences[2].options[0].enabled);
+            UrgentCares.changeSimpleMode($scope.sidebarPreferences[2].options[1].enabled);
         }
     };
 
@@ -137,6 +138,6 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
         localStorage.clear();
     };
 
-    $scope.clearPreferences();      // UNCOMMENT ME SOMEDAY!!
+    // $scope.clearPreferences();      // UNCOMMENT ME SOMEDAY!!
     $scope.loadPreferences();
 }

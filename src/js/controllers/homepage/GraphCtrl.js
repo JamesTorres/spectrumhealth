@@ -1,6 +1,6 @@
 app.controller('GraphCtrl', GraphCtrl);
 
-function GraphCtrl($scope, Parser, DateRange) {
+function GraphCtrl($scope, Parser, DateRange, UrgentCares) {
 
     $scope.bar = {
         title: "Total Patients / Hour",
@@ -141,6 +141,12 @@ function GraphCtrl($scope, Parser, DateRange) {
 
         $scope.pie.data = Parser.pieChartForm(DateRange.getEndDate());
         $scope.line.data = Parser.getBarChartData("Providers", "Hour");
+
+        if (UrgentCares.areNoneSelected()) { 
+            $scope.bar.options.chart.noData = "Please select at least one Urgent Care."; 
+        } else {
+            $scope.bar.options.chart.noData = "No data. Please query, or check the API call."; 
+        }
 
         console.log("API Data Changed: ", $scope.bar.data);
     });

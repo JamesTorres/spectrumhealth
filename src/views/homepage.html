@@ -34,8 +34,8 @@
 
     <div class="display-toggle">
         <div class="btn-group">
-            <label class="btn btn-primary" ng-model="view" uib-btn-radio="'Calendar'">Calendar</label>
-            <label class="btn btn-primary" ng-model="view" uib-btn-radio="'Dashboard'">Dashboard</label>
+            <label class="btn btn-primary" ng-model="view" ng-click="savePreferences()" uib-btn-radio="'Calendar'">Calendar</label>
+            <label class="btn btn-primary" ng-model="view" ng-click="savePreferences()" uib-btn-radio="'Dashboard'">Dashboard</label>
         </div>
     </div>
 

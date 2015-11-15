@@ -79,5 +79,10 @@ app.factory('UrgentCares', function($rootScope) {
 		this.westPavilion.data = [];
 	};
 
+	urgentCares.areNoneSelected = function() {
+		if (!this.alpine.enabled && !this.broadmoor.enabled && !this.eastBeltline.enabled && !this.westPavilion.enabled) { return true; }
+		return false;
+	};
+
 	return urgentCares;
 });
