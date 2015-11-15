@@ -28,13 +28,13 @@ app.factory('Parser', function(Queue, UrgentCares) {
         }
     }
 
-    function appendEmptyPoints(arrayOfPoints, start, end) {
-        for (var i = start + 1; i <= end; i++) {
+    function appendEmptyPoints(arrayOfPoints, start, end, limit) {
+        for (var i = start + limit; i <= end; i++) {
             arrayOfPoints.push({x: i, y: 0});
         }
     }
 
-    function buildValuesArray(array, numerator, denominator, showEmptyPoints) {
+    function buildValuesArray(array, numerator, denominator) {
 
         /* Builds the values for a UC (for a graph)
 
@@ -99,8 +99,8 @@ app.factory('Parser', function(Queue, UrgentCares) {
             // If we have reached a new x (where is a month, day, or year) - increase the count of x, and append empty points
             if (current < previous) { 
                 count++; 
-                if (showEmptyPoints) {
-                    appendEmptyPoints(v, previous, (current + count * multiplier));  
+                if (UrgentCares.showEmptyPoints) {
+                    appendEmptyPoints(v, previous, (current + count * multiplier), limit);  
                 }
             }
 
@@ -182,7 +182,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
         for (var uc in UrgentCares) {
             if (UrgentCares[uc].enabled) {
                 if (UrgentCares[uc].data.length > 0) {
-                    var v = buildValuesArray(UrgentCares[uc].data, numerator, denominator, UrgentCares.showEmptyPoints);
+                    var v = buildValuesArray(UrgentCares[uc].data, numerator, denominator);
 
                     ret.push({
                         values: v,
