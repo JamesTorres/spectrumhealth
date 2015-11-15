@@ -1,0 +1,249 @@
+.sh-header, .navbar-fixed-top {
+  height: 5em;
+  padding: 0;
+  margin: 0;
+  border-bottom: none;
+}
+.sh-header .container, .navbar-fixed-top .container {
+  height: 100%;
+}
+.sh-header .container .navbar-header, .navbar-fixed-top .container .navbar-header {
+  height: inherit;
+  padding-top: 0.75em;
+}
+.sh-header .container .navbar-header .navbar-brand, .navbar-fixed-top .container .navbar-header .navbar-brand {
+  height: inherit;
+  margin: 0;
+  padding: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+.sh-header .container .navbar-header .navbar-text, .navbar-fixed-top .container .navbar-header .navbar-text {
+  height: inherit;
+  margin: 0;
+  bottom: 0;
+  padding-top: 1.6em;
+  padding-left: 0.8em;
+  font-style: italic;
+}
+.sh-header .container .navbar-collapse, .navbar-fixed-top .container .navbar-collapse {
+  height: 100%;
+}
+.sh-header .container .navbar-collapse .navbar-right, .navbar-fixed-top .container .navbar-collapse .navbar-right {
+  padding-top: 1.4em;
+  height: inherit;
+  max-height: 5em;
+}
+.sh-header .container .navbar-collapse .navbar-right .dropwdown, .navbar-fixed-top .container .navbar-collapse .navbar-right .dropwdown {
+  height: inherit;
+}
+.sh-header .container .navbar-collapse .navbar-right .dropwdown a, .navbar-fixed-top .container .navbar-collapse .navbar-right .dropwdown a {
+  height: inherit;
+}
+
+@media (max-width: 750px) {
+  .sh-header .navbar-text {
+    visibility: hidden;
+  }
+}
+.loginForm {
+  position: relative;
+  display: inline-block;
+  padding: 3em 6em;
+  margin-top: 23vh;
+}
+.loginForm input[type="text"], .loginForm input[type="password"] {
+  text-align: center;
+  border: none;
+}
+.loginForm .submit-group {
+  width: auto;
+  height: 3em;
+}
+.loginForm .submit-group button[type="submit"] {
+  float: left;
+}
+.loginForm .submit-group > a {
+  position: relative;
+  float: right;
+  font-size: 12px;
+  text-align: right;
+}
+
+footer {
+  position: relative;
+  bottom: 0;
+  display: inline-block;
+}
+
+.sidebar {
+  position: fixed;
+  top: 35%;
+  left: -225px;
+  z-index: 11;
+}
+.sidebar #sidebar-toggle {
+  position: absolute;
+  top: 40%;
+  left: 225px;
+  padding: 20px;
+}
+.sidebar ul {
+  padding: 0;
+  margin: 0;
+}
+.sidebar ul .sidebar-item {
+  display: block;
+  padding: 10px 30px;
+  width: 225px;
+  margin: 0;
+}
+.sidebar ul .sidebar-item input, .sidebar ul .sidebar-item a {
+  text-align: center;
+}
+.sidebar ul .sidebar-title {
+  display: block;
+  padding: 10px 30px;
+  width: 225px;
+}
+
+.show {
+  left: 0;
+}
+
+.dashboard .col-xs-12, .dashboard .col-md-8, .dashboard .col-md-4, .dashboard .col-md-12 {
+  margin-top: 2em;
+}
+.dashboard .dp-ctn {
+  margin-top: 2em;
+}
+.dashboard .dp-ctn .row {
+  position: relative;
+  z-index: 1;
+}
+.dashboard .dp-ctn .row .left-dp {
+  float: right;
+}
+.dashboard .dp-ctn .row .right-dp {
+  float: left;
+}
+.dashboard .dp-ctn .queryBtn {
+  top: -.25em;
+  width: 100px;
+  position: relative;
+  z-index: 0;
+}
+.dashboard .dash-block {
+  height: 500px;
+}
+.dashboard .dash-block h3 {
+  padding: 10px 0;
+  height: 50px;
+  margin: 0;
+}
+.dashboard .dash-block .graph {
+  width: auto;
+  height: 450px;
+}
+
+@media (max-width: 510px) {
+  .dashboard .date-picker {
+    display: block;
+    width: 400px;
+  }
+}
+.cal {
+  margin-top: 2em;
+  background-color: #fff;
+  height: 1000px;
+  padding: 0;
+}
+.cal .cal-header {
+  text-align: center;
+  height: 4em;
+  background-color: #444545;
+  color: #fff;
+  padding: .7em;
+}
+.cal .cal-header h1 {
+  position: relative;
+  display: inline;
+  vertical-align: middle;
+}
+.cal .cal-header .cal-arrow-left {
+  float: left;
+}
+.cal .cal-header .cal-arrow-right {
+  float: right;
+}
+.cal .cal-main {
+  padding: 0;
+  margin: 0;
+}
+.cal .cal-main .cal-day-names {
+  padding: 0;
+}
+.cal .cal-main .cal-row .cal-arrow-right {
+  display: inline-block;
+  float: left;
+}
+.cal .cal-main .cal-row .cal-day-name {
+  width: 14%;
+  height: 40px;
+  display: inline-block;
+  padding-top: .7em;
+  background-color: #444545;
+  color: #fff;
+  margin-top: 3em;
+}
+.cal .cal-main .cal-row .cal-cell {
+  width: 14%;
+  height: 120px;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  padding: 1em;
+}
+.cal .cal-main .cal-row .cal-cell:hover {
+  background-color: #444545;
+  color: #fff;
+}
+.cal .cal-main .cal-row .cal-cell .day-number {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 1.5px;
+}
+
+html {
+  height: 100%;
+}
+
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer;
+}
+
+.homepage, .about {
+  text-align: center;
+  padding-top: 5em;
+}
+
+.display-toggle {
+  top: -.25em;
+  position: relative;
+  z-index: 0;
+}
+
+.view {
+  height: 87vh;
+  position: relative;
+}
+
+.loginPage {
+  display: inline-block;
+  text-align: center;
+  width: 100vw;
+  position: relative;
+}
+
+/*# sourceMappingURL=main.css.map */
