@@ -27,7 +27,7 @@
                 <li ng-repeat="option in selected.options"><a class="sidebar-item" ng-class="{ 'enabled': option.enabled, 'disabled': !option.enabled }" ng-click="changeTheme(option)">{{ option.name }}</a></li>
             </div>
             <div ng-switch-when="Settings">
-                <li ng-repeat="option in selected.options"><a class="sidebar-item" ng-class="{ 'enabled': option.enabled, 'disabled': !option.enabled }" ng-click="showEmptyPoints(option)">{{ option.name }}</a></li>
+                <li ng-repeat="option in selected.options"><a class="sidebar-item" ng-class="{ 'enabled': option.enabled, 'disabled': !option.enabled }" ng-click="enableSetting(option)">{{ option.name }}</a></li>
             </div>
         </ul>
     </div>

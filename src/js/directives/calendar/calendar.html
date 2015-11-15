@@ -10,7 +10,7 @@
 	</div>
 
 	<div class="cal-main col-md-12">
-		<div class="cal-day-names">
+		<div class="cal-day-names col-md-12">
 			<div class="cal-row">
 				<div class="cal-day-name" ng-repeat="dayName in dayNames">
 					{{ dayName }}
@@ -20,7 +20,10 @@
 		<div class="cal-month-box">
 			<div ng-repeat="row in rows">
 				<div class="cal-row">
-					<div class="cal-cell" ng-repeat="day in week">
+<!-- 					<button type="button" class="cal-arrow-right btn btn-default" aria-label="Left Align">
+			  			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					</button> -->
+					<div class="cal-cell" ng-repeat="day in week" ng-click="expandRow(row)">
 						<div class="day-number">
 							{{ day + row * 7 }}
 						</div>

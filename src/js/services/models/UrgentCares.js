@@ -2,6 +2,8 @@ app.factory('UrgentCares', function($rootScope) {
 
 	var urgentCares = {
 		showEmptyPoints: false,
+		simpleMode: false,
+		averageOver: 3,
 		alpine: {
 			key: "Alpine",			// Graph legend value
 			data: [],				// Array of Queue objects
@@ -58,6 +60,11 @@ app.factory('UrgentCares', function($rootScope) {
 
 	urgentCares.changeShowEmptyPoints = function(b) {
 		this.showEmptyPoints = b;
+		$rootScope.$broadcast('urgent_cares_changed');
+	};
+
+	urgentCares.changeSimpleMode = function(b) {
+		this.simpleMode = b;
 		$rootScope.$broadcast('urgent_cares_changed');
 	};
 

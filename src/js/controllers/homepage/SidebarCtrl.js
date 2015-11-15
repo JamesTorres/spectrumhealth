@@ -43,7 +43,8 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
         } , {
             name: "Settings",
             options: [
-                { name: "Show Empty Points", enabled: UrgentCares.showEmptyPoints }
+                { name: "Show Empty Points", enabled: UrgentCares.showEmptyPoints },
+                { name: "Simple Mode", enabled: UrgentCares.simpleMode }
             ]
         }, {
             name: "Theme",
@@ -82,9 +83,20 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
         }
     };
 
-    $scope.showEmptyPoints = function(option) {
+    $scope.enableSetting = function(option) {
         option.enabled = (option.enabled) ? false : true;
-        UrgentCares.changeShowEmptyPoints(option.enabled);
+
+        switch (option.name) {
+            case $scope.sidebarPreferences[2].options[0].name:
+                UrgentCares.changeShowEmptyPoints(option.enabled);
+                break;
+            case $scope.sidebarPreferences[2].options[1].name:
+                UrgentCares.changeSimpleMode(option.enabled);
+                break;
+            default:
+                break;
+        }
+        
         $scope.savePreferences();
     };
 

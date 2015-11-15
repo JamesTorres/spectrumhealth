@@ -28,29 +28,37 @@ app.factory('Parser', function(Queue, UrgentCares) {
         }
     }
 
-    function appendEmptyPoints(arrayOfPoints, start, end, showEmptyPoints) {
-        if (showEmptyPoints) {
-            for (var i = start + 1; i <= end; i++) {
-                arrayOfPoints.push({x: i, y: 0});
-            }
+    function appendEmptyPoints(arrayOfPoints, start, end) {
+        for (var i = start + 1; i <= end; i++) {
+            arrayOfPoints.push({x: i, y: 0});
         }
     }
 
     function buildValuesArray(array, numerator, denominator, showEmptyPoints) {
+
+        /* Builds the values for a UC (for a graph)
+
+                [{x: 1, y:1}, {x: 5, y:2}, ...]
+        */
         
         // Returned array
         var v = [];
 
         // Keeps track of the number of days, hours, months...
-        var previous = -1;                   // Start number (to determine if a new day, month, etc. has been selected)
+        var previous = -1;                                      // Start number (to determine if a new day, month, etc. has been selected)
         var count = 0;                                          // Count of the number of days, months, etc.
         var multiplier = determineMultiplier(denominator);
+        
+        var avgCount = 0;
+        var yAvg = 0;
+        var limit = 1;
+
+        if (UrgentCares.simpleMode) { limit = UrgentCares.averageOver; }
 
         // Adding graph points to the array
         array.forEach(function(queue) {
-
-            // Variables
-            var yVal, current;
+        
+            var xVal, yVal, current;
 
             // Determine the y-value base
             switch (denominator) {
@@ -89,10 +97,31 @@ app.factory('Parser', function(Queue, UrgentCares) {
             }
 
             // If we have reached a new x (where is a month, day, or year) - increase the count of x, and append empty points
-            if (current < previous) { count++; appendEmptyPoints(v, previous, (current + count * multiplier), showEmptyPoints);  }
+            if (current < previous) { 
+                count++; 
+                if (showEmptyPoints) {
+                    appendEmptyPoints(v, previous, (current + count * multiplier));  
+                }
+            }
 
-            // Add the points
-            v.push({x: (current + count * multiplier), y: yVal});
+            // Accounting for the nature of dates
+            xVal = current + count * multiplier;
+
+            // Increment average numerator
+            yAvg += yVal;
+            avgCount++;
+
+            // Supports averaging over a number of points
+            if (avgCount == limit) {
+                // Average our numbers 
+                yAvg /= limit;
+
+                // Add the point to the array
+                v.push({x: xVal, y: yAvg});
+
+                // Reset things
+                avgCount = yAvg = 0;
+            }
 
             // Save the previous
             previous = current;
