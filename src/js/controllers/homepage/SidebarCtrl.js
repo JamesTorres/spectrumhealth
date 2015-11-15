@@ -1,6 +1,6 @@
 app.controller('SidebarCtrl', SidebarCtrl);
 
-function SidebarCtrl($scope, localStorage) {
+function SidebarCtrl($scope, localStorage, UrgentCares) {
 	/*
 		Sidebar contains preferences:
 			- API's to use
@@ -40,7 +40,12 @@ function SidebarCtrl($scope, localStorage) {
                 { name: "Seen/Total Ratio", value: 0.5 },
                 { name: "Waiting/Provider Ratio", value: 0.5 }
             ]
-        },{
+        } , {
+            name: "Settings",
+            options: [
+                { name: "Show Empty Points", enabled: UrgentCares.showEmptyPoints }
+            ]
+        }, {
             name: "Theme",
             options: [
                 { name: "Clean-cut", enabled: true }
@@ -48,11 +53,10 @@ function SidebarCtrl($scope, localStorage) {
         }, {
             name: "Urgent Cares",
             options: [
-                { name: "Alpine", enabled: true },        // TODO
-                { name: "Broadmoor", enabled: true },              // Implement object for a days statistcs?
-                { name: "East Beltline", enabled: true },
-                { name: "West Pavilion", enabled: true },
-                { name: "Broadmoor", enabled: true }
+                { name: UrgentCares.alpine.key, enabled: UrgentCares.alpine.enabled },        // TODO
+                { name: UrgentCares.broadmoor.key, enabled: UrgentCares.broadmoor.enabled },              // Implement object for a days statistcs?
+                { name: UrgentCares.eastBeltline.key, enabled: UrgentCares.eastBeltline.enabled },
+                { name: UrgentCares.westPavilion.key, enabled: UrgentCares.westPavilion.enabled }
             ]
         }
     ];
@@ -73,8 +77,14 @@ function SidebarCtrl($scope, localStorage) {
     // Enables display of data for a UC 
     $scope.enableUC = function(option) {
         option.enabled = (option.enabled) ? false : true;
-        //callToBackend();
-        //reloadPage();
+        if (UrgentCares.changeSelected($scope.sidebarPreferences[4].options)) {
+            $scope.savePreferences();
+        }
+    };
+
+    $scope.showEmptyPoints = function(option) {
+        option.enabled = (option.enabled) ? false : true;
+        UrgentCares.changeShowEmptyPoints(option.enabled);
         $scope.savePreferences();
     };
 
@@ -103,6 +113,10 @@ function SidebarCtrl($scope, localStorage) {
         // If we have preferences in localStorage, get them
         if (localStorage.getObject('sidebarPreferences') !== null) {
             $scope.sidebarPreferences = localStorage.getObject('sidebarPreferences');
+
+            // Update our models
+            UrgentCares.changeSelected($scope.sidebarPreferences[4].options);
+            UrgentCares.changeShowEmptyPoints($scope.sidebarPreferences[2].options[0].enabled);
         }
     };
 
@@ -111,6 +125,6 @@ function SidebarCtrl($scope, localStorage) {
         localStorage.clear();
     };
 
-    // $scope.loadPreferences();
-    $scope.clearPreferences();
+    $scope.loadPreferences();
+    // $scope.clearPreferences();
 }

@@ -1,11 +1,7 @@
-app.factory('Queues', function(Queue, $rootScope) {
+app.factory('Queues', function(Queue, UrgentCares) {
 
     var queues = {};
-
     queues.rawAPIData = null;
-    queues.barChart = {};
-
-    showEmptyPoints = true;
 
     function earlierThan(a, b) {
         if (a.Year < b.Year) { return -1; } 
@@ -32,7 +28,7 @@ app.factory('Queues', function(Queue, $rootScope) {
         }
     }
 
-    function appendEmptyPoints(arrayOfPoints, start, end) {
+    function appendEmptyPoints(arrayOfPoints, start, end, showEmptyPoints) {
         if (showEmptyPoints) {
             for (var i = start + 1; i <= end; i++) {
                 arrayOfPoints.push({x: i, y: 0});
@@ -40,78 +36,135 @@ app.factory('Queues', function(Queue, $rootScope) {
         }
     }
 
+    function buildValuesArray(array, numerator, denominator, showEmptyPoints) {
+        
+        // Returned array
+        var v = [];
+
+        // Keeps track of the number of days, hours, months...
+        var previous = -1;                   // Start number (to determine if a new day, month, etc. has been selected)
+        var count = 0;                                          // Count of the number of days, months, etc.
+        var multiplier = determineMultiplier(denominator);
+
+        // Adding graph points to the array
+        array.forEach(function(queue) {
+
+            // Variables
+            var yVal, current;
+
+            // Determine the y-value base
+            switch (denominator) {
+                case "Hour":
+                    current = queue.getHour();
+                    break;
+                case "Day":
+                    current = queue.getDay();
+                    break;
+                case "Month":
+                    current = queue.getMonth();
+                    break;
+                case "Year":
+                    current = queue.getYear();
+                    break;
+                default:
+                    break;
+            }
+
+            // Determine the x-value
+            switch (numerator) {
+                case "Total Patients":
+                    yVal = queue.getTotalPatients();
+                    break;
+                case "Seen Patients":
+                    yVal = queue.getSeenPatients();
+                    break;
+                case "Waiting Patients":
+                    yVal = queue.getWaitingPatients();
+                    break;
+                case "Providers":
+                    yVal = queue.getProviders();
+                    break;
+                default:
+                    break;
+            }
+
+            // If we have reached a new x (where is a month, day, or year) - increase the count of x, and append empty points
+            if (current < previous) { count++; appendEmptyPoints(v, previous, (current + count * multiplier), showEmptyPoints);  }
+
+            // Add the points
+            v.push({x: (current + count * multiplier), y: yVal});
+
+            // Save the previous
+            previous = current;
+        });
+
+        return v;
+    }
+
     queues.sendAPIData = function(data) {
-        data.sort(earlierThan);
         this.rawAPIData = data;
-        $rootScope.$broadcast('api_data_changed');
+        this.rawAPIData.sort(earlierThan);
+        parseData(this.rawAPIData);
     };
 
-    queues.getBarChartXLabels = function() {
-        return ['a','b','c'];
-    };
+    function parseData(data) {
+        // Ensure we are parsing an array of data points
+        if (Array.isArray(data)) {
 
-	queues.getBarChartData = function(numerator, denominator) {
+            // Clear any previous data
+            UrgentCares.clearData();
 
-        /* 
-            Algorithm:
-                1) Ensure our data was returned as an array
-                    2) Sort the array
-                    3) Set the starting count (days, hours, years, etc.)
-                    4) Determine the multiplier for this count
-                    5) Iterate
-                        6) Push to appropriate dept
-                        7) Increment the count (& timechecker/start) if necessary
-        */
+            // Presume these points are already sorted by date
+            data.forEach(function(sortedPoint) {
 
-        var parsedData = {
-            alpine: {
-                values: [],
-                key: "Alpine",
-                color: '#ff7f0e'
-            },
-            test: []
-        };
-
-        // this.rawAPIData = [
-        //     {Department:"Spectrum Health Alpine Urgent Care",TotalPatients:4,Hour:2},
-        //     {Department:"Spectrum Health Alpine Urgent Care",TotalPatients:6,Hour:2}
-        // ];
-
-        // If we recieved an array (sorted)
-        if (Array.isArray(this.rawAPIData) && this.rawAPIData[0]) {
-
-            // Keeps track of the number of days, hours, months...
-            var previous = this.rawAPIData[0][denominator];         // Start number (to determine if a new day, month, etc. has been selected)
-            var count = 0;                                          // Count of the number of days, months, etc.
-            var multiplier = determineMultiplier(denominator);
-
-            // Iterate and add appropriately
-            this.rawAPIData.forEach(function(sortedPoint) {
-
-                // Append to the appropriate department
+                // Create a queue for this data point
+                var q = new Queue(sortedPoint);
+                
+                // Determine the dept of each element
                 switch (sortedPoint.Department) {
-                    case "Spectrum Health Alpine Urgent Care": 
-                        if (sortedPoint[denominator] < previous) { count++; appendEmptyPoints(parsedData.alpine.values, previous, (sortedPoint[denominator] + count*multiplier));  }
-                        var d = (sortedPoint[denominator] + count * multiplier);
-                        parsedData.alpine.values.push({x: d, y: sortedPoint[numerator]});
-                        previous = sortedPoint[denominator];
+                    case "Spectrum Health Alpine Urgent Care":
+                        UrgentCares.alpine.data.push(q);
                         break;
-                    case "Test":
-                        parsedData.test.push({x: (sortedPoint[denominator] + count*multiplier), y: sortedPoint[numerator]});
+                    case "Spectrum Health East Beltline Urgent Care":
+                        UrgentCares.eastBeltline.data.push(q);  
+                        break;
+                    case "Spectrum Health West Pavilion Urgent Care":
+                        UrgentCares.westPavilion.data.push(q);
+                        break;
+                    case "Spectrum Health Broadmoor Urgent Care":
+                        UrgentCares.Broadmoor.data.push(q);
                         break;
                     default:
                         break;
-                }            
+                }
             });
+
+            UrgentCares.sendUpdate();
+        } 
+        else {
+            console.log("Data being parsed is not an array. The API may have return something else.");
+        }
+    }
+
+	queues.getBarChartData = function(numerator, denominator) {
+
+        var ret = [];
+
+        for (var uc in UrgentCares) {
+            if (UrgentCares[uc].enabled) {
+                if (UrgentCares[uc].data.length > 0) {
+                    var v = buildValuesArray(UrgentCares[uc].data, numerator, denominator, UrgentCares.showEmptyPoints);
+
+                    ret.push({
+                        values: v,
+                        key: UrgentCares[uc].key,
+                        color: UrgentCares[uc].color
+                    });
+                }
+            }
         }
 
-        return [
-            {
-                values: parsedData.alpine.values,
-                key: parsedData.alpine.key,
-                color: parsedData.alpine.color
-            }
-        ];  
+        return ret;
 	};
 
     queues.pieChartForm = function(date) {

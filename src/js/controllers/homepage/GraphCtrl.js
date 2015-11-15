@@ -31,8 +31,8 @@ function GraphCtrl($scope, Queues, DateRange) {
                     headerFormatter: function(d, i) {
                         var tempDate = new Date(DateRange.getStartDate());
                         tempDate.setDate(tempDate.getDate() - 1);           // This function is off... bug
-                        tempDate.setHours(tempDate.getHours() + d - 1);
-                        return tempDate.getDate() + '/' + tempDate.getMonth() + '/' + tempDate.getFullYear() + ": " + tempDate.getHours() + " o'clock";
+                        tempDate.setHours(0 + d );
+                        return tempDate.getMonth() + '/' + tempDate.getDate() + '/' + tempDate.getFullYear() + ": " + tempDate.getHours() + " o'clock";
                     }
                 }
             }
@@ -43,7 +43,7 @@ function GraphCtrl($scope, Queues, DateRange) {
     d.setDate(d.getDate() - 2);
 
     $scope.pie = {
-        title: "Current Information" ,
+        title: "Most Recent Information" ,
         data: Queues.pieChartForm(d),
         options: {
             chart: {
@@ -123,14 +123,13 @@ function GraphCtrl($scope, Queues, DateRange) {
         }
     };
 
-    $scope.$on('api_data_changed', function() {
-        $scope.bar.data = Queues.getBarChartData("TotalPatients", "Hour");      // The api has camelcase properties... match please
+    $scope.$on('urgent_cares_changed', function() {
+        $scope.bar.data = Queues.getBarChartData("Total Patients", "Hour");      // The api has camelcase properties... match please
         // $scope.bar.options.chart.xAxis.tickFormat = Queues.getBarChartXLabels();
 
         $scope.pie.data = Queues.pieChartForm(DateRange.getEndDate());
         $scope.line.data = Queues.getBarChartData("Providers", "Hour");
-        // $scope.api.update();
-        // TODO - add calls for other graphs
+
         console.log("API Data Changed: ", $scope.bar.data);
     });
 }

@@ -64,6 +64,33 @@ To-do:
 
 
 
+// // If we recieved an array (sorted)
+// if (Array.isArray(this.rawAPIData) && this.rawAPIData[0]) {
+
+//     // Keeps track of the number of days, hours, months...
+//     var previous = this.rawAPIData[0][denominator];         // Start number (to determine if a new day, month, etc. has been selected)
+//     var count = 0;                                          // Count of the number of days, months, etc.
+//     var multiplier = determineMultiplier(denominator);
+
+//     // Iterate and add appropriately
+//     this.rawAPIData.forEach(function(sortedPoint) {
+
+//         // Append to the appropriate department
+//         switch (sortedPoint.Department) {
+//             case "Spectrum Health Alpine Urgent Care": 
+//                 if (sortedPoint[denominator] < previous) { count++; appendEmptyPoints(parsedData["Alpine"].values, previous, (sortedPoint[denominator] + count*multiplier));  }
+//                 var d = (sortedPoint[denominator] + count * multiplier);
+//                 parsedData["Alpine"].values.push({x: d, y: sortedPoint[numerator]});
+//                 previous = sortedPoint[denominator];
+//                 break;
+//             default:
+//                 break;
+//         }            
+//     });
+// }
+
+
+
 // Angular UI Bootstrap Datepicker & Timepicker
 
 <!--                     <div class="input-group">
