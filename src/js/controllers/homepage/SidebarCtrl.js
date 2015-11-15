@@ -125,6 +125,6 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
         localStorage.clear();
     };
 
+    $scope.clearPreferences();      // UNCOMMENT ME SOMEDAY!!
     $scope.loadPreferences();
-    // $scope.clearPreferences();
 }

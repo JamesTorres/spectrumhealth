@@ -1,6 +1,6 @@
 app.controller('DashboardCtrl', DashboardCtrl);
 
-function DashboardCtrl($scope, backendAPI, DateRange, Queues) {
+function DashboardCtrl($scope, backendAPI, DateRange, Parser) {
 
     var getDateRange = function() {
         $scope.startDate = DateRange.getStartDate();
@@ -10,7 +10,7 @@ function DashboardCtrl($scope, backendAPI, DateRange, Queues) {
     var getQueueData = function() {
         backendAPI.getQueues($scope.startDate, $scope.endDate)
             .then(function(data) {
-                Queues.sendAPIData(data);
+                Parser.sendAPIData(data);
                 $scope.initialized.dashboard = true;
             }, function(data) {
                 // Error
@@ -32,7 +32,8 @@ function DashboardCtrl($scope, backendAPI, DateRange, Queues) {
         getDateRange();
 
         // Initialized flag is located in the HomepageCtrl. This keeps track of if we need to query API on Controller load
-        if (!$scope.initialized.dashboard) { getQueueData(); }
+        // if (!$scope.initialized.dashboard) { getQueueData(); }
+        getQueueData();
 
         // Creates watchers to check for date_range_changes. Upon change, we query API again
         createWatchers();

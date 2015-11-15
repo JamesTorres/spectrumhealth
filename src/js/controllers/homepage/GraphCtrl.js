@@ -1,6 +1,6 @@
 app.controller('GraphCtrl', GraphCtrl);
 
-function GraphCtrl($scope, Queues, DateRange) {
+function GraphCtrl($scope, Parser, DateRange) {
 
     $scope.bar = {
         title: "Total Patients / Hour",
@@ -15,26 +15,38 @@ function GraphCtrl($scope, Queues, DateRange) {
                 xAxis: {
                     axisLabel: 'Hour',
                     showMaxMin: false,
-
+                    tickFormat: function(d) {
+                        var tempDate = new Date(DateRange.getStartDate());
+                        tempDate.setDate(tempDate.getDate() - 1);           // This function is off... bug
+                        tempDate.setHours(0 + d );
+                        return tempDate.getMonth() + '/' + tempDate.getDate();
+                    },
+                    staggerLabels: false,
+                    rotateLabels: null
                 },
                 yAxis: {
-                    axisLabel: 'Providers',
-                    axisLabelDistance: 40,
+                    axisLabel: 'Total Patients',
+                    axisLabelDistance: -20,
                     tickFormat: function(d){
                         return d3.format('')(d);
                     },
-                    showMaxMin: false
+                    showMaxMin: false,
+                    rotateYLabel: true
                 },
                 reduceXTicks: true,
-                noData: null,
+                noData: "No data. Please query, or check the API call.",
                 tooltip: {
                     headerFormatter: function(d, i) {
                         var tempDate = new Date(DateRange.getStartDate());
                         tempDate.setDate(tempDate.getDate() - 1);           // This function is off... bug
                         tempDate.setHours(0 + d );
-                        return tempDate.getMonth() + '/' + tempDate.getDate() + '/' + tempDate.getFullYear() + ": " + tempDate.getHours() + " o'clock";
+                        return tempDate.getMonth() + '/' + tempDate.getDate() + '/' + tempDate.getFullYear() + ": " + tempDate.toLocaleTimeString('en-US');
+                    },
+                    valueFormatter: function(d) {
+                        return d + " Patients";
                     }
-                }
+                },
+                groupSpacing: 0.08
             }
         }
     };
@@ -44,7 +56,7 @@ function GraphCtrl($scope, Queues, DateRange) {
 
     $scope.pie = {
         title: "Most Recent Information" ,
-        data: Queues.pieChartForm(d),
+        data: [],
         options: {
             chart: {
                 type: 'pieChart',
@@ -124,11 +136,11 @@ function GraphCtrl($scope, Queues, DateRange) {
     };
 
     $scope.$on('urgent_cares_changed', function() {
-        $scope.bar.data = Queues.getBarChartData("Total Patients", "Hour");      // The api has camelcase properties... match please
+        $scope.bar.data = Parser.getBarChartData("Total Patients", "Hour");      // The api has camelcase properties... match please
         // $scope.bar.options.chart.xAxis.tickFormat = Queues.getBarChartXLabels();
 
-        $scope.pie.data = Queues.pieChartForm(DateRange.getEndDate());
-        $scope.line.data = Queues.getBarChartData("Providers", "Hour");
+        $scope.pie.data = Parser.pieChartForm(DateRange.getEndDate());
+        $scope.line.data = Parser.getBarChartData("Providers", "Hour");
 
         console.log("API Data Changed: ", $scope.bar.data);
     });

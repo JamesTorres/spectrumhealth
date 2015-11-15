@@ -13,7 +13,7 @@ function DateRangeCtrl($scope, DateRange) {
     $scope.minDate = new Date(2015, 1, 1);
 
     $scope.hstep = 1;
-    $scope.mstep = 15;
+    $scope.mstep = 5;
     $scope.ismeridian = true;
 
     $scope.open = function($event) {

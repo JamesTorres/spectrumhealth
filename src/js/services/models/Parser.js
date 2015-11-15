@@ -1,4 +1,4 @@
-app.factory('Queues', function(Queue, UrgentCares) {
+app.factory('Parser', function(Queue, UrgentCares) {
 
     var queues = {};
     queues.rawAPIData = null;

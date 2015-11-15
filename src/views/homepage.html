@@ -40,6 +40,8 @@
     </div>
 
     <div ng-switch on="view">
+
+        <!-- Dashboard -->
         <div ng-switch-when="Dashboard" class="dashboard" ng-controller="DashboardCtrl">
             <div class="container dp-ctn" ng-controller="DateRangeCtrl" >
                 <div class="row">
@@ -63,8 +65,10 @@
                 </div>
             </div>
     	</div>
-        <div ng-switch-when="Calendar" class="calendar" ng-controller="CalendarCtrl">
 
+        <!-- Calendar -->
+        <div ng-switch-when="Calendar" ng-controller="CalendarCtrl">
+            <calendar></calendar>
         </div>
     </div>
 </div>

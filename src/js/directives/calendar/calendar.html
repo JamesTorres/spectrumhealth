@@ -1,0 +1,32 @@
+<div class="cal container">
+	<div class="cal-header col-md-12">
+		<button type="button" class="cal-arrow-left btn btn-default" aria-label="Left Align">
+		  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		</button>
+		<h1>{{ cal.month }} Month</h1>	
+		<button type="button" class="cal-arrow-right btn btn-default" aria-label="Left Align">
+		  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		</button>
+	</div>
+
+	<div class="cal-main col-md-12">
+		<div class="cal-day-names">
+			<div class="cal-row">
+				<div class="cal-day-name" ng-repeat="dayName in dayNames">
+					{{ dayName }}
+				</div>
+			</div>
+		</div>
+		<div class="cal-month-box">
+			<div ng-repeat="row in rows">
+				<div class="cal-row">
+					<div class="cal-cell" ng-repeat="day in week">
+						<div class="day-number">
+							{{ day + row * 7 }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,74 @@
+$cell-width: 120px ;
+$cell-height: 120px;
+$black: #444545; 		
+$white: #fff; 	
+
+.cal {
+	margin-top: 2em;
+	background-color: $white;
+	width: 920px;
+	height: 700px;
+	padding: 0;
+
+	.cal-header {
+		text-align: center;
+		height: 4em;
+		background-color: $black;
+		color: $white;
+		padding-top: .7em;
+
+		h1 {
+			position: relative;
+			display: inline;
+			vertical-align: middle;
+		}
+		.cal-arrow-left {
+			float: left;
+			left: 2em;
+		}
+		.cal-arrow-right {
+			float: right;
+			right: 2em;
+		}
+	}
+
+	.cal-main {
+		padding: 0;
+		margin: 0;
+
+		.cal-row {
+
+			.cal-day-name {
+				width: $cell-width;
+				height: $cell-height / 3;
+				display: inline-block;
+				padding-top: .7em;
+				background-color: $black;
+				color: $white;
+				margin-top: 3em;
+			}
+
+			.cal-cell {
+				width: $cell-width;
+				height: $cell-height;
+				display: inline-block;
+				text-align: center;
+				cursor: pointer;
+				position: relative;
+				padding: 1em;
+
+				&:hover {
+					background-color: #888;
+					color: $white;
+				}
+
+				.day-number {
+					margin: 0;
+					font-size: 24px;
+					letter-spacing: 1.5px;
+				}
+			}
+		}
+
+	}
+}
