@@ -1,7 +1,7 @@
 app.factory('Parser', function(Queue, UrgentCares) {
 
-    var queues = {};
-    queues.rawAPIData = null;
+    var parser = {};
+    parser.rawAPIData = null;
 
     function earlierThan(a, b) {
         if (a.Year < b.Year) { return -1; } 
@@ -36,7 +36,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
 
     function buildValuesArray(array, numerator, denominator) {
 
-        /* Builds the values for a UC (for a graph)
+        /* Builds the x-y coordinates for a UC (for a graph)
 
                 [{x: 1, y:1}, {x: 5, y:2}, ...]
         */
@@ -104,7 +104,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
                 }
             }
 
-            // Accounting for the nature of dates
+            // Accounting for two data points sharing the same x-value
             xVal = current + count * multiplier;
 
             // Increment average numerator
@@ -130,9 +130,9 @@ app.factory('Parser', function(Queue, UrgentCares) {
         return v;
     }
 
-    queues.sendAPIData = function(data) {
+    parser.parseAPIDataByDept = function(data) {
         this.rawAPIData = data;
-        this.rawAPIData.sort(earlierThan);
+        // this.rawAPIData.sort(earlierThan);
         parseData(this.rawAPIData);
     };
 
@@ -161,7 +161,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
                         UrgentCares.westPavilion.data.push(q);
                         break;
                     case "Spectrum Health Broadmoor Urgent Care":
-                        UrgentCares.Broadmoor.data.push(q);
+                        UrgentCares.broadmoor.data.push(q);
                         break;
                     default:
                         break;
@@ -175,7 +175,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
         }
     }
 
-	queues.getBarChartData = function(numerator, denominator) {
+	parser.getBarChartData = function(numerator, denominator) {
 
         var ret = [];
 
@@ -196,7 +196,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
         return ret;
 	};
 
-    queues.pieChartForm = function(date) {
+    parser.pieChartForm = function(date) {
 
         var ret = [];
 
@@ -230,7 +230,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
         return ret;
     };
 
-    queues.lineChartForm = function() {
+    parser.lineChartForm = function() {
         var alpine = [];
 
         // If we were given an object, and that object has at least one property
@@ -262,7 +262,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
     };
 
     /*Random Data Generator */
-    queues.sinAndCos = function() {
+    parser.sinAndCos = function() {
         var sin = [],sin2 = [],
             cos = [];
 
@@ -296,7 +296,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
 
 
     /* Random Data Generator (took from nvd3.org) */
-    queues.fakeData = function() {
+    parser.fakeData = function() {
         var names = ["Alpine", "Broadmoor", "West Pavillion"];
         return stream_layers(3, 50+Math.random()*50, 0.1).map(function(data, i) {
             return {
@@ -340,5 +340,5 @@ app.factory('Parser', function(Queue, UrgentCares) {
         return {x: i, y: Math.max(0, d)};
     }
 
-	return queues;
+	return parser;
 });

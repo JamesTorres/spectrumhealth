@@ -29,8 +29,8 @@ app.service('backendAPI', function($http, $q) {
 				"m2": endMonth,
 				"y2": endDate.getFullYear(),
 				"d2": endDate.getDate(),
-				"h2": endDate.getHours(),
-				"dept": "Spectrum Health Alpine Urgent Care"
+				"h2": endDate.getHours()
+				// "dept": "Spectrum Health East Beltline Urgent Care"
 			}
 		});
 
