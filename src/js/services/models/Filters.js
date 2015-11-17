@@ -38,7 +38,7 @@ app.factory('Filters', function($rootScope) {
 			}
 		});
 
-		this.sendUpdate();
+		// this.sendUpdate();
 	};
 
 	return filters;

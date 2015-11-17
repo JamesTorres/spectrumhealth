@@ -35,8 +35,6 @@ app.service('backendAPI', function($http, $q) {
 			}
 		});
 
-		console.log("HEY:",request.params);
-
 		// $http returns a promise by default, as it extends the $q service
 		return request.then(function(response) {
 

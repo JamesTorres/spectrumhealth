@@ -105,6 +105,10 @@ function SidebarCtrl($scope, localStorage, UrgentCares, Filters) {
         $scope.savePreferences();
     };
 
+    $scope.updateFilters = function() {
+        Filters.sendUpdate();
+    };
+
     $scope.changeModel = function(option) {
         // Talk to backend
         $scope.savePreferences();

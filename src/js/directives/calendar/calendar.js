@@ -1,4 +1,4 @@
-app.directive('calendar', function(){
+app.directive('calendar', function(Parser){
 	// Runs during compile
 	return {
 		restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
@@ -16,31 +16,6 @@ app.directive('calendar', function(){
             start.date(1);
             _removeTime(start.day(0));
             scope.display = true;
-
-            scope.getDetailsForDate = function(day) {
-                var details = [];
-
-            	for (i=0; i < scope.details.length; i++) {
-                    var dObj = scope.details[i];
-            		if (dObj.date.getDate() == day.date() && dObj.data.getMonth() == day.month()) {
-                        for (y=0; y<details.length; y++) {
-                            var d = details[y];
-                            if (dObj.date.getHours() == d.h1) {
-                                d.h2 = d.h1 + dObj.detail.duration;
-                                d.text = dObj.detail.text;
-                            }
-                        }
-                        // details.forEach(function(d) {
-                        //     if (dObj.date.getHours() == d.h1) {
-                        //         d.h2 = d.h1 + dObj.detail.duration;
-                        //         d.text = dObj.detail.text;
-                        //     }
-                        // });
-            		}
-            	}
-
-            	return details;
-            };
 
             _buildMonth(scope, start, scope.month);
 
@@ -64,13 +39,61 @@ app.directive('calendar', function(){
             };
 
             scope.showDetails = function(week) {
-            	console.log(week);
+            	// console.log(week);
             	//TODO
                 week.show = !week.show;
             };
 
+            scope.$on('urgent_cares_changed', function() {
+                clearDetailsForAllDates(scope);
+                scope.details = Parser.getDetails();
+                initializeDetailsForAllDates(scope);
+
+                console.log(Parser);
+                console.log(scope.details);
+                console.log(scope.weeks);
+            });
+
         }
 	};
+
+    function clearDetailsForAllDates(scope) {
+        if (scope.weeks) {
+            for (var y = 0; y < scope.weeks.length; y++) {
+                var week = scope.weeks[y];
+                for (var x = 0; x < week.days.length; x++) {
+                    var day = week.days[x];
+
+                    day.details = [];
+                }
+            }
+        }
+    }
+
+    function initializeDetailsForAllDates(scope) {
+        // For details
+        for (i=0; i < scope.details.length; i++) {
+
+            var detail = scope.details[i];
+
+            // For days
+            if (scope.weeks) {
+                for (var y = 0; y < scope.weeks.length; y++) {
+                    var week = scope.weeks[y];
+                    for (var x = 0; x < week.days.length; x++) {
+                        var day = week.days[x];
+
+                        // If this day has a detail
+                        if (detail.date == day.date.date()) {
+
+                            // Save it
+                            day.details.push(detail);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 	function _removeTime(date) {
         return date.day(0).hour(0).minute(0).second(0).millisecond(0);
@@ -92,7 +115,7 @@ app.directive('calendar', function(){
 
     function _buildWeek(scope, date, month) {
         var days = [];
-        var dayInfo = scope.getDetailsForDate(date);
+        var dayDetails = [];                                       // Initialized in the intiializeDetails function etc.
         for (var i = 0; i < 7; i++) {
             days.push({
                 name: date.format("dd").substring(0, 1),
@@ -100,11 +123,12 @@ app.directive('calendar', function(){
                 isCurrentMonth: date.month() === month.month(),
                 isToday: date.isSame(new Date(), "day"),
                 date: date,
-                info: dayInfo
+                details: dayDetails
             });
             date = date.clone();
             date.add(1, "d");
         }
+        console.log(dayDetails);
         return days;
     }
 });

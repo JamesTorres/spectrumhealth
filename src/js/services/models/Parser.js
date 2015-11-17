@@ -21,27 +21,38 @@ app.factory('Parser', function(Queue, UrgentCares, DateRange, Filters) {
 
     parser.getDetails = function() {
         // Add Filters dependency above, after creating model 
-        var ret = [];
+        var ret = []; 
 
         console.log(Filters.thresholds.total);
         
         // For each property in UrgentCares (for prop in obj)
         for (var prop in UrgentCares) {
-            if (UrgentCares[prop].data) {
+
+            // If we have data for said property... (not a function, et. al.) and it is enabled
+            if (UrgentCares[prop].data && UrgentCares[prop].enabled) {
+
                 var ucData = UrgentCares[prop].data;
 
-                // console.log(ucData);
+                // TODO - handle duration (multiple hours for the same thing)
+                // var detail = {type: "threshold", data: "total", hour: queue.getHour(), duration: 1, text: ""};
 
-                // ucData will be a list of Queues.... { date, totalPatients, providers, seen, waiting.... }
-                for (var i=0; i<ucData.length; i++) {
-                    if (ucData[i].getTotalPatients() > Filters.thresholds.total) {
-                        console.log(ucData[i]);
+                // Iterate over the list of queues (for all selected UC's), and return ones that are above filters
+                for (var i = 0; i < ucData.length; i++) {
+
+                    var queue = ucData[i];
+
+                    if (queue.getTotalPatients() > Filters.thresholds.total) {
+                        // console.log(queue);
+                        var detail = {uc: prop, type: "threshold", data: "total", value: queue.getTotalPatients(), filterValue: Filters.thresholds.total, month: queue.getMonth(), year: queue.getYear(), date: queue.getDay(), hour: queue.getHour(), duration: 1, text: "Test text"};
+                        ret.push(detail);
                     }
+
+                    // TODO - other filters and addition
                 }
             }
-            // If obj[data]
-                // If obj[data].someProperty > someFilter ... add to a returned list
         }
+
+        return ret;
     };
 
     function earlierThan(a, b) {
