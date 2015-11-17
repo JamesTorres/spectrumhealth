@@ -35,6 +35,48 @@ app.service('backendAPI', function($http, $q) {
 			}
 		});
 
+		console.log("HEY:",request.params);
+
+		// $http returns a promise by default, as it extends the $q service
+		return request.then(function(response) {
+
+				if (typeof response.data === 'object') {
+					console.log("API returned an object.", response.data);
+					return response.data;
+				}
+				console.log("The response came back with something other than an object. Perhaps the API is returning the wrong data type?");
+                return $q.reject(response.data);
+
+			}, function(response) {
+				console.log("There was an error when retrieving the response. Perhaps the API is down, or you don't have correct access permissions?");
+				return $q.reject(response.data);
+			});
+	};
+
+	this.getQueuesWithMoment = function(startDate, endDate) {
+
+		var urlBase = "http://patientservicedeliveryplanning.azurewebsites.net/api/data";
+
+		// Account for indexing
+		var startMonth = startDate.month() + 1;
+		var endMonth = endDate.month() + 1;
+
+		var request = $http({
+			method: 'GET',
+			url: urlBase,
+			params: {
+				"m1": startMonth,
+				"y1": startDate.year(),
+				"d1": startDate.date(),
+				"h1": startDate.hour(),
+				"m2": endMonth,
+				"y2": endDate.year(),
+				"d2": endDate.date(),
+				"h2": endDate.hour()
+				// "dept": "Spectrum Health East Beltline Urgent Care"
+			}
+		});
+
 		// $http returns a promise by default, as it extends the $q service
 		return request.then(function(response) {
 

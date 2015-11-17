@@ -155,4 +155,9 @@ function GraphCtrl($scope, Parser, DateRange, UrgentCares) {
 
         console.log("API Data Changed: ", $scope.bar.data);
     });
+
+    $scope.$on('filters_changed', function() {
+        // TODO
+        console.log("Graph + filter TODO");
+    });
 }

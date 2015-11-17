@@ -1,18 +1,48 @@
-app.factory('Parser', function(Queue, UrgentCares, DateRange) {
+app.factory('Parser', function(Queue, UrgentCares, DateRange, Filters) {
 
     var parser = {};
     var startDate = DateRange.getStartDate();
     var endDate = DateRange.getEndDate();
 
     parser.rawAPIData = null;
+    parser.calendarRawData = null;
 
-    function getNotifications() {
+    parser.parseAPIDataByDept = function(data) {
+        this.rawAPIData = data;
+        // this.rawAPIData.sort(earlierThan);
+        parseData(this.rawAPIData);
+    };
+
+    parser.parseAPIForCalendar = function(data) {
+        this.calendarRawData = data;
+        // this.calendarRawData.sort(earlierThan);      // breaks?
+        parseData(this.calendarRawData);
+    };
+
+    parser.getDetails = function() {
         // Add Filters dependency above, after creating model 
+        var ret = [];
+
+        console.log(Filters.thresholds.total);
         
         // For each property in UrgentCares (for prop in obj)
+        for (var prop in UrgentCares) {
+            if (UrgentCares[prop].data) {
+                var ucData = UrgentCares[prop].data;
+
+                // console.log(ucData);
+
+                // ucData will be a list of Queues.... { date, totalPatients, providers, seen, waiting.... }
+                for (var i=0; i<ucData.length; i++) {
+                    if (ucData[i].getTotalPatients() > Filters.thresholds.total) {
+                        console.log(ucData[i]);
+                    }
+                }
+            }
             // If obj[data]
                 // If obj[data].someProperty > someFilter ... add to a returned list
-    }
+        }
+    };
 
     function earlierThan(a, b) {
         if (a.Year < b.Year) { return -1; } 
@@ -32,6 +62,7 @@ app.factory('Parser', function(Queue, UrgentCares, DateRange) {
                 return 12;
             case "Day":
                 // TODO
+                return 29;
             case "Hour":
                 return 24;
             default:
@@ -170,13 +201,8 @@ app.factory('Parser', function(Queue, UrgentCares, DateRange) {
         return v;
     }
 
-    parser.parseAPIDataByDept = function(data) {
-        this.rawAPIData = data;
-        this.rawAPIData.sort(earlierThan);
-        parseData(this.rawAPIData);
-    };
-
     function parseData(data) {
+
         // Ensure we are parsing an array of data points
         if (Array.isArray(data)) {
 
