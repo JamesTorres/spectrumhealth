@@ -18,8 +18,8 @@
                 <li ng-repeat="option in selected.options"><a class="sidebar-item" ng-class="{ 'enabled': option.enabled, 'disabled': !option.enabled }" ng-click="enableAPI(option)">{{ option.name }}</a></li>
             </div>
             <div ng-switch-when="Filters">
-                <li ng-repeat="option in selected.options"><form><label class="sidebar-item">{{ option.name }}</br><input type="text" value="{{ option.value }}" ng-change="changeFilter(option)" ng-model="option.value" /></label></form></li>
-                <button ng-click="updateFilters()"></button>
+                <li ng-repeat="option in selected.options"><form><label class="sidebar-item">{{ option.name }}</br><input type="text" value="{{ option.value }}" ng-change="changeFilter(option);updateFilters();" ng-model="option.value" /></label></form></li>
+                <!-- <button ng-click="updateFilters()"></button> -->
             </div>
             <div ng-switch-when="Urgent Cares">
                 <li ng-repeat="option in selected.options"><a class="sidebar-item" ng-class="{ 'enabled': option.enabled, 'disabled': !option.enabled }" ng-click="enableUC(option)">{{ option.name }}</a></li>

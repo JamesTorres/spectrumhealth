@@ -134,6 +134,7 @@ function SidebarCtrl($scope, localStorage, UrgentCares, Filters) {
             UrgentCares.changeSelected($scope.sidebarPreferences[4].options);
             UrgentCares.changeShowEmptyPoints($scope.sidebarPreferences[2].options[0].enabled);
             UrgentCares.changeSimpleMode($scope.sidebarPreferences[2].options[1].enabled);
+            Filters.setFilters($scope.sidebarPreferences[1].options);
         }
     };
 

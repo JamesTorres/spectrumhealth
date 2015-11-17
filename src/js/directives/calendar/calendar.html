@@ -21,16 +21,21 @@
 			<div class="cal-week" ng-repeat="week in weeks">
 
 			    <div class="cal-row">
-			    	<span class="cal-cell" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }" ng-click="select(day); showDetails(week);" ng-repeat="day in week.days">{{day.number}}</span>
+			    	<span class="cal-cell" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }" ng-click="select(day); showDetails(week);" ng-repeat="day in week.days">
+			    		<p>{{day.number}}</p>
+	<!-- 					<div ng-repeat="detail in day.details[0]">
+							<span>{{ detail.uc }}</span>
+	    				</div> -->
+			    	</span>
 			    </div>
 			    <div class="cal-details-container" ng-class="{ 'd-show ': week.show, '': !week.show }">
 				    <table class="cal-details">
 				    	<tbody>
-				    		<tr ng-repeat="n in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]">
-				    			<td class="cal-row-header">{{ n }}</td>
+				    		<tr ng-repeat="hour in hours">
+				    			<td class="cal-row-header">{{ hour }}</td>
 				    			<td class="cal-detail" ng-repeat="day in week.days">
 				    				<div ng-repeat="detail in day.details">
-										<span>{{ detail.text }}</span>
+										<span ng-if="month.month() + 1 == detail.month && hour === detail.hour">{{ detail.text }}</span>
 				    				</div>
 				    			</td>
 				    		</tr>

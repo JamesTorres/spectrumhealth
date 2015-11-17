@@ -23,7 +23,7 @@ app.factory('Parser', function(Queue, UrgentCares, DateRange, Filters) {
         // Add Filters dependency above, after creating model 
         var ret = []; 
 
-        console.log(Filters.thresholds.total);
+        console.log(Filters.thresholds.total, UrgentCares);
         
         // For each property in UrgentCares (for prop in obj)
         for (var prop in UrgentCares) {
@@ -43,7 +43,7 @@ app.factory('Parser', function(Queue, UrgentCares, DateRange, Filters) {
 
                     if (queue.getTotalPatients() > Filters.thresholds.total) {
                         // console.log(queue);
-                        var detail = {uc: prop, type: "threshold", data: "total", value: queue.getTotalPatients(), filterValue: Filters.thresholds.total, month: queue.getMonth(), year: queue.getYear(), date: queue.getDay(), hour: queue.getHour(), duration: 1, text: "Test text"};
+                        var detail = {uc: prop, type: "threshold", data: "total", value: queue.getTotalPatients(), filterValue: Filters.thresholds.total, month: queue.getMonth(), year: queue.getYear(), date: queue.getDay(), hour: queue.getHour(), duration: 1, text: "Total patients over threshold."};
                         ret.push(detail);
                     }
 

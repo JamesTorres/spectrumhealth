@@ -8,20 +8,7 @@ function CalendarCtrl($scope, moment, Parser, backendAPI) {
 	};
 	$scope.today = moment();
 
-	// console.log(moment({ year :2015, month :10, day :16, hour :0, minute :0, second :0, millisecond :0}));
-
-	// $scope.details = [
-	// 	{ date: new Date(2015, 10, 16, 4), detail: {duration:3, text:"Predicted understaffing."} },
-	// 	{ date: new Date(2015, 10, 17, 1), detail: {duration:2, text:"There is expected to be a large number of patients."}},
-	// 	{ date: new Date(2015, 10, 18, 9), detail: {duration:4, text:""}},
-	// 	{ date: new Date(2015, 10, 19, 10), detail: {duration:1, text:"Predicted understaffing."}},
-	// 	{ date: new Date(2015, 10, 20, 11), detail: {duration:1, text:"2-4pm: There is expected to be a large number of patients."}},
-	// 	{ date: new Date(2015, 10, 21, 18), detail: {duration:2, text:"There is expected to be a large number of patients."}}
-	// ];
-
-	// $scope.$on('filters_changed', function() {
- //        console.log(Filters);
- //    });
+	// TODO - handle requerying after switching month?	(move this code to calendar.js, or implement watcher)
 
     var getQueueData = function() {
     	var range = getMonthDateRange($scope.today.year(), $scope.today.month());
