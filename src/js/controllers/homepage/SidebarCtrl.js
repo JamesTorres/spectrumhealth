@@ -36,9 +36,9 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
         }, {
             name: "Filters",
             options: [
-                { name: "Waiting/Total Ratio", value: 0.5 },
-                { name: "Seen/Total Ratio", value: 0.5 },
-                { name: "Waiting/Provider Ratio", value: 0.5 }
+                { name: "Provider/Patient Ratio", value: 0.5 },
+                { name: "Total Patient Threshold", value: 0.5 },
+                { name: "Waiting Threshold", value: 0.5 }
             ]
         } , {
             name: "Settings",
@@ -138,6 +138,6 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
         localStorage.clear();
     };
 
-    // $scope.clearPreferences();      // UNCOMMENT ME SOMEDAY!!
+    $scope.clearPreferences();      // UNCOMMENT ME SOMEDAY!!
     $scope.loadPreferences();
 }

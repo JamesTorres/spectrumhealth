@@ -7,6 +7,7 @@
 	Heroku (old): 	https://peaceful-coast-3278.herokuapp.com/
 	Azure (new): 	http://patientservicedeliveryplanning.azurewebsites.net/api/data
 	Ngrok: 			https://2c926ff3.ngrok.io/api/data
+	Ngrok2.0: 		https://bb0512ad.ngrok.io
 */
 app.service('backendAPI', function($http, $q) {
 	

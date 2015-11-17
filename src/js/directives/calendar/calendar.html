@@ -1,37 +1,45 @@
 <div class="cal container">
 	<div class="cal-header col-md-12">
-		<button type="button" class="cal-arrow-left btn btn-default" aria-label="Left Align">
-		  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-		</button>
-		<h1>{{ cal.month }} Month</h1>	
-		<button type="button" class="cal-arrow-right btn btn-default" aria-label="Left Align">
-		  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-		</button>
+	    <i class="cal-arrow-left glyphicon glyphicon-chevron-left" ng-click="previous()"></i>
+	    <span>{{month.format("MMMM, YYYY")}}</span>
+	    <i class="cal-arrow-right glyphicon glyphicon-chevron-right" ng-click="next()"></i>
 	</div>
 
 	<div class="cal-main col-md-12">
 		<div class="cal-day-names col-md-12">
 			<div class="cal-row">
-				<div class="cal-day-name" ng-repeat="dayName in dayNames">
-					{{ dayName }}
-				</div>
+			    <span class="day-name">Sun</span>
+			    <span class="day-name">Mon</span>
+			    <span class="day-name">Tue</span>
+			    <span class="day-name">Wed</span>
+			    <span class="day-name">Thu</span>
+			    <span class="day-name">Fri</span>
+			    <span class="day-name">Sat</span>	
 			</div>
 		</div>
 		<div class="cal-month-box">
-			<div ng-repeat="row in rows">
-				<div class="cal-row">
-<!-- 					<button type="button" class="cal-arrow-right btn btn-default" aria-label="Left Align">
-			  			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-					</button> -->
-					<div class="cal-cell" ng-repeat="day in week" ng-click="expandRow(row)">
-						<div class="day-number">
-							{{ day + row * 7 }}
-						</div>
-					</div>
-					<div class="cal-cell-details">
-					</div>
+			<div class="cal-week" ng-repeat="week in weeks">
+
+			    <div class="cal-row">
+			    	<span class="cal-cell" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }" ng-click="select(day); showDetails(week);" ng-repeat="day in week.days">{{day.number}}</span>
+			    </div>
+			    <div class="cal-details-container" ng-class="{ 'd-show ': week.show, '': !week.show }">
+				    <table class="cal-details">
+				    	<tbody>
+				    		<tr ng-repeat="n in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]">
+				    			<td class="cal-row-header">{{ n }}</td>
+				    			<td class="cal-detail" ng-repeat="day in week.days">
+				    				<div ng-repeat="i in day.info">
+										<span>{{ i.text }}</span>
+				    				</div>
+				    			</td>
+				    		</tr>
+				    	</tbody>
+				    </table>
 				</div>
+
 			</div>
 		</div>
 	</div>
 </div>
+

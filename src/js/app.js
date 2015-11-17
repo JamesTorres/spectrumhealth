@@ -1,6 +1,8 @@
 // Following style guide at: 	https://github.com/mgechev/angularjs-style-guide
 
-var app = angular.module("spectrumStatistics", ['ngRoute', 'ui.bootstrap', 'nvd3', 'ngFitText']);
+// "use strict";
+
+var app = angular.module("spectrumStatistics", ['ngRoute', 'ui.bootstrap', 'nvd3', 'ngFitText', 'angularMoment']);
 
 app.config(function ($routeProvider) { 
 	$routeProvider 

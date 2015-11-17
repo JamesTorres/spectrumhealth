@@ -1,7 +1,18 @@
-app.factory('Parser', function(Queue, UrgentCares) {
+app.factory('Parser', function(Queue, UrgentCares, DateRange) {
 
     var parser = {};
+    var startDate = DateRange.getStartDate();
+    var endDate = DateRange.getEndDate();
+
     parser.rawAPIData = null;
+
+    function getNotifications() {
+        // Add Filters dependency above, after creating model 
+        
+        // For each property in UrgentCares (for prop in obj)
+            // If obj[data]
+                // If obj[data].someProperty > someFilter ... add to a returned list
+    }
 
     function earlierThan(a, b) {
         if (a.Year < b.Year) { return -1; } 
@@ -53,6 +64,20 @@ app.factory('Parser', function(Queue, UrgentCares) {
         var yAvg = 0;
         var limit = 1;
 
+        // Appending points to the begging if necessary
+        if (UrgentCares.showEmptyPoints) {
+            if (startDate.getTime() < array[0].getDate().getTime()) {
+                if (startDate.getHours() > array[0].getHour()) {
+                    appendEmptyPoints(v, startDate.getHours(), multiplier, limit);
+                    appendEmptyPoints(v, 0, array[0].getHour(), limit);
+                }
+                else {
+                    appendEmptyPoints(v, startDate.getHours(), array[0].getHour(), limit);           
+                }
+            }
+        }
+
+        // Setting a new limit if we are in simple mode
         if (UrgentCares.simpleMode) { limit = UrgentCares.averageOver; }
 
         // Adding graph points to the array
@@ -127,12 +152,27 @@ app.factory('Parser', function(Queue, UrgentCares) {
             previous = current;
         });
 
+        // Fill any remaining zeros
+        if (UrgentCares.showEmptyPoints) {
+            var tempDate = array[array.length - 1].getDate();
+            tempDate.setMonth(tempDate.getMonth() - 1);
+            console.log(endDate, tempDate);
+            if (endDate.getTime() > tempDate.getTime()) {
+                if (endDate.getHours() > array[array.length - 1].getHour()) {
+                    appendEmptyPoints(v, endDate.getHours(), multiplier, limit);
+                    appendEmptyPoints(v, 0, array[array.length - 1].getHour(), limit);
+                } else {
+                    appendEmptyPoints(v, endDate.getHours(), array[0].getHour(), limit);
+                }
+            }
+        }
+
         return v;
     }
 
     parser.parseAPIDataByDept = function(data) {
         this.rawAPIData = data;
-        // this.rawAPIData.sort(earlierThan);
+        this.rawAPIData.sort(earlierThan);
         parseData(this.rawAPIData);
     };
 
@@ -141,7 +181,15 @@ app.factory('Parser', function(Queue, UrgentCares) {
         if (Array.isArray(data)) {
 
             // Clear any previous data
-            UrgentCares.clearData();
+            UrgentCares.clearData();    
+
+            // Fill data for each UC with zeros (should share the same size)
+            var rangeHours = (endDate - startDate) / (60*60*1000);
+            
+            // for (var i=0; i<rangeHours; i++) {
+            //     var emptyQueue = new Queue({})
+            //     UrgentCares.alpine.data.push()
+            // } 
 
             // Presume these points are already sorted by date
             data.forEach(function(sortedPoint) {
@@ -167,6 +215,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
                         break;
                 }
             });
+
 
             UrgentCares.sendUpdate();
         } 
