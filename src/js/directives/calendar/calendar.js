@@ -23,15 +23,22 @@ app.directive('calendar', function(){
             	for (i=0; i < scope.details.length; i++) {
                     var dObj = scope.details[i];
             		if (dObj.date.getDate() == day.date() && dObj.data.getMonth() == day.month()) {
-                        details.forEach(function(d) {
+                        for (y=0; y<details.length; y++) {
+                            var d = details[y];
                             if (dObj.date.getHours() == d.h1) {
                                 d.h2 = d.h1 + dObj.detail.duration;
                                 d.text = dObj.detail.text;
                             }
-                        });
+                        }
+                        // details.forEach(function(d) {
+                        //     if (dObj.date.getHours() == d.h1) {
+                        //         d.h2 = d.h1 + dObj.detail.duration;
+                        //         d.text = dObj.detail.text;
+                        //     }
+                        // });
             		}
             	}
-                
+
             	return details;
             };
 

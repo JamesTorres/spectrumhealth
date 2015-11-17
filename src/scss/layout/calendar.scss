@@ -1,13 +1,14 @@
 
 $black: #444545; 		
 $white: #fff; 	
-$details-height: 300px;
+$details-height: 450px;
 $cal-details-width: 1055px;							// 95.5% or 1055
 $row-height: 40px;				
 $row-header-width: 60px; 							// cal-details-width - (cal-width * 6.99) or 60px
 $cell-width: $cal-details-width / 7;				// 13% or 150px
 $cell-height: 120px;
 
+$detail-cell-height: 35px;
 
 .cal {
 	margin-bottom: 3em;
@@ -62,7 +63,7 @@ $cell-height: 120px;
 		.cal-week {
 
 			.cal-details-container {
-				height: 300px;
+				height: $details-height;
 				display: none;
 				overflow: auto;
 
@@ -72,7 +73,7 @@ $cell-height: 120px;
 
 					.cal-row-header {
 						width: $row-header-width;
-						height: $details-height / 8;
+						height: $detail-cell-height;
 						background-color: $black;
 						color: $white;
 						border: 1px solid black;
@@ -80,7 +81,7 @@ $cell-height: 120px;
 
 					.cal-detail {
 						width: $cell-width;
-						height: $details-height / 8;
+						height: $detail-cell-height;
 						border: 1px solid black;
 
 					}
