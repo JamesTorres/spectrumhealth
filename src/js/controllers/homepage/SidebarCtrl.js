@@ -1,6 +1,6 @@
 app.controller('SidebarCtrl', SidebarCtrl);
 
-function SidebarCtrl($scope, localStorage, UrgentCares) {
+function SidebarCtrl($scope, localStorage, UrgentCares, Filters) {
 	/*
 		Sidebar contains preferences:
 			- API's to use
@@ -36,9 +36,9 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
         }, {
             name: "Filters",
             options: [
-                { name: "Waiting/Total Ratio", value: 0.5 },
-                { name: "Seen/Total Ratio", value: 0.5 },
-                { name: "Waiting/Provider Ratio", value: 0.5 }
+                { name: "Provider/Patient Ratio", value: Filters.ratios.providerPerPatient },
+                { name: "Total Patient Threshold", value: Filters.thresholds.total },
+                { name: "Waiting Threshold", value: Filters.thresholds.waiting }
             ]
         } , {
             name: "Settings",
@@ -101,8 +101,12 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
     };
 
     $scope.changeFilter = function(option) {
-        //TODO
+        Filters.setFilters($scope.sidebarPreferences[1].options);
         $scope.savePreferences();
+    };
+
+    $scope.updateFilters = function() {
+        Filters.sendUpdate();
     };
 
     $scope.changeModel = function(option) {
@@ -130,6 +134,7 @@ function SidebarCtrl($scope, localStorage, UrgentCares) {
             UrgentCares.changeSelected($scope.sidebarPreferences[4].options);
             UrgentCares.changeShowEmptyPoints($scope.sidebarPreferences[2].options[0].enabled);
             UrgentCares.changeSimpleMode($scope.sidebarPreferences[2].options[1].enabled);
+            Filters.setFilters($scope.sidebarPreferences[1].options);
         }
     };
 

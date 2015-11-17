@@ -1,7 +1,59 @@
-app.factory('Parser', function(Queue, UrgentCares) {
+app.factory('Parser', function(Queue, UrgentCares, DateRange, Filters) {
 
-    var queues = {};
-    queues.rawAPIData = null;
+    var parser = {};
+    var startDate = DateRange.getStartDate();
+    var endDate = DateRange.getEndDate();
+
+    parser.rawAPIData = null;
+    parser.calendarRawData = null;
+
+    parser.parseAPIDataByDept = function(data) {
+        this.rawAPIData = data;
+        // this.rawAPIData.sort(earlierThan);
+        parseData(this.rawAPIData);
+    };
+
+    parser.parseAPIForCalendar = function(data) {
+        this.calendarRawData = data;
+        // this.calendarRawData.sort(earlierThan);      // breaks?
+        parseData(this.calendarRawData);
+    };
+
+    parser.getDetails = function() {
+        // Add Filters dependency above, after creating model 
+        var ret = []; 
+
+        console.log(Filters.thresholds.total, UrgentCares);
+        
+        // For each property in UrgentCares (for prop in obj)
+        for (var prop in UrgentCares) {
+
+            // If we have data for said property... (not a function, et. al.) and it is enabled
+            if (UrgentCares[prop].data && UrgentCares[prop].enabled) {
+
+                var ucData = UrgentCares[prop].data;
+
+                // TODO - handle duration (multiple hours for the same thing)
+                // var detail = {type: "threshold", data: "total", hour: queue.getHour(), duration: 1, text: ""};
+
+                // Iterate over the list of queues (for all selected UC's), and return ones that are above filters
+                for (var i = 0; i < ucData.length; i++) {
+
+                    var queue = ucData[i];
+
+                    if (queue.getTotalPatients() > Filters.thresholds.total) {
+                        // console.log(queue);
+                        var detail = {uc: prop, type: "threshold", data: "total", value: queue.getTotalPatients(), filterValue: Filters.thresholds.total, month: queue.getMonth(), year: queue.getYear(), date: queue.getDay(), hour: queue.getHour(), duration: 1, text: "Total patients over threshold."};
+                        ret.push(detail);
+                    }
+
+                    // TODO - other filters and addition
+                }
+            }
+        }
+
+        return ret;
+    };
 
     function earlierThan(a, b) {
         if (a.Year < b.Year) { return -1; } 
@@ -21,6 +73,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
                 return 12;
             case "Day":
                 // TODO
+                return 29;
             case "Hour":
                 return 24;
             default:
@@ -36,7 +89,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
 
     function buildValuesArray(array, numerator, denominator) {
 
-        /* Builds the values for a UC (for a graph)
+        /* Builds the x-y coordinates for a UC (for a graph)
 
                 [{x: 1, y:1}, {x: 5, y:2}, ...]
         */
@@ -53,6 +106,20 @@ app.factory('Parser', function(Queue, UrgentCares) {
         var yAvg = 0;
         var limit = 1;
 
+        // Appending points to the begging if necessary
+        if (UrgentCares.showEmptyPoints) {
+            if (startDate.getTime() < array[0].getDate().getTime()) {
+                if (startDate.getHours() > array[0].getHour()) {
+                    appendEmptyPoints(v, startDate.getHours(), multiplier, limit);
+                    appendEmptyPoints(v, 0, array[0].getHour(), limit);
+                }
+                else {
+                    appendEmptyPoints(v, startDate.getHours(), array[0].getHour(), limit);           
+                }
+            }
+        }
+
+        // Setting a new limit if we are in simple mode
         if (UrgentCares.simpleMode) { limit = UrgentCares.averageOver; }
 
         // Adding graph points to the array
@@ -104,7 +171,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
                 }
             }
 
-            // Accounting for the nature of dates
+            // Accounting for two data points sharing the same x-value
             xVal = current + count * multiplier;
 
             // Increment average numerator
@@ -127,21 +194,39 @@ app.factory('Parser', function(Queue, UrgentCares) {
             previous = current;
         });
 
+        // Fill any remaining zeros
+        if (UrgentCares.showEmptyPoints) {
+            var tempDate = array[array.length - 1].getDate();
+            tempDate.setMonth(tempDate.getMonth() - 1);
+            console.log(endDate, tempDate);
+            if (endDate.getTime() > tempDate.getTime()) {
+                if (endDate.getHours() > array[array.length - 1].getHour()) {
+                    appendEmptyPoints(v, endDate.getHours(), multiplier, limit);
+                    appendEmptyPoints(v, 0, array[array.length - 1].getHour(), limit);
+                } else {
+                    appendEmptyPoints(v, endDate.getHours(), array[0].getHour(), limit);
+                }
+            }
+        }
+
         return v;
     }
 
-    queues.sendAPIData = function(data) {
-        this.rawAPIData = data;
-        this.rawAPIData.sort(earlierThan);
-        parseData(this.rawAPIData);
-    };
-
     function parseData(data) {
+
         // Ensure we are parsing an array of data points
         if (Array.isArray(data)) {
 
             // Clear any previous data
-            UrgentCares.clearData();
+            UrgentCares.clearData();    
+
+            // Fill data for each UC with zeros (should share the same size)
+            var rangeHours = (endDate - startDate) / (60*60*1000);
+            
+            // for (var i=0; i<rangeHours; i++) {
+            //     var emptyQueue = new Queue({})
+            //     UrgentCares.alpine.data.push()
+            // } 
 
             // Presume these points are already sorted by date
             data.forEach(function(sortedPoint) {
@@ -161,12 +246,13 @@ app.factory('Parser', function(Queue, UrgentCares) {
                         UrgentCares.westPavilion.data.push(q);
                         break;
                     case "Spectrum Health Broadmoor Urgent Care":
-                        UrgentCares.Broadmoor.data.push(q);
+                        UrgentCares.broadmoor.data.push(q);
                         break;
                     default:
                         break;
                 }
             });
+
 
             UrgentCares.sendUpdate();
         } 
@@ -175,7 +261,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
         }
     }
 
-	queues.getBarChartData = function(numerator, denominator) {
+	parser.getBarChartData = function(numerator, denominator) {
 
         var ret = [];
 
@@ -196,7 +282,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
         return ret;
 	};
 
-    queues.pieChartForm = function(date) {
+    parser.pieChartForm = function(date) {
 
         var ret = [];
 
@@ -230,7 +316,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
         return ret;
     };
 
-    queues.lineChartForm = function() {
+    parser.lineChartForm = function() {
         var alpine = [];
 
         // If we were given an object, and that object has at least one property
@@ -262,7 +348,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
     };
 
     /*Random Data Generator */
-    queues.sinAndCos = function() {
+    parser.sinAndCos = function() {
         var sin = [],sin2 = [],
             cos = [];
 
@@ -296,7 +382,7 @@ app.factory('Parser', function(Queue, UrgentCares) {
 
 
     /* Random Data Generator (took from nvd3.org) */
-    queues.fakeData = function() {
+    parser.fakeData = function() {
         var names = ["Alpine", "Broadmoor", "West Pavillion"];
         return stream_layers(3, 50+Math.random()*50, 0.1).map(function(data, i) {
             return {
@@ -340,5 +426,5 @@ app.factory('Parser', function(Queue, UrgentCares) {
         return {x: i, y: Math.max(0, d)};
     }
 
-	return queues;
+	return parser;
 });

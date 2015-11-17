@@ -91,6 +91,28 @@ To-do:
 
 
 
+
+
+
+// Appending points to the begging if necessary
+if (UrgentCares.showEmptyPoints) {
+    if (startDate.getTime() < array[0].getDate().getTime()) {
+        if (startDate.getHours() > array[0].getHour()) {
+            appendEmptyPoints(v, startDate.getHours(), multiplier, limit);
+            appendEmptyPoints(v, 0, array[0].getHour(), limit);
+        }
+        else {
+            appendEmptyPoints(v, startDate.getHours(), array[0].getHour(), limit);           
+        }
+    }
+}
+
+
+
+
+
+
+
 // Angular UI Bootstrap Datepicker & Timepicker
 
 <!--                     <div class="input-group">
@@ -100,3 +122,52 @@ To-do:
                         </span>
                         <uib-timepicker ng-model="startDate" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-change="setStartDate(startDate)"></uib-timepicker>
                     </div> -->
+
+
+
+
+
+
+
+
+                    
+<!--  <div class="header">
+    <i class="glyphicon glyphicon-chevron-left" ng-click="previous()"></i>
+    <span>{{month.format("MMMM, YYYY")}}</span>
+    <i class="glyphicon glyphicon-chevron-right" ng-click="next()"></i>
+</div>
+<div class="week names">
+    <span class="day">Sun</span>
+    <span class="day">Mon</span>
+    <span class="day">Tue</span>
+    <span class="day">Wed</span>
+    <span class="day">Thu</span>
+    <span class="day">Fri</span>
+    <span class="day">Sat</span>
+</div>
+<div class="week" ng-repeat="week in weeks">
+    <span class="day" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }" ng-click="select(day)" ng-repeat="day in week.days">{{day.number}}</span>
+
+
+		<table>
+			<thead>
+				<tr>
+					<th><span class="cal-day-name">Sun</span></th>
+					<th><span class="cal-day-name">Mon</span></th>
+					<th><span class="cal-day-name">Tue</span></th>
+					<th><span class="cal-day-name">Wed</span></th>
+					<th><span class="cal-day-name">Thu</span></th>
+					<th><span class="cal-day-name">Fri</span></th>
+					<th><span class="cal-day-name">Sat</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="cal-row" ng-repeat="week in weeks">
+					<td class="cal-cell" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }" ng-click="select(day); showDetails(week);" ng-repeat="day in week.days">{{day.number}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+    
+</div> -->

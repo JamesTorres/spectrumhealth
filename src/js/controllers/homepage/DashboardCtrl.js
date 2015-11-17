@@ -10,7 +10,7 @@ function DashboardCtrl($scope, backendAPI, DateRange, Parser) {
     var getQueueData = function() {
         backendAPI.getQueues($scope.startDate, $scope.endDate)
             .then(function(data) {
-                Parser.sendAPIData(data);
+                Parser.parseAPIDataByDept(data);
                 $scope.initialized.dashboard = true;
             }, function(data) {
                 // Error

@@ -1,13 +1,21 @@
-$cell-width: 14% ;
-$cell-height: 120px;
+
 $black: #444545; 		
 $white: #fff; 	
+$details-height: 450px;
+$cal-details-width: 1055px;							// 95.5% or 1055
+$row-height: 40px;				
+$row-header-width: 60px; 							// cal-details-width - (cal-width * 6.99) or 60px
+$cell-width: $cal-details-width / 7;				// 13% or 150px
+$cell-height: 120px;
+
+$detail-cell-height: 35px;
 
 .cal {
+	margin-bottom: 3em;
 	margin-top: 2em;
 	background-color: $white;
 	// width: 920px;
-	height: 1000px;
+	height: auto;
 	padding: 0;
 
 	.cal-header {
@@ -33,13 +41,90 @@ $white: #fff;
 	.cal-main {
 		padding: 0;
 		margin: 0;
+		margin-bottom: 3em;
 
 		.cal-day-names {
 			padding:0;
+
+			.day-name {
+				width: $cell-width;
+				height: $cell-height / 3;
+				display: inline-block;
+				text-align: center;
+				cursor: pointer;
+				position: relative;
+				padding: 1em;
+				background-color: $black;
+				color: $white;
+				border: 1px solid black;
+				margin-top: 3em;
+			}
 		}
 
-		.cal-row {
+		.cal-week {
 
+			.cal-details-container {
+				height: $details-height;
+				display: none;
+				overflow: auto;
+
+				.cal-details {
+					width: $cal-details-width + $row-header-width;
+					background-color: white;
+
+					.cal-row-header {
+						width: $row-header-width;
+						height: $detail-cell-height;
+						background-color: $black;
+						color: $white;
+						border: 1px solid black;
+					}
+
+					.cal-detail {
+						width: $cell-width;
+						height: $detail-cell-height;
+						border: 1px solid black;
+
+					}
+				}
+			}
+
+			.d-show {
+				display: block;
+			}
+
+			.cal-row {
+
+				&:hover {
+					.call-cell {
+						background-color: $black;
+					}
+				}
+
+				.cal-cell {
+					width: $cell-width;
+					height: $cell-height;
+					display: inline-block;
+					text-align: center;
+					cursor: pointer;
+					position: relative;
+					padding: 1em;
+					background-color: grey;
+					color: $white;
+					border: 1px solid black;
+
+					// &:hover {
+					// 	background-color: $black;
+					// 	color: $white;
+					// }
+
+					.day-number {
+						margin: 0;
+						font-size: 24px;
+						letter-spacing: 1.5px;
+					}
+				}				
+			}
 			.cal-arrow-right {
 				display: inline-block;
 				float: left;
@@ -55,26 +140,7 @@ $white: #fff;
 				margin-top: 3em;
 			}
 
-			.cal-cell {
-				width: $cell-width;
-				height: $cell-height;
-				display: inline-block;
-				text-align: center;
-				cursor: pointer;
-				position: relative;
-				padding: 1em;
 
-				&:hover {
-					background-color: $black;
-					color: $white;
-				}
-
-				.day-number {
-					margin: 0;
-					font-size: 24px;
-					letter-spacing: 1.5px;
-				}
-			}
 		}
 
 	}

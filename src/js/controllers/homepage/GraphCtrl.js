@@ -17,9 +17,10 @@ function GraphCtrl($scope, Parser, DateRange, UrgentCares) {
                     showMaxMin: false,
                     tickFormat: function(d) {
                         var tempDate = new Date(DateRange.getStartDate());
-                        tempDate.setDate(tempDate.getDate() - 1);           // This function is off... bug
-                        tempDate.setHours(0 + d );
-                        return tempDate.getMonth() + '/' + tempDate.getDate();
+                        tempDate.setDate(tempDate.getDate());           // This function is off... bug
+                        tempDate.setHours(0 + d);
+                        tempDate.setMonth(tempDate.getMonth() + 1);
+                        return tempDate.getMonth() + '/' + tempDate.getDate() + ': ' + tempDate.getHours();
                     },
                     staggerLabels: false,
                     rotateLabels: null
@@ -38,8 +39,9 @@ function GraphCtrl($scope, Parser, DateRange, UrgentCares) {
                 tooltip: {
                     headerFormatter: function(d, i) {
                         var tempDate = new Date(DateRange.getStartDate());
-                        tempDate.setDate(tempDate.getDate() - 1);           // This function is off... bug
-                        tempDate.setHours(0 + d );
+                        tempDate.setDate(tempDate.getDate());           // This function is off... bug
+                        tempDate.setHours(0 + d);
+                        tempDate.setMonth(tempDate.getMonth() + 1);
                         return tempDate.getMonth() + '/' + tempDate.getDate() + '/' + tempDate.getFullYear() + ": " + tempDate.toLocaleTimeString('en-US');
                     },
                     valueFormatter: function(d) {
@@ -142,6 +144,7 @@ function GraphCtrl($scope, Parser, DateRange, UrgentCares) {
         $scope.pie.data = Parser.pieChartForm(DateRange.getEndDate());
         $scope.line.data = Parser.getBarChartData("Providers", "Hour");
 
+        // $scope.bar.options.chart.reduceXTicks = !UrgentCares.simpleMode; 
         $scope.bar.options.chart.reduceXTicks = !UrgentCares.simpleMode;
 
         if (UrgentCares.areNoneSelected()) { 
@@ -151,5 +154,10 @@ function GraphCtrl($scope, Parser, DateRange, UrgentCares) {
         }
 
         console.log("API Data Changed: ", $scope.bar.data);
+    });
+
+    $scope.$on('filters_changed', function() {
+        // TODO
+        console.log("Graph + filter TODO");
     });
 }
